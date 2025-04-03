@@ -1,6 +1,8 @@
 "use client";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { IoSunnyOutline } from "react-icons/io5";
+import { RiMoonClearLine } from "react-icons/ri";
 
 export default function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
@@ -14,7 +16,13 @@ export default function ThemeSwitcher() {
 
   return (
     <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
-      {theme === "dark" ? "🌙" : "☀️"}
+      <div className="p-2 rounded-sm ">
+        {theme === "dark" ? (
+          <RiMoonClearLine className="text-2xl" />
+        ) : (
+          <IoSunnyOutline className="text-2xl" />
+        )}
+      </div>
     </button>
   );
 }

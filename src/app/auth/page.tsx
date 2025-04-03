@@ -16,8 +16,8 @@ export default function AuthPage() {
   const onFinish = async (values: any) => {
     const { username, password } = values;
     try {
-      dispatch(login({ username, password }));
-      dispatch(getProfile());
+      await dispatch(login({ username, password }));
+      await dispatch(getProfile());
     } catch (e) {}
   };
 

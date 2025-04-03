@@ -8,28 +8,21 @@ import UserMenu from "./UserMenu";
 import { useEffect, useState } from "react";
 import Notification from "@/types/notification";
 import { notificationApi } from "@/api/notifaction.api";
+import logo from "@/assets/images/logo1.png";
+import Image from "next/image";
 
 export default function Header() {
-  const [notifications, setNotifications] = useState<Notification[]>([]);
   const user = useAppSelector((state) => state.user);
 
-  const handleGetNotifications = async () => {
-    try {
-      const { data } = await notificationApi.findAll({ page: 1, limit: 20 });
-      setNotifications(data.notifications);
-    } catch (error) {}
-  };
-
-  useEffect(() => {
-    handleGetNotifications();
-  }, []);
-
   return (
-    <header className="w-full p-4 shadow-md">
+    <header className="w-full p-4 max-w-7xl m-auto">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
-        <Link href="/" className="text-2xl font-bold">
-          MyBlog
+        <Link href="/" className="text-base font-black uppercase">
+          <div className="flex items-center">
+            <Image src={logo} alt={""} width={50} className="object-contain" />{" "}
+            WriteFlow
+          </div>
         </Link>
 
         {/* Menu */}
@@ -37,24 +30,29 @@ export default function Header() {
           <ul className="flex space-x-6">
             <li>
               <Link href="/" className="hover:text-blue-500">
-                Home
+                Trang chủ
               </Link>
             </li>
             <li>
               <Link href="/categories" className="hover:text-blue-500">
-                Categories
+                Bài viết
               </Link>
             </li>
             <li>
               <Link href="/about" className="hover:text-blue-500">
-                About
+                Khóa học
+              </Link>
+            </li>
+            <li>
+              <Link href="/about" className="hover:text-blue-500">
+                Góp ý
               </Link>
             </li>
           </ul>
         </nav>
 
         <div className="flex items-center gap-2">
-          <UserMenu user={user.info} notifications={notifications} />
+          <UserMenu user={user.info} />
           <ThemeSwitcher />
         </div>
       </div>

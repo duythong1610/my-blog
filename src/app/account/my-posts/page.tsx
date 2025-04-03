@@ -1,6 +1,7 @@
 "use client";
 
 import { postApi } from "@/api/post.api";
+import PostCard from "@/components/Post/PostCard";
 import PostItem from "@/components/PostItem";
 import { Post } from "@/types/post";
 import { useEffect, useState } from "react";
@@ -28,16 +29,18 @@ export default function MyPostsPage() {
   if (loading) return <p>Đang tải bài viết...</p>;
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold">Bài viết của tôi</h1>
+    <div className="m-auto">
+      <div className="mb-3">
+        <h1 className="font-bold text-xl">Bài viết của tôi</h1>
+      </div>
       {posts.length === 0 ? (
         <p>Chưa có bài viết nào.</p>
       ) : (
-        <ul className="space-y-4">
-          {posts.map((post) => (
-            <PostItem post={post} />
+        <div className="grid grid-cols-2 gap-x-8 gap-y-[48px]">
+          {posts.map((post, index) => (
+            <PostCard key={post._id} post={post} />
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

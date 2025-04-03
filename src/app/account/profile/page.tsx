@@ -1,17 +1,25 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Form, Input, Upload, Button, Avatar, message } from "antd";
+import { Form, Input, Upload, Button, Avatar, message, Row, Col } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { authApi } from "@/api/auth.api";
 import { getProfile } from "@/lib/features/users/userSlice";
+import CloudinaryUpload from "@/components/Upload/AvatarUpload";
+import AvatarUpload from "@/components/Upload/AvatarUpload";
+import CoverPhotoUpload from "@/components/Upload/CoverPhotoUpload";
+import TextArea from "antd/es/input/TextArea";
+import Link from "next/link";
+import { GoArrowUpRight } from "react-icons/go";
 
 export default function ProfilePage() {
   const [form] = Form.useForm();
-  const [avatar, setAvatar] = useState<string | null>(null);
-  const [coverPhoto, setCoverPhoto] = useState<string | null>(null);
   const user = useAppSelector((state) => state.user);
+
+  const coverPhoto = Form.useWatch("coverPhoto", form);
+  const avatar = Form.useWatch("avatar", form);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -19,22 +27,6 @@ export default function ProfilePage() {
       form.setFieldsValue({ ...user.info });
     }
   }, [user]);
-
-  // Xử lý cập nhật ảnh Avatar
-  const handleAvatarChange = (info: any) => {
-    if (info.file.status === "done") {
-      const url = URL.createObjectURL(info.file.originFileObj);
-      setAvatar(url);
-    }
-  };
-
-  // Xử lý cập nhật ảnh Cover Photo
-  const handleCoverChange = (info: any) => {
-    if (info.file.status === "done") {
-      const url = URL.createObjectURL(info.file.originFileObj);
-      setCoverPhoto(url);
-    }
-  };
 
   // Xử lý submit form
   const handleSubmit = async (values: any) => {
@@ -46,81 +38,105 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold text-center mb-4">Thông tin cá nhân</h1>
-
+    <div className="m-auto">
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
-        {/* Avatar */}
-        <div className="flex justify-center mb-4">
-          <Avatar size={80} src={avatar} />
+        <div className="flex items-center justify-between  mb-3">
+          <div className="flex items-center gap-4">
+            <h1 className="font-bold text-xl">Thông tin cá nhân</h1>
+            <Link
+              href={"/viet-bai"}
+              className="text-purple-500 font-medium flex items-center gap-1 leading-[18px] mt-[2px]"
+            >
+              Preview
+              <GoArrowUpRight className="text-lg" />
+            </Link>
+          </div>
+          <Form.Item className="mb-0">
+            <Button type="primary" htmlType="submit">
+              Lưu thông tin
+            </Button>
+          </Form.Item>
         </div>
-        <Form.Item label="Avatar">
-          <Upload
-            showUploadList={false}
-            customRequest={() => {}}
-            onChange={handleAvatarChange}
-          >
-            <Button icon={<UploadOutlined />}>Tải lên Avatar</Button>
-          </Upload>
-        </Form.Item>
 
-        {/* Cover Photo */}
-        {coverPhoto && (
-          <img
-            src={coverPhoto}
-            alt="Cover"
-            className="w-full h-40 object-cover rounded-lg mb-4"
-          />
-        )}
-        <Form.Item label="Cover Photo">
-          <Upload
-            showUploadList={false}
-            customRequest={() => {}}
-            onChange={handleCoverChange}
-          >
-            <Button icon={<UploadOutlined />}>Tải lên Cover Photo</Button>
-          </Upload>
-        </Form.Item>
+        <Row gutter={[16, 16]}>
+          <Col span={12}>
+            <div className="bg-gray-50 rounded-xl overflow-hidden">
+              <div className="relative h-[200px]">
+                <div className="absolute w-full z-0">
+                  <Form.Item label="" name={"coverPhoto"}>
+                    <CoverPhotoUpload
+                      onUploadOk={(url) =>
+                        form.setFieldValue("coverPhoto", url)
+                      }
+                      imageUrl={coverPhoto}
+                    />
+                  </Form.Item>
+                </div>
+                <div className="absolute -bottom-6 left-5 z-10">
+                  <Form.Item label="" name={"avatar"} className="mb-0">
+                    <AvatarUpload
+                      onUploadOk={(url) =>
+                        form.setFieldValue("coverPhoto", url)
+                      }
+                      imageUrl={avatar}
+                    />
+                  </Form.Item>
+                </div>
+              </div>
+              <div className="pt-10">
+                <div className="px-3">
+                  <Form.Item
+                    label="Username"
+                    name="username"
+                    rules={[
+                      { required: true, message: "Vui lòng nhập username" },
+                    ]}
+                  >
+                    <Input placeholder="Nhập username" size="large" />
+                  </Form.Item>
 
-        {/* Username */}
-        <Form.Item
-          label="Username"
-          name="username"
-          rules={[{ required: true, message: "Vui lòng nhập username" }]}
-        >
-          <Input placeholder="Nhập username" />
-        </Form.Item>
+                  {/* Full Name */}
+                  <Form.Item
+                    label="Full Name"
+                    name="fullName"
+                    rules={[
+                      { required: true, message: "Vui lòng nhập họ và tên" },
+                    ]}
+                  >
+                    <Input placeholder="Nhập họ và tên" size="large" />
+                  </Form.Item>
 
-        {/* Full Name */}
-        <Form.Item
-          label="Full Name"
-          name="fullName"
-          rules={[{ required: true, message: "Vui lòng nhập họ và tên" }]}
-        >
-          <Input placeholder="Nhập họ và tên" />
-        </Form.Item>
-
-        {/* Email */}
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={[
-            {
-              required: true,
-              type: "email",
-              message: "Vui lòng nhập email hợp lệ",
-            },
-          ]}
-        >
-          <Input placeholder="Nhập email" />
-        </Form.Item>
-
-        {/* Submit Button */}
-        <Form.Item>
-          <Button type="primary" htmlType="submit" className="w-full">
-            Cập nhật thông tin
-          </Button>
-        </Form.Item>
+                  {/* Email */}
+                  <Form.Item
+                    label="Email"
+                    name="email"
+                    rules={[
+                      {
+                        required: true,
+                        type: "email",
+                        message: "Vui lòng nhập email hợp lệ",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Nhập email" size="large" />
+                  </Form.Item>
+                  <Form.Item label="Số điện thoại" name="phone">
+                    <Input placeholder="Nhập số điện thoại" size="large" />
+                  </Form.Item>
+                </div>
+              </div>
+            </div>
+          </Col>
+          <Col span={12}>
+            <div className="flex flex-col gap-3">
+              <div className="bg-slate-50 rounded-xl px-3">
+                <Form.Item label="Bio" name="bio">
+                  <TextArea placeholder="Nhập bio" rows={5} />
+                </Form.Item>
+              </div>
+            </div>
+          </Col>
+        </Row>
       </Form>
     </div>
   );

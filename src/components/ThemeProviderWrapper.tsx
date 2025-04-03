@@ -24,15 +24,13 @@ export default function ThemeProviderWrapper({
   }, []);
 
   const lightTheme = {
-    colorPrimary: "#1677ff",
-    colorTextBase: "#000",
-    colorTextLightSolid: "#fff",
+    colorPrimary: "#a855f7",
+    fontFamily: `__Raleway_2c93db', '__Raleway_Fallback_2c93db`,
   };
 
   const darkTheme = {
-    colorPrimary: "#1677ff",
-    colorTextBase: "#fff",
-    colorTextLightSolid: "#000",
+    colorPrimary: "#a855f7",
+    fontFamily: `__Raleway_2c93db', '__Raleway_Fallback_2c93db`,
   };
 
   return (

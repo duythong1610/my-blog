@@ -1,16 +1,44 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-
+import { usePathname, useRouter } from "next/navigation";
+import { ReactNode, useRef } from "react";
+import { MdOutlineAccountCircle } from "react-icons/md";
+import { LuLogOut, LuNotebookPen } from "react-icons/lu";
+import { Avatar } from "antd";
+import { useAppDispatch, useAppSelector } from "@/lib/hook";
+import { BsEmojiHeartEyes } from "react-icons/bs";
+import { logout } from "@/lib/features/users/userSlice";
+import ConfirmLogoutModal, {
+  ConfirmLogoutModalRef,
+} from "@/components/Modal/ConfirmLogoutModal";
 interface MenuItem {
   key: string;
   label: string;
+  icon: ReactNode;
 }
 
 const menuItems: MenuItem[] = [
-  { key: "/account/profile", label: "Thông tin cá nhân" },
-  { key: "/account/my-posts", label: "Bài viết của tôi" },
+  {
+    key: "/account/profile",
+    label: "Thông tin cá nhân",
+    icon: <MdOutlineAccountCircle className="text-2xl" />,
+  },
+  {
+    key: "/account/my-posts",
+    label: "Bài viết của tôi",
+    icon: <LuNotebookPen className="text-2xl" />,
+  },
+  {
+    key: "/account/favorite",
+    label: "Yêu thích",
+    icon: <BsEmojiHeartEyes className="text-2xl" />,
+  },
+  {
+    key: "/account/logout",
+    label: "Đăng xuất",
+    icon: <LuLogOut className="text-2xl" />,
+  },
 ];
 
 interface AccountLayoutProps {
@@ -19,19 +47,59 @@ interface AccountLayoutProps {
 
 export default function AccountLayout({ children }: AccountLayoutProps) {
   const pathname = usePathname();
+  const user = useAppSelector((state) => state.user);
+
+  const confirmLogoutModalRef = useRef<ConfirmLogoutModalRef>();
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen max-w-7xl m-auto">
       {/* Sidebar */}
-      <aside className="w-64 bg-gray-100 p-4">
+      <aside className="w-64 bg-gray-100 rounded-xl">
         <nav>
+          <div className="my-5 px-3">
+            <div className="flex items-center gap-3">
+              <Avatar src={user.info?.avatar} className="w-[60px] h-[60px]" />
+              <div>
+                <p className="font-bold">{user.info?.fullName}</p>
+                <span className="font-medium text-gray-400">
+                  {user.info?.rank}
+                </span>
+              </div>
+            </div>
+          </div>
           <ul>
             {menuItems.map((item) => (
               <li
                 key={item.key}
-                className={pathname === item.key ? "font-bold" : ""}
+                className={`my-1.5 py-3 px-4 ${
+                  pathname === item.key ? "bg-slate-50" : ""
+                }`}
               >
-                <Link href={item.key}>{item.label}</Link>
+                {item.key === "/account/logout" ? (
+                  <button
+                    className={`link font-medium ${
+                      pathname === item.key ? "text-purple-500" : ""
+                    }`}
+                    onClick={() => confirmLogoutModalRef.current?.handleOpen()}
+                  >
+                    <div className="flex items-center gap-2">
+                      {item.icon}
+                      {item.label}
+                    </div>
+                  </button>
+                ) : (
+                  <Link
+                    className={`link font-medium ${
+                      pathname === item.key ? " text-purple-500" : ""
+                    }`}
+                    href={item.key}
+                  >
+                    <div className="flex items-center gap-2">
+                      {item.icon}
+                      {item.label}
+                    </div>
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
@@ -39,7 +107,8 @@ export default function AccountLayout({ children }: AccountLayoutProps) {
       </aside>
 
       {/* Nội dung */}
-      <main className="flex-1 p-6">{children}</main>
+      <main className="flex-1 pl-6">{children}</main>
+      <ConfirmLogoutModal ref={confirmLogoutModalRef} />
     </div>
   );
 }

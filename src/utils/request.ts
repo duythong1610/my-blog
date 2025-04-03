@@ -3,12 +3,19 @@ import axios from "axios";
 import { debounce } from "lodash";
 import { getToken } from "./auth";
 
-message.config({
-  duration: 1.5,
-});
+const isClient = typeof window !== "undefined";
+// Kiểm tra xem có đang ở client không
+
+if (isClient) {
+  message.config({
+    duration: 1.5,
+  });
+}
 
 const debounceMessage = debounce((messageText) => {
-  message.error(messageText);
+  if (isClient) {
+    message.error(messageText);
+  }
 }, 100);
 
 // create an axios instance

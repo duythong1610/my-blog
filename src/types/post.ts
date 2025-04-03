@@ -1,3 +1,4 @@
+import { Tag } from "./tag";
 import { User } from "./user";
 
 export interface Post {
@@ -8,4 +9,7 @@ export interface Post {
   status: "draft" | "pending" | "approved";
   createdAt?: Date;
   updatedAt?: Date;
+  slug: string;
+  thumbnail: string;
+  tags: Tag[];
 }

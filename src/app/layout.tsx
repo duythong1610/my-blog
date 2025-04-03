@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "@/styles/custom.scss";
 import Header from "@/components/Header";
 import { Raleway } from "next/font/google";
 import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
-import StoreProvider from "./ReduxProvider";
-import ReduxProvider from "./ReduxProvider";
+import ReduxProvider from "../providers/ReduxProvider";
+import ReactQueryProvider from "@/providers/ReactQueryProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,16 +24,18 @@ export default function RootLayout({
 }>) {
   return (
     <ReduxProvider>
-      <html lang="en" suppressHydrationWarning>
-        <body
-          className={`${raleway.className} bg-white dark:bg-black text-black dark:text-white`}
-        >
-          <ThemeProviderWrapper>
-            <Header />
-            <main className="container mx-auto p-4">{children}</main>
-          </ThemeProviderWrapper>
-        </body>
-      </html>
+      <ReactQueryProvider>
+        <html lang="en" suppressHydrationWarning>
+          <body
+            className={`${raleway.className} bg-white dark:bg-black text-black dark:text-white`}
+          >
+            <ThemeProviderWrapper>
+              <Header />
+              <main className="container mx-auto p-4">{children}</main>
+            </ThemeProviderWrapper>
+          </body>
+        </html>
+      </ReactQueryProvider>
     </ReduxProvider>
   );
 }
