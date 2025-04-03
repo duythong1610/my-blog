@@ -25,7 +25,7 @@ export default function MarkdownRenderer({
   content?: string;
 }) {
   return (
-    <div className="mx-auto p-6 bg-gray-900 text-white rounded-lg shadow-md">
+    <div className="mx-auto p-6 rounded-lg">
       <ReactMarkdown
         components={{
           code({ node, inline, className, children, ...props }) {

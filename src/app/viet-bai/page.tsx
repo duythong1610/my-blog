@@ -94,7 +94,6 @@ const CreatePostPage = () => {
             size="large"
             htmlType="submit"
             loading={loading}
-            className="bg-blue-500"
           >
             Đăng bài viết
           </Button>

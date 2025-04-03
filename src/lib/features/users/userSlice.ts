@@ -41,7 +41,6 @@ export const getProfile = createAsyncThunk("user/getProfile", async () => {
   } catch (error) {}
 });
 
-// Tạo slice với các reducers
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -51,13 +50,16 @@ const userSlice = createSlice({
       state.isAuthenticated = false;
       state.loading = false;
       state.error = null;
+      setToken("");
     },
   },
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, action) => {
+      state.isAuthenticated = true;
       setToken(action.payload); // Giả sử bạn có setToken function
     });
     builder.addCase(getProfile.fulfilled, (state, action) => {
+      state.isAuthenticated = true;
       state.info = action.payload;
     });
   },
