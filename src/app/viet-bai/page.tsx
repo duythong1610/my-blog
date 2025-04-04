@@ -3,15 +3,25 @@
 import { postApi } from "@/api/post.api";
 import DynamicMDXEditor from "@/components/DynamicMDXEditor";
 import MarkdownRenderer from "@/components/MarkdownRendered";
+import ThumbnailPostUpload from "@/components/Upload/ThumbnailPostUpload";
+import { useTag } from "@/hooks/useTag";
 import "@mdxeditor/editor/style.css";
-import { Button, Form, Input, message } from "antd";
+import { Button, Form, Input, message, Select } from "antd";
 import { debounce } from "lodash";
 import { useCallback, useState } from "react";
 
 const CreatePostPage = () => {
   const [form] = Form.useForm();
-  const [markdown, setMarkdown] = useState("# Xin chào");
+  const [markdown, setMarkdown] = useState("");
   const [loading, setLoading] = useState(false);
+  const thumbnail = Form.useWatch("thumbnail", form);
+
+  const { tags } = useTag({
+    initQuery: {
+      page: 1,
+      limit: 10,
+    },
+  });
 
   // Sử dụng useCallback để tránh tạo lại hàm debounce mỗi lần render
   const debouncedSetMarkdown = useCallback(
@@ -27,7 +37,11 @@ const CreatePostPage = () => {
     debouncedSetMarkdown(newMarkdown);
   };
 
-  const handleSubmit = async (values: { title: string }) => {
+  const handleSubmit = async (values: {
+    title: string;
+    thumbnail: string;
+    tags: string[];
+  }) => {
     try {
       setLoading(true);
 
@@ -42,6 +56,8 @@ const CreatePostPage = () => {
       }
 
       await postApi.create({
+        tags: values.tags,
+        thumbnail: values.thumbnail,
         title: values.title,
         content: markdown,
       });
@@ -67,6 +83,12 @@ const CreatePostPage = () => {
         onFinish={handleSubmit}
         initialValues={{ title: "" }}
       >
+        <Form.Item label="" name={"thumbnail"}>
+          <ThumbnailPostUpload
+            onUploadOk={(url) => form.setFieldValue("thumbnail", url)}
+            imageUrl={thumbnail}
+          />
+        </Form.Item>
         <Form.Item
           name="title"
           label="Tiêu đề bài viết"
@@ -76,6 +98,32 @@ const CreatePostPage = () => {
             placeholder="Nhập tiêu đề bài viết"
             size="large"
             className="text-xl"
+          />
+        </Form.Item>
+        <Form.Item
+          name="tags"
+          label="Thẻ bài viết"
+          rules={[
+            { required: true, message: "Vui lòng chọn thẻ bài viết" },
+            {
+              validator: (_, value) => {
+                if (value && value.length > 5) {
+                  return Promise.reject("Chỉ được chọn tối đa 5 thẻ");
+                }
+                return Promise.resolve();
+              },
+            },
+          ]}
+        >
+          <Select
+            mode="multiple"
+            placeholder="Chọn thẻ bài viết"
+            size="large"
+            className="text-xl"
+            options={tags?.map((tag) => ({
+              label: tag.name,
+              value: tag._id,
+            }))}
           />
         </Form.Item>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Avatar, Dropdown, Menu, Badge } from "antd";
 import { UserOutlined, LogoutOutlined, BellOutlined } from "@ant-design/icons";
@@ -13,14 +13,26 @@ import { useNotification } from "@/hooks/useNotification";
 import NotificationItem from "./Notification/NotificationItem";
 import Image from "next/image";
 import Link from "next/link";
+import ThemeSwitcher from "./ThemeSwitcher";
+import { useClickAway } from "react-use";
+import { useAppSelector } from "@/lib/hook";
+import ConfirmLogoutModal, {
+  ConfirmLogoutModalRef,
+} from "./Modal/ConfirmLogoutModal";
 
-interface UserMenuProps {
-  user: User | null;
-  onLogout?: () => void;
-}
-
-export default function UserMenu({ user, onLogout }: UserMenuProps) {
+export default function UserMenu() {
   const router = useRouter();
+  const [isOpenNotification, setIsOpenNotification] = useState(false);
+  const dropdownRef = useRef(null);
+  const user = useAppSelector((state) => state.user.info);
+
+  const confirmLogoutModalRef = useRef<ConfirmLogoutModalRef>();
+
+  useClickAway(dropdownRef, () => {
+    setIsOpenNotification(false);
+  });
+
+  console.log("object");
 
   const {
     notifications,
@@ -37,15 +49,20 @@ export default function UserMenu({ user, onLogout }: UserMenuProps) {
     },
   });
 
+  console.log("render");
+
   if (!user) {
     return (
-      <Link href="/auth">
-        <div className="bg-purple-500 border-none text-white hover:bg-purple-400 rounded-[40px] py-2 px-3 cursor-pointer">
-          <div className="flex items-center gap-3">
-            <span className="font-bold">Đăng nhập</span>
+      <div className="flex items-center gap-2">
+        <Link href="/auth">
+          <div className="bg-purple-500 border-none text-white hover:bg-purple-400 rounded-[40px] py-2 px-3 cursor-pointer">
+            <div className="flex items-center gap-3">
+              <span className="font-bold">Đăng nhập</span>
+            </div>
           </div>
-        </div>
-      </Link>
+        </Link>
+        <ThemeSwitcher />
+      </div>
     );
   }
 
@@ -56,14 +73,14 @@ export default function UserMenu({ user, onLogout }: UserMenuProps) {
         {
           key: "account",
           label: "Tài khoản của tôi",
-          icon: <UserOutlined />,
+          icon: <UserOutlined className="!text-base mb-[2px]" />,
           onClick: () => router.push("/account"),
         },
         {
           key: "logout",
           label: "Đăng xuất",
-          icon: <LogoutOutlined />,
-          onClick: onLogout,
+          icon: <LogoutOutlined className="!text-base mb-[2px]" />,
+          onClick: () => confirmLogoutModalRef.current?.handleOpen(),
         },
       ]}
     />
@@ -92,9 +109,10 @@ export default function UserMenu({ user, onLogout }: UserMenuProps) {
               key={item._id}
               onView={async (notification: Notification) => {
                 if (notification.type == "post_approved") {
-                  router.push(`/blog/${notification.post._id}`);
+                  router.push(`/blog/${notification.post.slug}`);
                 } else {
                 }
+                setIsOpenNotification(false);
               }}
               notification={item}
             />
@@ -120,7 +138,7 @@ export default function UserMenu({ user, onLogout }: UserMenuProps) {
   return (
     <div className="flex items-center gap-5">
       <div className="flex flex-col">
-        <span className="text-xs text-gray-500 font-medium">
+        <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">
           Bạn muốn chia sẻ?
         </span>
         <div className="flex items-center gap-1 cursor-pointer hover:underline">
@@ -130,28 +148,37 @@ export default function UserMenu({ user, onLogout }: UserMenuProps) {
           <GrLinkNext className="text-sm" />
         </div>
       </div>
-      {/* Thông báo */}
 
-      <Dropdown
-        overlay={notificationMenu}
-        trigger={["click"]}
-        placement="bottomRight"
-      >
-        <div className="rounded-full p-2 hover:bg-purple-100 cursor-pointer group">
-          <Badge count={notifications.length} color="#a855f7">
-            <IoIosNotificationsOutline className="text-2xl group-hover:text-purple-500" />
-          </Badge>
-        </div>
-      </Dropdown>
+      <div className="flex items-center gap-2">
+        {/* Thông báo */}
+        <Dropdown
+          open={isOpenNotification}
+          overlay={notificationMenu}
+          trigger={["click"]}
+          placement="bottomRight"
+        >
+          <div
+            ref={dropdownRef}
+            className="rounded-full p-2 hover:bg-purple-100 cursor-pointer group"
+            onClick={() => setIsOpenNotification(!isOpenNotification)}
+          >
+            <Badge count={notifications.length} color="#a855f7">
+              <IoIosNotificationsOutline className="text-2xl dark:text-white group-hover:text-purple-500" />
+            </Badge>
+          </div>
+        </Dropdown>
+        <ThemeSwitcher />
 
-      {/* Avatar và Menu */}
-      <Dropdown overlay={menu} trigger={["click"]}>
-        <Avatar
-          src={user.avatar}
-          icon={!user.avatar && <UserOutlined />}
-          className="cursor-pointer"
-        />
-      </Dropdown>
+        {/* Avatar và Menu */}
+        <Dropdown overlay={menu} trigger={["click"]} placement="bottomRight">
+          <Avatar
+            src={user.avatar}
+            icon={!user.avatar && <UserOutlined />}
+            className="cursor-pointer"
+          />
+        </Dropdown>
+      </div>
+      <ConfirmLogoutModal ref={confirmLogoutModalRef} />
     </div>
   );
 }

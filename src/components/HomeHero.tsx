@@ -15,19 +15,19 @@ export default function HomeHero() {
           />
         </div>
         <div>
-          <h1 className="text-[64px] text-gray-900">
+          <h1 className="text-[64px]">
             <span className="font-black text-purple-500 uppercase">
               WriteFlow{" "}
             </span>{" "}
             <p>
               Hãy chia sẻ kiến thức{" "}
               <div className="inline-block relative">
-                <div className="bg-purple-200 h-8 absolute bottom-[20px] rounded-[20px] left-0 right-0 -z-10"></div>
+                <div className="bg-purple-200 dark:bg-purple-500 h-7 absolute bottom-[20px] rounded-[20px] left-0 right-0 -z-10"></div>
                 <span className="font-black">của bạn</span>
               </div>
             </p>
           </h1>
-          <p className="text-[#33404A] font-medium mt-3">
+          <p className="text-[#33404A] dark:text-gray-400 font-medium mt-3">
             Chia sẻ kiến thức, kết nối cộng đồng – Nơi mỗi bài viết là một hành
             trình học hỏi!
           </p>

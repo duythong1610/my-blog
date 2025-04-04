@@ -6,7 +6,7 @@ export interface Post {
   title: string;
   content: string;
   author: User; // Có thể là ObjectId hoặc đã populate thành IUser
-  status: "draft" | "pending" | "approved";
+  status: "draft" | "pending" | "approved" | "rejected";
   createdAt?: Date;
   updatedAt?: Date;
   slug: string;

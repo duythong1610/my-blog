@@ -1,16 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Form, Input, Upload, Button, Avatar, message, Row, Col } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { authApi } from "@/api/auth.api";
-import { getProfile } from "@/lib/features/users/userSlice";
-import CloudinaryUpload from "@/components/Upload/AvatarUpload";
 import AvatarUpload from "@/components/Upload/AvatarUpload";
 import CoverPhotoUpload from "@/components/Upload/CoverPhotoUpload";
+import { getProfile } from "@/lib/features/users/userSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/hook";
+import { Button, Col, DatePicker, Form, Input, message, Row } from "antd";
 import TextArea from "antd/es/input/TextArea";
+import dayjs from "dayjs";
 import Link from "next/link";
+import { useEffect } from "react";
+import { FaFacebook, FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import { GoArrowUpRight } from "react-icons/go";
 
 export default function ProfilePage() {
@@ -23,15 +24,24 @@ export default function ProfilePage() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (user) {
-      form.setFieldsValue({ ...user.info });
+    if (user?.info) {
+      form.setFieldsValue({
+        ...user.info,
+        dateOfBirth: user.info.dateOfBirth
+          ? dayjs(user.info.dateOfBirth)
+          : null,
+      });
     }
   }, [user]);
 
   // Xử lý submit form
   const handleSubmit = async (values: any) => {
+    const formattedValues = {
+      ...values,
+      dateOfBirth: values.dateOfBirth ? values.dateOfBirth.toISOString() : null,
+    };
     try {
-      const res = await authApi.updateProfile({ ...values });
+      const res = await authApi.updateProfile({ ...formattedValues });
       message.success("Cập nhật thông tin thành công");
       dispatch(getProfile());
     } catch (error) {}
@@ -40,14 +50,15 @@ export default function ProfilePage() {
   return (
     <div className="m-auto">
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
-        <div className="flex items-center justify-between  mb-3">
+        <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-4">
-            <h1 className="font-bold text-xl">Thông tin cá nhân</h1>
+            <h1 className="font-bold text-xl">Tài khoản của tôi</h1>
             <Link
-              href={"/viet-bai"}
+              target="_blank"
+              href={`/user/${user.info?.username}`}
               className="text-purple-500 font-medium flex items-center gap-1 leading-[18px] mt-[2px]"
             >
-              Preview
+              Chế độ xem
               <GoArrowUpRight className="text-lg" />
             </Link>
           </div>
@@ -75,35 +86,50 @@ export default function ProfilePage() {
                 <div className="absolute -bottom-6 left-5 z-10">
                   <Form.Item label="" name={"avatar"} className="mb-0">
                     <AvatarUpload
-                      onUploadOk={(url) =>
-                        form.setFieldValue("coverPhoto", url)
-                      }
+                      onUploadOk={(url) => form.setFieldValue("avatar", url)}
                       imageUrl={avatar}
                     />
                   </Form.Item>
                 </div>
               </div>
-              <div className="pt-10">
-                <div className="px-3">
+              <div className="pt-[50px]">
+                <div className="px-3 pb-3">
+                  <h1 className="text-lg font-bold mb-2">Thông tin cá nhân</h1>
                   <Form.Item
-                    label="Username"
+                    label="Tên đăng nhập"
                     name="username"
                     rules={[
-                      { required: true, message: "Vui lòng nhập username" },
+                      {
+                        required: true,
+                        message: "Vui lòng nhập tên đăng nhập",
+                      },
                     ]}
                   >
-                    <Input placeholder="Nhập username" size="large" />
+                    <Input
+                      placeholder="Nhập tên đăng nhập"
+                      size="large"
+                      readOnly
+                    />
                   </Form.Item>
 
                   {/* Full Name */}
                   <Form.Item
-                    label="Full Name"
+                    label="Họ và tên"
                     name="fullName"
                     rules={[
                       { required: true, message: "Vui lòng nhập họ và tên" },
                     ]}
                   >
                     <Input placeholder="Nhập họ và tên" size="large" />
+                  </Form.Item>
+
+                  <Form.Item label="Ngày sinh" name="dateOfBirth">
+                    <DatePicker
+                      format="DD/MM/YYYY"
+                      placeholder="DD/MM/YYYY"
+                      className="w-full"
+                      size="large"
+                    />
                   </Form.Item>
 
                   {/* Email */}
@@ -129,9 +155,54 @@ export default function ProfilePage() {
           </Col>
           <Col span={12}>
             <div className="flex flex-col gap-3">
-              <div className="bg-slate-50 rounded-xl px-3">
-                <Form.Item label="Bio" name="bio">
-                  <TextArea placeholder="Nhập bio" rows={5} />
+              <div className="bg-slate-50 rounded-xl p-3">
+                <h1 className="text-lg font-bold mb-2">Giới thiệu</h1>
+                <Form.Item label="" name="bio">
+                  <TextArea placeholder="Nhập bio" rows={6} />
+                </Form.Item>
+              </div>
+
+              <div className="bg-slate-50 rounded-xl p-3">
+                <h1 className="text-lg font-bold mb-2">
+                  Tài khoản mạng xã hội
+                </h1>
+                <Form.Item label="Facebook" name={["socialMedia", "facebook"]}>
+                  <Input
+                    prefix={<FaFacebook className="!text-lg" />}
+                    placeholder="Nhập link facebook"
+                    size="large"
+                  />
+                </Form.Item>
+                <Form.Item label="Twitter" name={["socialMedia", "twitter"]}>
+                  <Input
+                    prefix={<FaXTwitter className="!text-lg" />}
+                    placeholder="Nhập link twitter"
+                    size="large"
+                  />
+                </Form.Item>
+                <Form.Item
+                  label="Instagram"
+                  name={["socialMedia", "instagram"]}
+                >
+                  <Input
+                    prefix={<FaInstagram className="!text-lg" />}
+                    placeholder="Nhập link instagram"
+                    size="large"
+                  />
+                </Form.Item>
+                <Form.Item label="Linkedin" name={["socialMedia", "linkedin"]}>
+                  <Input
+                    prefix={<FaLinkedin className="!text-lg" />}
+                    placeholder="Nhập link linkedin"
+                    size="large"
+                  />
+                </Form.Item>
+                <Form.Item label="Github" name={["socialMedia", "github"]}>
+                  <Input
+                    prefix={<FaGithub className="!text-lg" />}
+                    placeholder="Nhập link github"
+                    size="large"
+                  />
                 </Form.Item>
               </div>
             </div>
