@@ -51,7 +51,7 @@ const CoverPhotoUpload: React.FC<CoverPhotoUploadProps> = ({
         )}
         <Upload {...uploadProps} className="cover-upload">
           <div className="absolute bottom-2 right-2">
-            <Button>Cập nhật ảnh bìa</Button>
+            <Button size="small">Cập nhật ảnh bìa</Button>
           </div>
         </Upload>
       </div>

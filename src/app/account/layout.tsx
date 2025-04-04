@@ -1,14 +1,14 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { ReactNode, useRef } from "react";
-import { MdOutlineAccountCircle } from "react-icons/md";
-import { LuLogOut, LuNotebookPen } from "react-icons/lu";
+import { useAppSelector } from "@/lib/hook";
+import { UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
-import { useAppDispatch, useAppSelector } from "@/lib/hook";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { ReactNode, useRef } from "react";
 import { BsEmojiHeartEyes } from "react-icons/bs";
-import { logout } from "@/lib/features/users/userSlice";
+import { LuLogOut, LuNotebookPen } from "react-icons/lu";
+
 import ConfirmLogoutModal, {
   ConfirmLogoutModalRef,
 } from "@/components/Modal/ConfirmLogoutModal";
@@ -21,8 +21,8 @@ interface MenuItem {
 const menuItems: MenuItem[] = [
   {
     key: "/account/profile",
-    label: "Thông tin cá nhân",
-    icon: <MdOutlineAccountCircle className="text-2xl" />,
+    label: "Tài khoản của tôi",
+    icon: <UserOutlined className="text-2xl" />,
   },
   {
     key: "/account/my-posts",
@@ -54,9 +54,9 @@ export default function AccountLayout({ children }: AccountLayoutProps) {
   return (
     <div className="flex min-h-screen max-w-7xl m-auto">
       {/* Sidebar */}
-      <aside className="w-64 bg-gray-100 rounded-xl">
+      <aside className="w-64 bg-white shadow-sm rounded-xl">
         <nav>
-          <div className="my-5 px-3">
+          <div className="my px-3">
             <div className="flex items-center gap-3">
               <Avatar src={user.info?.avatar} className="w-[60px] h-[60px]" />
               <div>
@@ -67,12 +67,12 @@ export default function AccountLayout({ children }: AccountLayoutProps) {
               </div>
             </div>
           </div>
-          <ul>
+          <ul className="mt-5">
             {menuItems.map((item) => (
               <li
                 key={item.key}
                 className={`my-1.5 py-3 px-4 ${
-                  pathname === item.key ? "bg-slate-50" : ""
+                  pathname === item.key ? "bg-purple-50" : ""
                 }`}
               >
                 {item.key === "/account/logout" ? (

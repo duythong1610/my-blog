@@ -12,9 +12,10 @@ export const postApi = {
       url: "/user/my-post",
       params,
     }),
-  findOne: (id: string): AxiosPromise<any> =>
+
+  findOne: (slug: string): AxiosPromise<any> =>
     request({
-      url: `/user/post/${id}`,
+      url: `/user/post/${slug}`,
     }),
   create: (data: any): AxiosPromise<any> =>
     request({

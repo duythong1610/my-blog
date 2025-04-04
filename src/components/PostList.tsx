@@ -27,7 +27,7 @@ const PostList = () => {
 
   return (
     <div className="flex-1">
-      <h1 className="font-extrabold text-[36px] text-[#050505] leading-[72px] mb-6">
+      <h1 className="font-extrabold text-3xl text-[#050505] leading-[72px] mb-6">
         Tất cả bài viết
       </h1>
       {/* <CategoryFilter
@@ -35,7 +35,7 @@ const PostList = () => {
         selectedCategory={selectedCategory}
         onSelectCategory={setSelectedCategory}
       /> */}
-      <div className="grid grid-cols-2 gap-x-8 gap-y-[48px]">
+      <div className="grid grid-cols-3 gap-x-6 gap-y-[48px]">
         {posts?.map((post, index) => (
           <PostCard key={post._id} post={post} />
         ))}

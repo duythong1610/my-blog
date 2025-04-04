@@ -1,5 +1,6 @@
 import { notificationApi } from "@/api/notifaction.api";
 import { postApi } from "@/api/post.api";
+import { useAppSelector } from "@/lib/hook";
 import Notification from "@/types/notification";
 import { Post } from "@/types/post";
 import { QueryParam } from "@/types/query";
@@ -21,6 +22,7 @@ interface DataProps {
 
 export const useNotification = ({ initQuery }: NotificationProps) => {
   const [query, setQuery] = useState<NotificationQuery>(initQuery);
+  const user = useAppSelector((state) => state.user);
 
   const fetchNotification = async (query: NotificationQuery) => {
     const response = await notificationApi.findAll(query);
@@ -31,7 +33,7 @@ export const useNotification = ({ initQuery }: NotificationProps) => {
     useQuery<DataProps>({
       queryKey: ["notifications", query],
       queryFn: () => fetchNotification(query),
-      enabled: !!query,
+      enabled: !!query && !!user.info,
       refetchOnWindowFocus: false,
       gcTime: Infinity,
     });

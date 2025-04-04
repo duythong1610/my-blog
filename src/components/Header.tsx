@@ -1,18 +1,14 @@
 "use client";
 
-import Link from "next/link";
-import ThemeSwitcher from "./ThemeSwitcher";
-import { Avatar } from "antd";
+import logo from "@/assets/images/logo.png";
 import { useAppSelector } from "@/lib/hook";
-import UserMenu from "./UserMenu";
-import { useEffect, useState } from "react";
-import Notification from "@/types/notification";
-import { notificationApi } from "@/api/notifaction.api";
-import logo from "@/assets/images/logo1.png";
 import Image from "next/image";
+import Link from "next/link";
+import UserMenu from "./UserMenu";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
-  const user = useAppSelector((state) => state.user);
+  const pathname = usePathname();
 
   return (
     <header className="w-full p-4 max-w-7xl m-auto">
@@ -29,22 +25,42 @@ export default function Header() {
         <nav>
           <ul className="flex space-x-6">
             <li>
-              <Link href="/" className="hover:text-blue-500">
+              <Link
+                href="/"
+                className={`font-medium hover:text-purple-500 ${
+                  pathname === "/" ? " text-purple-500 !font-bold" : ""
+                }`}
+              >
                 Trang chủ
               </Link>
             </li>
             <li>
-              <Link href="/categories" className="hover:text-blue-500">
+              <Link
+                href="/post"
+                className={`font-medium hover:text-purple-500 ${
+                  pathname === "/post" ? " text-purple-500 !font-bold" : ""
+                }`}
+              >
                 Bài viết
               </Link>
             </li>
             <li>
-              <Link href="/about" className="hover:text-blue-500">
+              <Link
+                href="/course"
+                className={`font-medium hover:text-purple-500 ${
+                  pathname === "/course" ? " text-purple-500 !font-bold" : ""
+                }`}
+              >
                 Khóa học
               </Link>
             </li>
             <li>
-              <Link href="/about" className="hover:text-blue-500">
+              <Link
+                href="/about"
+                className={`font-medium hover:text-purple-500 ${
+                  pathname === "/about" ? " text-purple-500 !font-bold" : ""
+                }`}
+              >
                 Góp ý
               </Link>
             </li>
@@ -52,8 +68,7 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <UserMenu user={user.info} />
-          <ThemeSwitcher />
+          <UserMenu />
         </div>
       </div>
     </header>
