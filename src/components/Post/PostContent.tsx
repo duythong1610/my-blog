@@ -24,7 +24,7 @@ interface Heading {
 }
 
 const PostContent = ({ post, slug }: PropsType) => {
-  const { data, isLoading } = useQuery<Post>({
+  const { data } = useQuery<Post>({
     queryKey: ["postDetail"],
     queryFn: () => getPostDetail(slug),
     refetchOnWindowFocus: false,
@@ -91,7 +91,10 @@ const PostContent = ({ post, slug }: PropsType) => {
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-1">
             {post.tags.map((item) => (
-              <div className="bg-purple-100 rounded-[8px] py-1 px-2 w-fit text-purple-500">
+              <div
+                key={item._id}
+                className="bg-purple-100 rounded-[8px] py-1 px-2 w-fit text-purple-500"
+              >
                 {item.name}
               </div>
             ))}

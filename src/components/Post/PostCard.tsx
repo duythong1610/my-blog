@@ -43,7 +43,10 @@ export default function PostCard({ post, isShowStatus = false }: PropTypes) {
         <div className="flex flex-col gap-4 p-4">
           <div className="flex items-center gap-1 flex-wrap">
             {post.tags.map((item) => (
-              <div className="bg-purple-100 dark:bg-transparent dark:border dark:border-gray-200 rounded-[8px] py-1 px-2 w-fit text-purple-500 text-xs">
+              <div
+                key={item._id}
+                className="bg-purple-100 dark:bg-transparent dark:border dark:border-gray-200 rounded-[8px] py-1 px-2 w-fit text-purple-500 text-xs"
+              >
                 {item.name}
               </div>
             ))}

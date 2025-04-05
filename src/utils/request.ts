@@ -71,7 +71,7 @@ service.interceptors.response.use(
     }
   },
   (error) => {
-    let status = error.response ? error.response.status : false;
+    const status = error.response ? error.response.status : false;
     let msg = "";
     if (status) {
       msg = error.response.data.message;

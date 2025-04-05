@@ -1,8 +1,5 @@
-import {
-  LoadingOutlined,
-  UserOutlined
-} from "@ant-design/icons";
-import { message, Upload, UploadProps } from "antd";
+import { LoadingOutlined, UserOutlined } from "@ant-design/icons";
+import { Image, message, Upload, UploadProps } from "antd";
 import React, { useState } from "react";
 
 interface AvatarUploadProps {
@@ -42,7 +39,9 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
           {loading ? (
             <LoadingOutlined className="text-xl text-gray-500" />
           ) : imageUrl ? (
-            <img
+            <Image
+              width={200}
+              height={200}
               src={imageUrl}
               alt="Avatar"
               className="w-full h-full object-cover"

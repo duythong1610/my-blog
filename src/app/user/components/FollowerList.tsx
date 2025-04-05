@@ -23,7 +23,7 @@ export default function FollowerList({ userId }: { userId: string }) {
       ) : (
         <div className="grid grid-cols-2 gap-x-6 gap-y-[48px]">
           {followers?.map((follower) => (
-            <FollowerCard follower={follower} />
+            <FollowerCard key={follower._id} follower={follower} />
           ))}
         </div>
       )}

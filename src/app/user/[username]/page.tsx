@@ -1,4 +1,4 @@
-import { userApi } from "@/api/user.api";
+import { getUserDetail } from "@/services/user";
 import { formatDate } from "@/utils/date";
 import { Col, Divider, Row, Tabs, Tooltip } from "antd";
 import { TabsProps } from "antd/lib";
@@ -23,11 +23,6 @@ import UserPost from "../components/UserPost";
 interface UserDetailPageProps {
   params: { username: string };
 }
-
-export const getUserDetail = async (username: string) => {
-  const response = await userApi.findOne(username);
-  return response.data;
-};
 
 const UserDetailPage: NextPage<UserDetailPageProps> = async ({ params }) => {
   const user = await getUserDetail(params.username);

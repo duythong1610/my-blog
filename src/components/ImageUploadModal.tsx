@@ -2,6 +2,7 @@
 import { UploadOutlined } from "@ant-design/icons";
 import { insertImage$, usePublisher } from "@mdxeditor/editor";
 import { Upload, message } from "antd";
+import Image from "next/image";
 import { useState } from "react";
 
 const ImageUploadModal = ({
@@ -86,7 +87,9 @@ const ImageUploadModal = ({
         {imageUrl && (
           <div className="mb-4 text-center">
             <p className="text-gray-600">Ảnh đã tải lên:</p>
-            <img
+            <Image
+              width={500}
+              height={300}
               src={imageUrl}
               alt="Uploaded preview"
               className="max-w-full rounded-md mt-2"

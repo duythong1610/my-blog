@@ -1,15 +1,10 @@
 "use client";
-import { Post } from "@/types/post";
+/* eslint @typescript-eslint/no-var-requires: "off" */
 import { slugify } from "@/utils/slug";
 import { useEffect, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { IoMdCheckmark, IoMdCopy } from "react-icons/io";
 import ReactMarkdown from "react-markdown";
-
-interface PropsType {
-  post: Post;
-  slug: string;
-}
 
 // Interface for heading structure
 interface Heading {
@@ -112,7 +107,7 @@ const MarkdownRenderer = ({
     <div className="mx-auto p-6 rounded-lg">
       <ReactMarkdown
         components={{
-          h1: ({ node, children, ...props }) => {
+          h1: ({ children, ...props }) => {
             // Extract plain text from potentially complex children structure
             const plainText = getPlainTextFromChildren(children);
 
@@ -129,7 +124,7 @@ const MarkdownRenderer = ({
               </h1>
             );
           },
-          h2: ({ node, children, ...props }) => {
+          h2: ({ children, ...props }) => {
             // Extract plain text from potentially complex children structure
             const plainText = getPlainTextFromChildren(children);
 
@@ -146,7 +141,7 @@ const MarkdownRenderer = ({
               </h2>
             );
           },
-          h3: ({ node, children, ...props }) => {
+          h3: ({ children, ...props }) => {
             // Extract plain text from potentially complex children structure
             const plainText = getPlainTextFromChildren(children);
 
@@ -162,7 +157,7 @@ const MarkdownRenderer = ({
               </h3>
             );
           },
-          blockquote: ({ node, children, ...props }) => {
+          blockquote: ({ children, ...props }) => {
             return (
               <blockquote
                 {...props}
@@ -173,12 +168,11 @@ const MarkdownRenderer = ({
             );
           },
 
-          code({ node, className, children, ...props }) {
+          code({ className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || "");
             const codeString = String(children).replace(/\n$/, "");
             const id = generateIdFromCode(codeString);
 
-            console.log(id);
             return match ? (
               <div className="relative">
                 <SyntaxHighlighter

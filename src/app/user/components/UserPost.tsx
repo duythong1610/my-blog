@@ -1,7 +1,6 @@
 "use client";
 
 import PostCard from "@/components/Post/PostCard";
-import { useMyPost } from "@/hooks/useMyPost";
 import { usePostsByUser } from "@/hooks/usePostsByUser";
 
 export default function UserPost({ userId }: { userId: string }) {
@@ -24,7 +23,7 @@ export default function UserPost({ userId }: { userId: string }) {
         <p>Chưa có bài viết nào.</p>
       ) : (
         <div className="grid grid-cols-2 gap-x-6 gap-y-[48px]">
-          {posts?.map((post, index) => (
+          {posts?.map((post) => (
             <PostCard key={post._id} post={post} />
           ))}
         </div>

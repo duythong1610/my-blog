@@ -1,6 +1,4 @@
-import { useAppDispatch } from "@/lib/hook";
 import { Button, Modal } from "antd";
-import { useRouter } from "next/navigation";
 import React, { useImperativeHandle, useState } from "react";
 
 export interface PostSuccessModalRef {

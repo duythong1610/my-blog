@@ -26,7 +26,9 @@ export const login = createAsyncThunk(
     try {
       const response = await authApi.login({ username, password });
       return response.data;
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 );
 
@@ -34,7 +36,9 @@ export const getProfile = createAsyncThunk("user/getProfile", async () => {
   try {
     const response = await authApi.profile();
     return response.data;
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 const userSlice = createSlice({
