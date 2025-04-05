@@ -12,9 +12,9 @@ export default function Footer() {
   const { theme } = useTheme();
   return (
     <footer className="py-5 px-5 md:px-10 mt-10 border-t border-gray-200">
-      <div className="max-w-7xl mx-auto flex">
+      <div className="max-w-7xl mx-auto flex md:flex-row flex-col gap-5 md:gap-0">
         {/* Logo & Description */}
-        <div className="w-[600px]">
+        <div className="md:w-[600px]">
           <div className="flex items-center font-black uppercase">
             <Image
               src={logo}
@@ -30,11 +30,13 @@ export default function Footer() {
           </p>
         </div>
 
-        <div className="flex-1">
+        <div className="md:flex-1">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Navigation Links */}
             <div>
-              <h3 className="text-base font-semibold mb-10">Liên kết</h3>
+              <h3 className="text-base font-semibold mb-4 md:mb-10">
+                Liên kết
+              </h3>
               <ul className="flex flex-col gap-2 text-lg font-semibold">
                 <li>
                   <Link href="/about" className="">
@@ -61,7 +63,7 @@ export default function Footer() {
 
             {/* Social Media */}
             <div>
-              <h3 className="text-base font-semibold mb-10">Kết nối</h3>
+              <h3 className="text-base font-semibold mb-4 md:mb-10">Kết nối</h3>
               <div className="flex flex-col gap-2 text-lg font-semibold">
                 <Link href="#" className="flex items-center gap-2">
                   <FaFacebook size={20} />

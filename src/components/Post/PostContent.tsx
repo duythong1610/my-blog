@@ -85,9 +85,9 @@ const PostContent = ({ post, slug }: PropsType) => {
   if (!data) return "Bài viết không tồn tại";
 
   return (
-    <div className="flex gap-6">
+    <div className="flex md:flex-row flex-col-reverse gap-6">
       {/* Blog Content */}
-      <div className="w-[70%] pr-6">
+      <div className="w-full md:w-[70%] md:pr-6">
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-1">
             {post.tags.map((item) => (
@@ -101,7 +101,7 @@ const PostContent = ({ post, slug }: PropsType) => {
           </div>
           <h1 className="text-3xl font-extrabold my-5">{post.title}</h1>
 
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-3 md:gap-0 md:flex-row md:items-center justify-between">
             <div>
               <div className="flex items-center gap-3">
                 <Image
@@ -138,7 +138,7 @@ const PostContent = ({ post, slug }: PropsType) => {
         />
       </div>
 
-      <div className="sticky top-[100px] h-max p-4 max-w-[400px] w-[30%]">
+      <div className="md:sticky md:top-[100px] md:h-max md:p-4 md:max-w-[400px] w-full md:w-[30%]">
         <Collapse
           expandIconPosition="right"
           expandIcon={({ isActive }) => (
@@ -150,7 +150,7 @@ const PostContent = ({ post, slug }: PropsType) => {
           defaultActiveKey={["1"]}
           bordered={false}
           items={items}
-          className="w-[400px]"
+          className="w-fit md:w-[400px] bg-gray-50"
         ></Collapse>
       </div>
     </div>

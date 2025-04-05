@@ -104,7 +104,7 @@ const MarkdownRenderer = ({
   if (!SyntaxHighlighter) return <div>Loading code highlighter...</div>;
 
   return (
-    <div className="mx-auto p-6 rounded-lg">
+    <div className="mx-auto md:p-6 rounded-lg">
       <ReactMarkdown
         components={{
           h1: ({ children, ...props }) => {
@@ -184,7 +184,7 @@ const MarkdownRenderer = ({
                   }
                   language={match[1]}
                   PreTag="div"
-                  className="rounded-lg !pt-10 custom-scrollbar"
+                  className="rounded-lg !pt-10 custom-scrollbar md:!text-xs !text-[10px]"
                   {...props}
                 >
                   {String(children).replace(/\n$/, "")}

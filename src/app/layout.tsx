@@ -32,7 +32,7 @@ export default function RootLayout({
       <ReduxProvider>
         <ReactQueryProvider>
           <body
-            className={`${raleway.className} bg-white dark:bg-[#0e100f] text-black dark:text-white`}
+            className={`${raleway.className} bg-white dark:bg-[#0e100f] text-black dark:text-white !p-0`}
           >
             <ThemeProviderWrapper>
               <Header />

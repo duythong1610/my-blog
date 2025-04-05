@@ -59,7 +59,7 @@ const BlogDetailPage: NextPage<BlogDetailPageProps> = async ({ params }) => {
   };
 
   return (
-    <div className="max-w-7xl m-auto px-4">
+    <div className="max-w-7xl m-auto md:px-4">
       {/* JSON-LD structured data for Google */}
       <script
         type="application/ld+json"
