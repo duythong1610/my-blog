@@ -1,5 +1,4 @@
 "use client";
-import { getPostDetail } from "@/app/blog/[slug]/page";
 import { useHeadsObserver } from "@/hooks/useHeadsObserver";
 import { Post } from "@/types/post";
 import { formatDate } from "@/utils/date";
@@ -11,6 +10,7 @@ import { useState } from "react";
 import { CiCalendar } from "react-icons/ci";
 import { FaChevronDown } from "react-icons/fa";
 import MarkdownRenderer from "../MarkdownRendered";
+import { getPostDetail } from "@/services/post";
 
 interface PropsType {
   post: Post;
