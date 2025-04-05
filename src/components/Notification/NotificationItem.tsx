@@ -1,9 +1,8 @@
+import confetti from "@/assets/images/confetti.png";
+import sad from "@/assets/images/sad.png";
 import Notification from "@/types/notification";
-import { formatDate } from "@/utils/date";
 import dayjs from "dayjs";
 import Image from "next/image";
-import sad from "@/assets/images/sad.png";
-import confetti from "@/assets/images/confetti.png";
 
 interface PropsType {
   onView: (notification: Notification) => void;

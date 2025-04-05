@@ -13,7 +13,6 @@ export const getPostDetail = async (slug: string) => {
 const BlogDetailPage: NextPage<BlogDetailPageProps> = async ({ params }) => {
   const post = await getPostDetail(params.slug);
 
-  console.log({ post });
   return (
     <div className="max-w-7xl m-auto">
       {/* <FloatButtonGroup /> */}

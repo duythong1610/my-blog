@@ -1,20 +1,9 @@
 "use client";
 import { usePost } from "@/hooks/usePost";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 import PostCard from "./Post/PostCard";
 
 const PostList = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
-  const router = useRouter();
-  const {
-    posts,
-    debounceSearchPost,
-    fetchPost,
-    queryPost,
-    totalPost,
-    loadingPost,
-  } = usePost({
+  const { posts, loadingPost } = usePost({
     initQuery: {
       page: 1,
       limit: 50,
@@ -34,7 +23,7 @@ const PostList = () => {
         onSelectCategory={setSelectedCategory}
       /> */}
       <div className="grid grid-cols-3 gap-x-6 gap-y-[48px]">
-        {posts?.map((post, index) => (
+        {posts?.map((post) => (
           <PostCard key={post._id} post={post} />
         ))}
       </div>

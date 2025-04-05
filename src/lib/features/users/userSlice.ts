@@ -1,9 +1,8 @@
 // lib/features/user/userSlice.ts
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { setToken } from "@/utils/auth";
 import { authApi } from "@/api/auth.api";
-import { set } from "lodash";
 import { User } from "@/types/user";
+import { setToken } from "@/utils/auth";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 interface UserState {
   info: User | null;
@@ -23,10 +22,7 @@ const initialState: UserState = {
 // Tạo async thunk cho việc đăng nhập
 export const login = createAsyncThunk(
   "user/login",
-  async (
-    { username, password }: { username: string; password: string },
-    { rejectWithValue }
-  ) => {
+  async ({ username, password }: { username: string; password: string }) => {
     try {
       const response = await authApi.login({ username, password });
       return response.data;

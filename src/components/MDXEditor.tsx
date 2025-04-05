@@ -33,8 +33,6 @@ import { LuImagePlus } from "react-icons/lu";
 import ImageUploadModal from "./ImageUploadModal";
 
 const MDXEditorComponent = ({ editorKey, markdown, onChange }: any) => {
-  const [uploadStatus, setUploadStatus] = useState("");
-
   const [isModalOpen, setModalOpen] = useState(false);
 
   const openImageModal = () => {
