@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Upload, message, UploadProps } from "antd";
 import { LoadingOutlined, UploadOutlined } from "@ant-design/icons";
+import Image from "next/image";
 
 interface ThumbnailPostUploadProps {
   onUploadOk: (url: string) => void;
@@ -55,7 +56,9 @@ const ThumbnailPostUpload: React.FC<ThumbnailPostUploadProps> = ({
               <LoadingOutlined className="text-2xl text-gray-500" />
             </div>
           ) : imageUrl ? (
-            <img
+            <Image
+              width={500}
+              height={500}
               src={imageUrl}
               alt="Thumbnail"
               className="w-full h-full object-cover"

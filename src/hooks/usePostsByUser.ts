@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { debounce } from "lodash";
 import { useCallback, useState } from "react";
 
-export interface PostQuery extends QueryParam {}
+export type PostQuery = QueryParam;
 
 interface PostProps {
   initQuery: PostQuery;

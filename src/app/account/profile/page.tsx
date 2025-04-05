@@ -47,6 +47,7 @@ export default function ProfilePage() {
       message.success("Cập nhật thông tin thành công");
       dispatch(getProfile());
     } catch (error) {
+      console.log(error);
     } finally {
       setLoading(false);
     }

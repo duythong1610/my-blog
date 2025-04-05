@@ -1,14 +1,9 @@
-import { postApi } from "@/api/post.api";
 import PostContent from "@/components/Post/PostContent";
+import { getPostDetail } from "@/services/post";
 import { NextPage } from "next";
 interface BlogDetailPageProps {
   params: { slug: string };
 }
-
-export const getPostDetail = async (slug: string) => {
-  const response = await postApi.findOne(slug);
-  return response.data;
-};
 
 const BlogDetailPage: NextPage<BlogDetailPageProps> = async ({ params }) => {
   const post = await getPostDetail(params.slug);

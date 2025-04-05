@@ -23,11 +23,10 @@ export default function FollowingList({ userId }: { userId: string }) {
       ) : (
         <div className="grid grid-cols-3 gap-3">
           {following?.map((fol) => (
-            <FollowingItem following={fol} />
+            <FollowingItem key={fol._id} following={fol} />
           ))}
         </div>
       )}
     </div>
   );
 }
-  

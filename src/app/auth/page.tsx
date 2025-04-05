@@ -18,7 +18,9 @@ export default function AuthPage() {
     try {
       await dispatch(login({ username, password }));
       await dispatch(getProfile());
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

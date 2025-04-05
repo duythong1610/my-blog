@@ -1,13 +1,11 @@
-import { postApi } from "@/api/post.api";
 import { tagApi } from "@/api/tag.api";
-import { Post } from "@/types/post";
 import { QueryParam } from "@/types/query";
 import { Tag } from "@/types/tag";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { debounce } from "lodash";
-import { useState, useCallback } from "react";
+import { useCallback, useState } from "react";
 
-export interface TagQuery extends QueryParam {}
+export type TagQuery = QueryParam;
 
 interface TagProps {
   initQuery: TagQuery;
@@ -26,14 +24,13 @@ export const useTag = ({ initQuery }: TagProps) => {
     return response.data;
   };
 
-  const { data, isLoading, isFetching, isError, error, status, refetch } =
-    useQuery<DataProps>({
-      queryKey: ["tags", query],
-      queryFn: () => fetchTag(query),
-      enabled: !!query,
-      refetchOnWindowFocus: false,
-      gcTime: Infinity,
-    });
+  const { data, isLoading, isError, refetch } = useQuery<DataProps>({
+    queryKey: ["tags", query],
+    queryFn: () => fetchTag(query),
+    enabled: !!query,
+    refetchOnWindowFocus: false,
+    gcTime: Infinity,
+  });
 
   const debounceSearchTag = useCallback(
     debounce((searchValue: string) => {

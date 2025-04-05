@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { debounce } from "lodash";
 import { useCallback, useState } from "react";
 
-export interface NotificationQuery extends QueryParam {}
+export type NotificationQuery = QueryParam;
 
 interface NotificationProps {
   initQuery: NotificationQuery;
@@ -26,14 +26,13 @@ export const useNotification = ({ initQuery }: NotificationProps) => {
     return response.data;
   };
 
-  const { data, isLoading, isFetching, isError, error, status, refetch } =
-    useQuery<DataProps>({
-      queryKey: ["notifications", query],
-      queryFn: () => fetchNotification(query),
-      enabled: !!query && !!user.info,
-      refetchOnWindowFocus: false,
-      gcTime: Infinity,
-    });
+  const { data, isLoading, isError, refetch } = useQuery<DataProps>({
+    queryKey: ["notifications", query],
+    queryFn: () => fetchNotification(query),
+    enabled: !!query && !!user.info,
+    refetchOnWindowFocus: false,
+    gcTime: Infinity,
+  });
 
   const debounceSearchNotification = useCallback(
     debounce((searchValue: string) => {
