@@ -15,14 +15,14 @@ export default function HomeHero() {
           />
         </div>
         <div>
-          <h1 className="text-[64px]">
-            <span className="font-black text-purple-500 uppercase">
+          <h1>
+            <span className="font-black text-purple-500 uppercase text-[42px] md:text-[64px]">
               WriteFlow{" "}
             </span>{" "}
-            <p>
+            <p className="text-[28px] md:text-[64px]">
               Hãy chia sẻ kiến thức{" "}
               <div className="inline-block relative">
-                <div className="bg-purple-200 dark:bg-purple-500 h-7 absolute bottom-[20px] rounded-[20px] left-0 right-0 -z-10"></div>
+                <div className="bg-purple-200 dark:bg-purple-500 h-3 md:h-7 absolute bottom-2 md:bottom-[20px] rounded-[20px] left-0 right-0 -z-10"></div>
                 <span className="font-black">của bạn</span>
               </div>
             </p>

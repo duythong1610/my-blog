@@ -89,11 +89,11 @@ const PostContent = ({ post, slug }: PropsType) => {
       {/* Blog Content */}
       <div className="w-full md:w-[70%] md:pr-6">
         <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 flex-wrap">
             {post.tags.map((item) => (
               <div
                 key={item._id}
-                className="bg-purple-100 rounded-[8px] py-1 px-2 w-fit text-purple-500"
+                className="bg-purple-50 text-xs md:text-sm rounded-[8px] py-1 px-2 w-fit text-purple-500"
               >
                 {item.name}
               </div>
@@ -143,14 +143,14 @@ const PostContent = ({ post, slug }: PropsType) => {
           expandIconPosition="right"
           expandIcon={({ isActive }) => (
             <FaChevronDown
-              className="!text-xl"
+              className="!text-xl dark:fill-white"
               style={{ rotate: isActive ? "180deg" : "0deg" }}
             />
           )}
           defaultActiveKey={["1"]}
           bordered={false}
           items={items}
-          className="w-fit md:w-[400px] bg-gray-50"
+          className="w-full md:w-[400px] bg-gray-50 dark:bg-[#222]"
         ></Collapse>
       </div>
     </div>

@@ -1,9 +1,12 @@
+import { motion } from "framer-motion";
+
 const Path = (props: any) => (
-  <path
-    fill="#000"
+  <motion.path
+    fill="none"
+    stroke="currentColor"
     strokeWidth="3"
-    stroke="#000"
     strokeLinecap="round"
+    className="stroke-current text-black dark:text-white"
     {...props}
   />
 );
