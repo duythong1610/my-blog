@@ -4,7 +4,7 @@ import { useTag } from "@/hooks/useTag";
 import SearchBar from "../SearchBar";
 
 export default function TagFilter() {
-  const { tags, queryTag } = useTag({
+  const { tags } = useTag({
     initQuery: { page: 1, limit: 50, hasPosts: true },
   });
   return (

@@ -33,22 +33,12 @@ export default function UserMenu() {
 
   console.log("object");
 
-  const {
-    notifications,
-    fetchNotification,
-    debounceSearchNotification,
-    loadingNotification,
-    queryNotification,
-    totalNotification,
-    setQueryNotification,
-  } = useNotification({
+  const { notifications, fetchNotification } = useNotification({
     initQuery: {
       page: 1,
       limit: 50,
     },
   });
-
-  console.log("render");
 
   if (!user) {
     return (

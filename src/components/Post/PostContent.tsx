@@ -33,16 +33,12 @@ const PostContent = ({ post, slug }: PropsType) => {
   });
 
   const [headings, setHeadings] = useState<Heading[]>([]);
-  const { activeId, handleScroll } = useHeadsObserver(
-    headings.map(({ id }) => id)
-  );
+  const { handleScroll } = useHeadsObserver(headings.map(({ id }) => id));
 
   // Handler for when headings are extracted from markdown
   const handleHeadingsExtracted = (extractedHeadings: Heading[]) => {
     setHeadings(extractedHeadings);
   };
-
-  console.log(headings);
 
   const items: CollapseProps["items"] = [
     {

@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { Upload, message, UploadProps } from "antd";
 import {
   LoadingOutlined,
-  UploadOutlined,
-  UserOutlined,
+  UserOutlined
 } from "@ant-design/icons";
+import { message, Upload, UploadProps } from "antd";
+import React, { useState } from "react";
 
 interface AvatarUploadProps {
   onUploadOk: (url: string) => void;

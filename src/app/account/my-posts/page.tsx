@@ -21,7 +21,7 @@ export default function MyPostsPage() {
         <p>Chưa có bài viết nào.</p>
       ) : (
         <div className="grid grid-cols-3 gap-x-6 gap-y-[48px]">
-          {posts?.map((post, index) => (
+          {posts?.map((post) => (
             <PostCard key={post._id} post={post} isShowStatus />
           ))}
         </div>

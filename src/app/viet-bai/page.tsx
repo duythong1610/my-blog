@@ -1,5 +1,6 @@
 "use client";
 
+import { postApi } from "@/api/post.api";
 import DynamicMDXEditor from "@/components/DynamicMDXEditor";
 import MarkdownRenderer from "@/components/MarkdownRendered";
 import { ConfirmLogoutModalRef } from "@/components/Modal/ConfirmLogoutModal";
@@ -48,22 +49,22 @@ const CreatePostPage = () => {
     try {
       setLoading(true);
 
-      // if (!values.title.trim()) {
-      //   message.error("Vui lòng nhập tiêu đề bài viết");
-      //   return;
-      // }
+      if (!values.title.trim()) {
+        message.error("Vui lòng nhập tiêu đề bài viết");
+        return;
+      }
 
-      // if (!markdown.trim() || markdown === "# Xin chào") {
-      //   message.error("Vui lòng nhập nội dung bài viết");
-      //   return;
-      // }
+      if (!markdown.trim() || markdown === "# Xin chào") {
+        message.error("Vui lòng nhập nội dung bài viết");
+        return;
+      }
 
-      // await postApi.create({
-      //   tags: values.tags,
-      //   thumbnail: values.thumbnail,
-      //   title: values.title,
-      //   content: markdown,
-      // });
+      await postApi.create({
+        tags: values.tags,
+        thumbnail: values.thumbnail,
+        title: values.title,
+        content: markdown,
+      });
 
       confirmLogoutModalRef.current?.handleOpen();
 

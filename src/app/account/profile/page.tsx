@@ -43,7 +43,7 @@ export default function ProfilePage() {
     };
     setLoading(true);
     try {
-      const res = await authApi.updateProfile({ ...formattedValues });
+      await authApi.updateProfile({ ...formattedValues });
       message.success("Cập nhật thông tin thành công");
       dispatch(getProfile());
     } catch (error) {

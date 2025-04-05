@@ -1,6 +1,6 @@
+import { LoadingOutlined } from "@ant-design/icons";
+import { Button, Image, message, Upload, UploadProps } from "antd";
 import React, { useState } from "react";
-import { Upload, message, UploadProps, Button, Image } from "antd";
-import { LoadingOutlined, UploadOutlined } from "@ant-design/icons";
 
 interface CoverPhotoUploadProps {
   onUploadOk: (url: string) => void;
