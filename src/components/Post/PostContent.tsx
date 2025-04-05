@@ -138,7 +138,7 @@ const PostContent = ({ post, slug }: PropsType) => {
         />
       </div>
 
-      <div className="sticky top-[50px] h-max p-4 max-w-[400px] w-[30%]">
+      <div className="sticky top-[100px] h-max p-4 max-w-[400px] w-[30%]">
         <Collapse
           expandIconPosition="right"
           expandIcon={({ isActive }) => (

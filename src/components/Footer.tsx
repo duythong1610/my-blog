@@ -11,7 +11,7 @@ import { FaFacebook, FaGithub, FaInstagram } from "react-icons/fa";
 export default function Footer() {
   const { theme } = useTheme();
   return (
-    <footer className="py-10 px-6 md:px-16 mt-12 border-t border-gray-700">
+    <footer className="py-5 px-5 md:px-10 mt-10 border-t border-gray-200">
       <div className="max-w-7xl mx-auto flex">
         {/* Logo & Description */}
         <div className="w-[600px]">
@@ -25,7 +25,7 @@ export default function Footer() {
             />{" "}
             WriteFlow
           </div>
-          <p className="mt-2 text-sm text-gray-400">
+          <p className="mt-5 text-sm text-gray-400">
             Chia sẻ kiến thức, kỹ năng lập trình, và cuộc sống của một dev.
           </p>
         </div>
@@ -35,7 +35,7 @@ export default function Footer() {
             {/* Navigation Links */}
             <div>
               <h3 className="text-base font-semibold mb-10">Liên kết</h3>
-              <ul className="flex flex-col gap-3 text-lg font-semibold">
+              <ul className="flex flex-col gap-2 text-lg font-semibold">
                 <li>
                   <Link href="/about" className="">
                     Về tôi
@@ -51,13 +51,18 @@ export default function Footer() {
                     Chính sách bảo mật
                   </Link>
                 </li>
+                <li>
+                  <Link href="/privacy" className="">
+                    Hỏi đáp
+                  </Link>
+                </li>
               </ul>
             </div>
 
             {/* Social Media */}
             <div>
               <h3 className="text-base font-semibold mb-10">Kết nối</h3>
-              <div className="flex flex-col gap-3 text-lg font-semibold">
+              <div className="flex flex-col gap-2 text-lg font-semibold">
                 <Link href="#" className="flex items-center gap-2">
                   <FaFacebook size={20} />
                   Facebook

@@ -54,7 +54,7 @@ export default function AccountLayout({ children }: AccountLayoutProps) {
   return (
     <div className="flex min-h-screen max-w-7xl m-auto">
       {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-sm rounded-xl">
+      <aside className="w-64 bg-white rounded-xl">
         <nav>
           <div className="my px-3">
             <div className="flex items-center gap-3">
