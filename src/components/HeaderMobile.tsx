@@ -3,19 +3,84 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { MenuToggle } from "./MenuToggle";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import logo from "@/assets/images/logo.png";
 import Image from "next/image";
 import useMenuAnimation from "@/hooks/useMenuAnimation";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
+import { Badge, Dropdown } from "antd";
+import { useNotification } from "@/hooks/useNotification";
+import InfiniteScroll from "react-infinite-scroll-component";
+import NotificationItem from "./Notification/NotificationItem";
+import { IoIosNotificationsOutline } from "react-icons/io";
+import ThemeSwitcher from "./ThemeSwitcher";
+import Notification from "@/types/notification";
 
 const HeaderMobile = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const { theme } = useTheme();
+  const [isOpenNotification, setIsOpenNotification] = useState(false);
+  const router = useRouter();
+  const dropdownRef = useRef(null);
 
   const scope = useMenuAnimation(isOpen);
+
+  const { notifications, fetchNotification } = useNotification({
+    initQuery: {
+      page: 1,
+      limit: 50,
+    },
+  });
+
+  const notificationMenu = (
+    <div className="w-[350px] bg-white dark:bg-black rounded-lg shadow-xl py-3 px-2">
+      <div className="flex items-center justify-between mt-2 px-3">
+        <h1 className="text-base font-bold ">Thông báo</h1>
+        <span className="text-purple-500 font-medium text-sm cursor-pointer">
+          Đánh dấu là đã đọc
+        </span>
+      </div>
+      {notifications.length > 0 ? (
+        <InfiniteScroll
+          className="flex flex-col gap-4 h-[450px] max-h-[450px] overflow-y-auto mt-5 px-3"
+          dataLength={notifications.length}
+          next={fetchNotification}
+          hasMore={false}
+          loader={<h4>Loading...</h4>}
+          height={650}
+        >
+          {notifications.map((item) => (
+            <NotificationItem
+              key={item._id}
+              onView={(notification: Notification) => {
+                if (notification.type == "post_approved") {
+                  router.push(`/blog/${notification.post.slug}`);
+                } else {
+                }
+                setIsOpenNotification(false);
+              }}
+              notification={item}
+            />
+          ))}
+        </InfiniteScroll>
+      ) : (
+        <div className="flex flex-col items-center justify-center h-[300px] gap-2">
+          <Image
+            className="object-cover"
+            src="/icons/NoNoti.svg"
+            alt={"no_noti"}
+            width={50}
+            height={50}
+          />
+          <span className="font-bold text-lg text-gray">
+            Chưa có thông báo mới
+          </span>
+        </div>
+      )}
+    </div>
+  );
 
   return (
     <div>
@@ -67,14 +132,14 @@ const HeaderMobile = () => {
           </ul>
         </motion.div>
       </nav>
-      <nav className="p-4 h-20 block md:hidden bg-white overflow-hidden fixed top-0 left-0 right-0 z-10">
+      <nav className="p-4 h-20 block md:hidden bg-white dark:bg-[#0e100f] shadow-md overflow-hidden fixed top-0 left-0 right-0 z-10">
         <motion.div
           initial={{ y: 100 }}
           animate={{ y: 0 }}
           transition={{ duration: "1" }}
           className="flex justify-between h-full items-center"
         >
-          <div className=" font-medium text-lg">
+          <div className="font-medium text-lg">
             <Link href="/" className="text-base font-black uppercase">
               <div className="flex items-center">
                 <Image
@@ -87,6 +152,26 @@ const HeaderMobile = () => {
                 WriteFlow
               </div>
             </Link>
+          </div>
+          <div className="flex items-center gap-1 md:gap-2 pl-[50px]">
+            {/* Thông báo */}
+            <Dropdown
+              open={isOpenNotification}
+              overlay={notificationMenu}
+              trigger={["click"]}
+              placement="bottomRight"
+            >
+              <div
+                ref={dropdownRef}
+                className="rounded-full p-1 md:p-2 w-8 h-8 md:w-10 md:h-10 hover:bg-purple-100 cursor-pointer group"
+                onClick={() => setIsOpenNotification(!isOpenNotification)}
+              >
+                <Badge count={notifications.length} color="#a855f7">
+                  <IoIosNotificationsOutline className="text-2xl dark:text-white group-hover:text-purple-500" />
+                </Badge>
+              </div>
+            </Dropdown>
+            <ThemeSwitcher />
           </div>
           <div ref={scope}>
             <nav className="menu border-purple-400 border-b-[3px] bg-white dark:bg-[#222] md:hidden">

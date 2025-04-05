@@ -233,6 +233,21 @@ const MarkdownRenderer = ({
               </img>
             );
           },
+          a: ({ href, children, ...props }) => {
+            const isExternal = href?.startsWith("http");
+
+            return (
+              <a
+                href={href}
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
+                className="text-purple-600 dark:text-purple-400 underline hover:text-purple-800 dark:hover:text-purple-300 transition-colors duration-300 block"
+                {...props}
+              >
+                {children}
+              </a>
+            );
+          },
         }}
       >
         {content}

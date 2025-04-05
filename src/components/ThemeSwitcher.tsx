@@ -16,7 +16,7 @@ export default function ThemeSwitcher() {
 
   return (
     <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
-      <div className="p-2 rounded-sm ">
+      <div className="p-1 md:p-2 w-8 h-8 md:w-10 md:h-10 rounded-sm ">
         {theme === "dark" ? (
           <RiMoonClearLine className="text-2xl" />
         ) : (

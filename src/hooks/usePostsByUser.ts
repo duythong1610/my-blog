@@ -20,7 +20,7 @@ export const usePostsByUser = ({ initQuery }: PostProps) => {
   const [query, setQuery] = useState<PostQuery>(initQuery);
 
   const fetchPostsByUser = async (query: PostQuery) => {
-    const response = await postApi.findAll(query);
+    const response = await postApi.getPostsByUser(query);
     return response.data;
   };
 

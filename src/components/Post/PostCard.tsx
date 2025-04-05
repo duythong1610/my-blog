@@ -45,7 +45,7 @@ export default function PostCard({ post, isShowStatus = false }: PropTypes) {
             {post.tags.map((item) => (
               <div
                 key={item._id}
-                className="bg-purple-100 dark:bg-transparent dark:border dark:border-gray-200 rounded-[8px] py-1 px-2 w-fit text-purple-500 text-xs"
+                className="bg-purple-50 dark:bg-transparent dark:border dark:border-gray-200 rounded-[8px] py-1 px-2 w-fit text-purple-500 text-xs"
               >
                 {item.name}
               </div>
@@ -69,7 +69,7 @@ export default function PostCard({ post, isShowStatus = false }: PropTypes) {
               <span>{formatDate(post.createdAt)}</span>
             </div>{" "}
           </div>
-          <p className="text-gray-600">Khám phá thêm →</p>
+          <p className="text-gray-600 dark:text-white">Xem bài viết →</p>
         </div>
       </div>
     </Link>

@@ -12,6 +12,11 @@ export const postApi = {
       url: "/user/my-post",
       params,
     }),
+  getPostsByUser: (params?: any): AxiosPromise<any> =>
+    request({
+      url: `/user/post-by-user`,
+      params,
+    }),
 
   findOne: (slug: string): AxiosPromise<any> =>
     request({
