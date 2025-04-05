@@ -43,7 +43,7 @@ export default function UserMenu() {
   if (!user) {
     return (
       <div className="flex items-center gap-2">
-        <Link href="/auth">
+        <Link href="/login">
           <div className="bg-purple-500 border-none text-white hover:bg-purple-400 rounded-[40px] py-2 px-3 cursor-pointer">
             <div className="flex items-center gap-3">
               <span className="font-bold">Đăng nhập</span>

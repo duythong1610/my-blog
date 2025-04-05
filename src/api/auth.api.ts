@@ -9,6 +9,13 @@ export const authApi = {
       method: "post",
     }),
 
+  register: (data: any): AxiosPromise<any> =>
+    request({
+      url: "/user/register",
+      data,
+      method: "post",
+    }),
+
   passwordUpdate: (data: any): AxiosPromise<any> =>
     request({
       url: "/user/password/update",
