@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { Form, Input, Button, Card, Typography } from "antd";
-import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { getProfile, login } from "@/lib/features/users/userSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/hook";
+import { Button, Form, Input, Typography } from "antd";
+import { useState } from "react";
 
 const { Title, Text } = Typography;
 

@@ -3,118 +3,165 @@
 import {
   BlockTypeSelect,
   BoldItalicUnderlineToggles,
-  ChangeAdmonitionType,
   ChangeCodeMirrorLanguage,
+  codeBlockPlugin,
+  codeMirrorPlugin,
   CodeToggle,
   ConditionalContents,
   CreateLink,
-  DiffSourceToggleWrapper,
   frontmatterPlugin,
-  InsertAdmonition,
+  headingsPlugin,
+  imagePlugin,
   InsertCodeBlock,
-  insertCodeBlock$,
-  InsertFrontmatter,
-  InsertImage,
-  InsertSandpack,
-  InsertTable,
-  InsertThematicBreak,
   linkDialogPlugin,
+  linkPlugin,
+  listsPlugin,
   ListsToggle,
   MDXEditor,
+  quotePlugin,
+  SandpackConfig,
+  sandpackPlugin,
+  ShowSandpackInfo,
+  tablePlugin,
+  thematicBreakPlugin,
   toolbarPlugin,
   UndoRedo,
 } from "@mdxeditor/editor";
 import "@mdxeditor/editor/style.css";
-import {
-  headingsPlugin,
-  listsPlugin,
-  quotePlugin,
-  thematicBreakPlugin,
-  markdownShortcutPlugin,
-  linkPlugin,
-  imagePlugin,
-  tablePlugin,
-  codeBlockPlugin,
-  codeMirrorPlugin,
-} from "@mdxeditor/editor";
+import { useState } from "react";
+import { LuImagePlus } from "react-icons/lu";
+import ImageUploadModal from "./ImageUploadModal";
 
-const MDXEditorComponent = ({ markdown, onChange }: any) => {
+const MDXEditorComponent = ({ editorKey, markdown, onChange }: any) => {
+  const [uploadStatus, setUploadStatus] = useState("");
+
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openImageModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeImageModal = () => {
+    setModalOpen(false);
+  };
+
+  const defaultSnippetContent = `
+export default function App() {
   return (
-    <MDXEditor
-      markdown={markdown}
-      onChange={onChange}
-      plugins={[
-        headingsPlugin(),
-        listsPlugin(),
-        quotePlugin(),
-        thematicBreakPlugin(),
-        markdownShortcutPlugin(),
-        linkPlugin(),
-        linkDialogPlugin(),
-        frontmatterPlugin(),
-        imagePlugin(),
-        tablePlugin(),
-        codeBlockPlugin({
-          defaultCodeBlockLanguage: "js",
-        }),
-        codeMirrorPlugin({
-          codeBlockLanguages: {
-            js: "JavaScript",
-            jsx: "JavaScript JSX",
-            ts: "TypeScript",
-            tsx: "TypeScript JSX",
-            html: "HTML",
-            css: "CSS",
-            php: "PHP",
-            python: "Python",
-            java: "Java",
-            ruby: "Ruby",
-            go: "Go",
-            rust: "Rust",
-            c: "C",
-            cpp: "C++",
-            csharp: "C#",
-            json: "JSON",
-            markdown: "Markdown",
-            yaml: "YAML",
-            bash: "Bash",
-            plain: "Plain Text",
-          },
-        }),
-        toolbarPlugin({
-          toolbarClassName: "my-classname",
-          toolbarContents: () => (
-            <>
-              <UndoRedo />
-              <BoldItalicUnderlineToggles />
-              <BlockTypeSelect />
-              <CodeToggle />
-              <CreateLink />
-              <InsertCodeBlock />
-              <InsertAdmonition />
-              <InsertFrontmatter />
-              <InsertImage />
-              <InsertSandpack />
-              <InsertTable />
+    <div className="App">
+      <h1>Hello CodeSandbox</h1>
+      <h2>Start editing to see some magic happen!</h2>
+    </div>
+  );
+}
+`.trim();
 
-              <ConditionalContents
-                options={[
-                  {
-                    when: (editor) => editor?.editorType === "codeblock",
-                    contents: () => <ChangeCodeMirrorLanguage />,
-                  },
-                  {
-                    when: (editor) => editor?.editorType === "sandpack",
-                    contents: () => <ChangeCodeMirrorLanguage />,
-                  },
-                ]}
-              />
-            </>
-          ),
-        }),
-      ]}
-      className="border border-gray-300 rounded-md p-4"
-    />
+  const simpleSandpackConfig: SandpackConfig = {
+    defaultPreset: "react",
+    presets: [
+      {
+        label: "React",
+        name: "react",
+        meta: "live react",
+        sandpackTemplate: "react",
+        sandpackTheme: "light",
+        snippetFileName: "/App.js",
+        snippetLanguage: "jsx",
+        initialSnippetContent: defaultSnippetContent,
+      },
+    ],
+  };
+
+  return (
+    <>
+      <MDXEditor
+        key={editorKey}
+        markdown={markdown}
+        onChange={onChange}
+        plugins={[
+          headingsPlugin(),
+          listsPlugin(),
+          quotePlugin(),
+          thematicBreakPlugin(),
+          linkPlugin(),
+          linkDialogPlugin(),
+          imagePlugin({
+            disableImageSettingsButton: true,
+          }),
+          frontmatterPlugin(),
+          tablePlugin(),
+          codeBlockPlugin({
+            defaultCodeBlockLanguage: "js",
+          }),
+          sandpackPlugin({ sandpackConfig: simpleSandpackConfig }),
+          codeMirrorPlugin({
+            codeBlockLanguages: {
+              js: "JavaScript",
+              jsx: "JavaScript JSX",
+              ts: "TypeScript",
+              tsx: "TypeScript JSX",
+              html: "HTML",
+              css: "CSS",
+              php: "PHP",
+              python: "Python",
+              java: "Java",
+              ruby: "Ruby",
+              go: "Go",
+              rust: "Rust",
+              c: "C",
+              cpp: "C++",
+              csharp: "C#",
+              json: "JSON",
+              markdown: "Markdown",
+              yaml: "YAML",
+              bash: "Bash",
+              plain: "Plain Text",
+            },
+          }),
+          toolbarPlugin({
+            toolbarClassName: "!top-[82px] z-50",
+            toolbarContents: () => (
+              <>
+                <UndoRedo />
+                <BoldItalicUnderlineToggles />
+                <BlockTypeSelect />
+                <ListsToggle />
+                <CodeToggle />
+                <CreateLink />
+                <InsertCodeBlock />
+                <div className="hover:bg-[#e0e1e6] p-1 rounded-md">
+                  <LuImagePlus
+                    className="text-[20px] text-gray-400"
+                    onClick={openImageModal}
+                  />
+                </div>
+
+                <ImageUploadModal
+                  isOpen={isModalOpen}
+                  onClose={closeImageModal}
+                />
+
+                {/* <InsertImage /> */}
+                {/* <InsertSandpack /> */}
+                <ConditionalContents
+                  options={[
+                    {
+                      when: (editor) => editor?.editorType === "codeblock",
+                      contents: () => <ChangeCodeMirrorLanguage />,
+                    },
+                    {
+                      when: (editor) => editor?.editorType === "sandpack",
+                      contents: () => <ShowSandpackInfo />,
+                    },
+                  ]}
+                />
+              </>
+            ),
+          }),
+        ]}
+        className="border border-gray-300 rounded-md p-4"
+      />
+    </>
   );
 };
 

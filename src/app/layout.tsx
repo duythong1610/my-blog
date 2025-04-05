@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import "@/styles/custom.scss";
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { Raleway } from "next/font/google";
 import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
-import ReduxProvider from "../providers/ReduxProvider";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
+import "@/styles/custom.scss";
+import type { Metadata } from "next";
+import { Raleway } from "next/font/google";
+import ReduxProvider from "../providers/ReduxProvider";
+import "./globals.css";
 
 export const metadata: Metadata = {
   icons: {
@@ -27,19 +28,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ReduxProvider>
-      <ReactQueryProvider>
-        <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
+      <ReduxProvider>
+        <ReactQueryProvider>
           <body
-            className={`${raleway.className} bg-white dark:bg-black text-black dark:text-white`}
+            className={`${raleway.className} bg-white dark:bg-[#0e100f] text-black dark:text-white`}
           >
             <ThemeProviderWrapper>
               <Header />
-              <main className="container mx-auto p-4">{children}</main>
+              <main className="container mx-auto p-4 pt-[100px]">
+                {children}
+              </main>
+              <Footer />
             </ThemeProviderWrapper>
           </body>
-        </html>
-      </ReactQueryProvider>
-    </ReduxProvider>
+        </ReactQueryProvider>
+      </ReduxProvider>
+    </html>
   );
 }

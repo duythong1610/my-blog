@@ -1,13 +1,10 @@
 import { notificationApi } from "@/api/notifaction.api";
-import { postApi } from "@/api/post.api";
 import { useAppSelector } from "@/lib/hook";
 import Notification from "@/types/notification";
-import { Post } from "@/types/post";
 import { QueryParam } from "@/types/query";
-import { Tag } from "@/types/tag";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { debounce } from "lodash";
-import { useState, useCallback } from "react";
+import { useCallback, useState } from "react";
 
 export interface NotificationQuery extends QueryParam {}
 

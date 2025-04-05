@@ -1,24 +1,23 @@
 "use client";
 
-import React, { useRef, useState } from "react";
-import { useRouter } from "next/navigation";
-import { Avatar, Dropdown, Menu, Badge } from "antd";
-import { UserOutlined, LogoutOutlined, BellOutlined } from "@ant-design/icons";
-import { User } from "@/types/user";
-import Notification from "@/types/notification";
-import { IoIosNotificationsOutline } from "react-icons/io";
-import { GrLinkNext } from "react-icons/gr";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { useNotification } from "@/hooks/useNotification";
-import NotificationItem from "./Notification/NotificationItem";
+import { useAppSelector } from "@/lib/hook";
+import Notification from "@/types/notification";
+import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import { Avatar, Badge, Dropdown, Menu } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import ThemeSwitcher from "./ThemeSwitcher";
+import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
+import { GrLinkNext } from "react-icons/gr";
+import { IoIosNotificationsOutline } from "react-icons/io";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { useClickAway } from "react-use";
-import { useAppSelector } from "@/lib/hook";
 import ConfirmLogoutModal, {
   ConfirmLogoutModalRef,
 } from "./Modal/ConfirmLogoutModal";
+import NotificationItem from "./Notification/NotificationItem";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 export default function UserMenu() {
   const router = useRouter();
@@ -141,12 +140,12 @@ export default function UserMenu() {
         <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">
           Bạn muốn chia sẻ?
         </span>
-        <div className="flex items-center gap-1 cursor-pointer hover:underline">
-          <Link href={"/viet-bai"} className="font-bold text-sm ">
+        <Link href={"/viet-bai"} className="font-bold text-sm">
+          <div className="flex items-center gap-1 cursor-pointer hover:underline">
             Đăng bài ngay
-          </Link>
-          <GrLinkNext className="text-sm" />
-        </div>
+            <GrLinkNext className="text-sm" />
+          </div>
+        </Link>
       </div>
 
       <div className="flex items-center gap-2">
@@ -159,7 +158,7 @@ export default function UserMenu() {
         >
           <div
             ref={dropdownRef}
-            className="rounded-full p-2 hover:bg-purple-100 cursor-pointer group"
+            className="rounded-full p-2 w-10 h-10 hover:bg-purple-100 cursor-pointer group"
             onClick={() => setIsOpenNotification(!isOpenNotification)}
           >
             <Badge count={notifications.length} color="#a855f7">

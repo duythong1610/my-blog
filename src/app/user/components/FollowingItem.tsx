@@ -8,15 +8,15 @@ interface PropTypes {
 
 export default function FollowingItem({ following }: PropTypes) {
   return (
-    <div className="bg-slate-50 rounded-xl">
-      <div className="flex items-center justify-between">
-        <div className="flex flex-col gap-2">
+    <div className="bg-slate-50 dark:bg-transparent rounded-xl">
+      <div className="flex items-center">
+        <div className="flex flex-col gap-2 w-full">
           <Image
             src={following.avatar || ""}
             alt={""}
             width={150}
             height={150}
-            className="w-[115px] h-[115px] rounded-xl object-cover"
+            className="w-[115px] h-[115px] rounded-xl object-cover block m-auto"
           />
           <div>
             <Link href={`/user/${following.username}`} key={following._id}>

@@ -2,8 +2,6 @@
 import { usePost } from "@/hooks/usePost";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import CategoryFilter from "./CategoryFilter";
-import PostItem from "./PostItem";
 import PostCard from "./Post/PostCard";
 
 const PostList = () => {
@@ -27,7 +25,7 @@ const PostList = () => {
 
   return (
     <div className="flex-1">
-      <h1 className="font-extrabold text-3xl text-[#050505] leading-[72px] mb-6">
+      <h1 className="font-extrabold text-3xl text-[#050505] dark:text-white leading-[50px] mb-6">
         Tất cả bài viết
       </h1>
       {/* <CategoryFilter

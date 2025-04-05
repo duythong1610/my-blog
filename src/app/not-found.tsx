@@ -1,9 +1,11 @@
-// app/not-found.tsx
+"use client";
 
 import Image from "next/image";
 import NotfoundImg from "@/assets/images/404.png";
+import { useTheme } from "next-themes";
 
 export default function NotFound() {
+  const { theme } = useTheme();
   return (
     <div className="container mx-auto">
       <div className="flex flex-col items-center justify-center min-h-[calc(100vh-110px)]">
@@ -16,6 +18,7 @@ export default function NotFound() {
           width={400}
           height={300}
           className="w-[600px]"
+          style={{ filter: theme == "dark" ? "invert(1)" : "" }}
         />
         <a
           href="/"
