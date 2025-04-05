@@ -14,13 +14,15 @@ export async function generateMetadata({
   params: { slug: string };
 }): Promise<Metadata> {
   const post = await getPostDetail(params.slug);
-
+  const url = `https://writeflow.whatdaporice.website/blog/${params.slug}`;
   return {
     title: post?.title || "Bài viết",
     description: post?.content || "Chi tiết bài viết",
     openGraph: {
       title: post?.title,
-      description: post?.content,
+      description: post?.title,
+      url,
+      siteName: "WriteFlow",
       images: [post?.thumbnail],
       type: "article",
       publishedTime: post?.createdAt,
@@ -28,7 +30,7 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: post?.title,
-      description: post?.content,
+      description: post?.title,
       images: [post?.thumbnail],
     },
   };
