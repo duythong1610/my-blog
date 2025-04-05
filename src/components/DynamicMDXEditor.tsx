@@ -11,3 +11,5 @@ const DynamicMDXEditor = dynamic(() => import("./MDXEditor"), {
 });
 
 export default DynamicMDXEditor;
+
+DynamicMDXEditor.displayName = "DynamicMDXEditor";

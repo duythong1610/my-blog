@@ -30,3 +30,4 @@ export default function FollowingList({ userId }: { userId: string }) {
     </div>
   );
 }
+  

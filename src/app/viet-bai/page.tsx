@@ -1,20 +1,24 @@
 "use client";
 
-import { postApi } from "@/api/post.api";
 import DynamicMDXEditor from "@/components/DynamicMDXEditor";
 import MarkdownRenderer from "@/components/MarkdownRendered";
+import { ConfirmLogoutModalRef } from "@/components/Modal/ConfirmLogoutModal";
+import PostSuccessModal from "@/components/Modal/PostSuccessModal";
 import ThumbnailPostUpload from "@/components/Upload/ThumbnailPostUpload";
 import { useTag } from "@/hooks/useTag";
 import "@mdxeditor/editor/style.css";
 import { Button, Form, Input, message, Select } from "antd";
 import { debounce } from "lodash";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
+import { BsSendCheck } from "react-icons/bs";
 
 const CreatePostPage = () => {
   const [form] = Form.useForm();
   const [markdown, setMarkdown] = useState("");
   const [loading, setLoading] = useState(false);
   const thumbnail = Form.useWatch("thumbnail", form);
+  const confirmLogoutModalRef = useRef<ConfirmLogoutModalRef>();
+  const [editorKey, setEditorKey] = useState(Date.now());
 
   const { tags } = useTag({
     initQuery: {
@@ -33,7 +37,6 @@ const CreatePostPage = () => {
   );
 
   const handleChange = (newMarkdown: string) => {
-    // Cập nhật UI ngay lập tức nhưng dùng debounce cho việc lưu state
     debouncedSetMarkdown(newMarkdown);
   };
 
@@ -45,26 +48,28 @@ const CreatePostPage = () => {
     try {
       setLoading(true);
 
-      if (!values.title.trim()) {
-        message.error("Vui lòng nhập tiêu đề bài viết");
-        return;
-      }
+      // if (!values.title.trim()) {
+      //   message.error("Vui lòng nhập tiêu đề bài viết");
+      //   return;
+      // }
 
-      if (!markdown.trim() || markdown === "# Xin chào") {
-        message.error("Vui lòng nhập nội dung bài viết");
-        return;
-      }
+      // if (!markdown.trim() || markdown === "# Xin chào") {
+      //   message.error("Vui lòng nhập nội dung bài viết");
+      //   return;
+      // }
 
-      await postApi.create({
-        tags: values.tags,
-        thumbnail: values.thumbnail,
-        title: values.title,
-        content: markdown,
-      });
+      // await postApi.create({
+      //   tags: values.tags,
+      //   thumbnail: values.thumbnail,
+      //   title: values.title,
+      //   content: markdown,
+      // });
 
-      message.success("Đăng bài viết thành công!");
+      confirmLogoutModalRef.current?.handleOpen();
 
       form.resetFields();
+      setMarkdown("");
+      setEditorKey(Date.now());
     } catch (error) {
       console.error("Lỗi khi đăng bài:", error);
       message.error("Có lỗi xảy ra khi đăng bài viết. Vui lòng thử lại sau.");
@@ -94,11 +99,7 @@ const CreatePostPage = () => {
           label="Tiêu đề bài viết"
           rules={[{ required: true, message: "Vui lòng nhập tiêu đề" }]}
         >
-          <Input
-            placeholder="Nhập tiêu đề bài viết"
-            size="large"
-            className="text-xl"
-          />
+          <Input placeholder="Nhập tiêu đề bài viết" size="large" />
         </Form.Item>
         <Form.Item
           name="tags"
@@ -119,7 +120,6 @@ const CreatePostPage = () => {
             mode="multiple"
             placeholder="Chọn thẻ bài viết"
             size="large"
-            className="text-xl"
             options={tags?.map((tag) => ({
               label: tag.name,
               value: tag._id,
@@ -129,21 +129,27 @@ const CreatePostPage = () => {
 
         <div className="mb-6">
           <label className="block mb-2 font-medium">Nội dung bài viết</label>
-          <DynamicMDXEditor markdown={markdown} onChange={handleChange} />
+          <DynamicMDXEditor
+            editorKey={editorKey}
+            markdown={markdown}
+            onChange={handleChange}
+          />
         </div>
 
         <div className="flex justify-between items-center mb-8">
-          <Button type="default" size="large">
+          <div></div>
+          {/* <Button type="default" size="large">
             Lưu nháp
-          </Button>
+          </Button> */}
 
           <Button
             type="primary"
             size="large"
             htmlType="submit"
             loading={loading}
+            icon={<BsSendCheck />}
           >
-            Đăng bài viết
+            Gửi bài viết
           </Button>
         </div>
       </Form>
@@ -152,8 +158,11 @@ const CreatePostPage = () => {
         <h2 className="text-xl font-bold mb-4">Xem trước</h2>
         <MarkdownRenderer content={markdown} />
       </div>
+      <PostSuccessModal ref={confirmLogoutModalRef} />
     </div>
   );
 };
+
+CreatePostPage.hideFooter = true;
 
 export default CreatePostPage;

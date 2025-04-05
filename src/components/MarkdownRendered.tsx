@@ -1,19 +1,10 @@
 "use client";
-import { getPostDetail } from "@/app/blog/[slug]/page";
-import { useHeadsObserver } from "@/hooks/useHeadsObserver";
 import { Post } from "@/types/post";
-import { formatDate } from "@/utils/date";
 import { slugify } from "@/utils/slug";
-import { useQuery } from "@tanstack/react-query";
-import { Collapse, CollapseProps } from "antd";
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import { CiCalendar } from "react-icons/ci";
-import { FaChevronDown } from "react-icons/fa";
-import ReactMarkdown from "react-markdown";
+import { useEffect, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { IoMdCheckmark, IoMdCopy } from "react-icons/io";
-import { v4 as uuidv4 } from "uuid";
+import ReactMarkdown from "react-markdown";
 
 interface PropsType {
   post: Post;
@@ -175,7 +166,7 @@ const MarkdownRenderer = ({
             return (
               <blockquote
                 {...props}
-                className="border-l-[6px] border-purple-500 px-4 py-3 text-gray-800 bg-gray-100 italic text-lg font-semibold my-6 rounded-md"
+                className="border-l-[6px] border-purple-500 px-4 py-3  bg-gray-100 dark:bg-[#222] italic text-lg font-semibold my-6 rounded-md"
               >
                 <div className="blockquote-content [&>p]:mb-0">{children}</div>
               </blockquote>
@@ -199,14 +190,14 @@ const MarkdownRenderer = ({
                   }
                   language={match[1]}
                   PreTag="div"
-                  className="rounded-lg !pt-10"
+                  className="rounded-lg !pt-10 custom-scrollbar"
                   {...props}
                 >
                   {String(children).replace(/\n$/, "")}
                 </SyntaxHighlighter>
 
                 <div className="">
-                  <span className="absolute top-1 left-1 bg-white px-2 rounded-md">
+                  <span className="absolute top-1 left-1 bg-white dark:bg-[#222] px-2 rounded-md">
                     {match[1]}
                   </span>
                   {

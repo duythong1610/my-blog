@@ -1,7 +1,5 @@
 import { postApi } from "@/api/post.api";
 import PostContent from "@/components/Post/PostContent";
-import { Post } from "@/types/post";
-import { QueryClient, useQuery } from "@tanstack/react-query";
 import { NextPage } from "next";
 interface BlogDetailPageProps {
   params: { slug: string };

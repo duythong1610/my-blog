@@ -24,7 +24,7 @@ const FollowAction = ({ userId }: { userId: string }) => {
   const { data, isLoading } = useQuery<DataProps>({
     queryKey: ["isFollowing", userId],
     queryFn: () => handleCheckFollow(userId),
-    enabled: !!userId,
+    enabled: !!userId && !!user,
     refetchOnWindowFocus: false,
     gcTime: Infinity,
   });
@@ -69,7 +69,9 @@ const FollowAction = ({ userId }: { userId: string }) => {
     unfollowMutation.mutate();
   };
 
-  if (userId === user?._id || isLoading) return null;
+  if (!user || userId === user?._id || isLoading) return null;
+
+  console.log({ user });
 
   return (
     <div>

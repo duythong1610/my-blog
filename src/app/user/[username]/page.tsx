@@ -37,11 +37,11 @@ const UserDetailPage: NextPage<UserDetailPageProps> = async ({ params }) => {
       key: "info",
       label: "Thông tin",
       children: (
-        <div className="min-h-screen">
+        <div className="min-h-screen dark:text-white">
           <Row gutter={[16, 16]} align="stretch">
             <Col span={8}>
               <div className="flex flex-col gap-4">
-                <div className="bg-gray-50 rounded-xl overflow-hidden p-4">
+                <div className="bg-gray-50 dark:bg-[#222] rounded-xl overflow-hidden p-4">
                   <h1 className="text-lg font-bold mb-2">Giới thiệu</h1>
                   <p className="text-center">{user.bio}</p>
                   <Divider />
@@ -128,14 +128,14 @@ const UserDetailPage: NextPage<UserDetailPageProps> = async ({ params }) => {
                   </div>
                 </div>
 
-                <div className="bg-gray-50 rounded-xl overflow-hidden p-4">
+                <div className="bg-gray-50 dark:bg-[#222] rounded-xl overflow-hidden p-4">
                   <h1 className="text-lg font-bold mb-2">Đang theo dõi</h1>
                   <FollowingList userId={user._id} />
                 </div>
               </div>
             </Col>
             <Col span={16}>
-              <div className="bg-gray-50 rounded-xl overflow-hidden p-4 h-full">
+              <div className="bg-gray-50  dark:bg-transparent rounded-xl overflow-hidden p-4 h-full">
                 <UserPost userId={user._id} />
               </div>
             </Col>

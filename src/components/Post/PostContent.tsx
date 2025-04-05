@@ -6,9 +6,9 @@ import { formatDate } from "@/utils/date";
 import { useQuery } from "@tanstack/react-query";
 import { Collapse, CollapseProps } from "antd";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { useState } from "react";
 import { CiCalendar } from "react-icons/ci";
-import { MdOutlineExpandMore } from "react-icons/md";
 import { FaChevronDown } from "react-icons/fa";
 import MarkdownRenderer from "../MarkdownRendered";
 
@@ -100,7 +100,7 @@ const PostContent = ({ post, slug }: PropsType) => {
               </div>
             ))}
           </div>
-          <h1 className="text-[36px] font-extrabold">{post.title}</h1>
+          <h1 className="text-3xl font-extrabold my-5">{post.title}</h1>
 
           <div className="flex items-center justify-between">
             <div>
@@ -112,11 +112,14 @@ const PostContent = ({ post, slug }: PropsType) => {
                   width={64}
                   height={64}
                 />
-                <div>
+                <div className="flex flex-col gap-1">
                   <span>Tác giả</span>
-                  <p className="text-[#33404A] font-bold">
+                  <Link
+                    href={`/user/${post.author.username}`}
+                    className="text-[#33404A] dark:text-white font-bold"
+                  >
                     {post.author?.fullName}
-                  </p>
+                  </Link>
                 </div>
               </div>
             </div>

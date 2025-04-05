@@ -9,7 +9,7 @@ import { Button, Col, DatePicker, Form, Input, message, Row } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import dayjs from "dayjs";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaFacebook, FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { GoArrowUpRight } from "react-icons/go";
@@ -17,6 +17,7 @@ import { GoArrowUpRight } from "react-icons/go";
 export default function ProfilePage() {
   const [form] = Form.useForm();
   const user = useAppSelector((state) => state.user);
+  const [loading, setLoading] = useState(false);
 
   const coverPhoto = Form.useWatch("coverPhoto", form);
   const avatar = Form.useWatch("avatar", form);
@@ -40,11 +41,15 @@ export default function ProfilePage() {
       ...values,
       dateOfBirth: values.dateOfBirth ? values.dateOfBirth.toISOString() : null,
     };
+    setLoading(true);
     try {
       const res = await authApi.updateProfile({ ...formattedValues });
       message.success("Cập nhật thông tin thành công");
       dispatch(getProfile());
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -63,7 +68,7 @@ export default function ProfilePage() {
             </Link>
           </div>
           <Form.Item className="mb-0">
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={loading}>
               Lưu thông tin
             </Button>
           </Form.Item>
@@ -155,14 +160,14 @@ export default function ProfilePage() {
           </Col>
           <Col span={12}>
             <div className="flex flex-col gap-3">
-              <div className="bg-slate-50 rounded-xl p-3">
+              <div className="bg-slate-50 dark:bg-[#222] rounded-xl p-3">
                 <h1 className="text-lg font-bold mb-2">Giới thiệu</h1>
                 <Form.Item label="" name="bio">
                   <TextArea placeholder="Nhập bio" rows={6} />
                 </Form.Item>
               </div>
 
-              <div className="bg-slate-50 rounded-xl p-3">
+              <div className="bg-slate-50 dark:bg-[#222] rounded-xl p-3">
                 <h1 className="text-lg font-bold mb-2">
                   Tài khoản mạng xã hội
                 </h1>
