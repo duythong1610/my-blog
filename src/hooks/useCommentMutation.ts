@@ -4,14 +4,57 @@ import {
   deleteComment,
   updateComment,
 } from "@/services/comment";
+import { User } from "@/types/user";
 
-export const useCreateComment = () => {
+export const useCreateComment = ({
+  postId,
+  currentUser,
+}: {
+  postId: string;
+  currentUser: User;
+}) => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: createComment,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments"] });
+      queryClient.invalidateQueries({ queryKey: ["comments", postId] });
+    },
+    onMutate: async ({ postId, content }) => {
+      await queryClient.cancelQueries({ queryKey: ["comments", postId] });
+      const previous = queryClient.getQueryData(["comments", postId]);
+
+      // Optimistic update
+      queryClient.setQueryData(["comments", postId], (old: any) => {
+        const optimisticComment = {
+          _id: `temp-${Date.now()}`, // temporary id
+          content,
+          postId,
+          createdAt: new Date().toISOString(),
+          user: currentUser,
+          isOptimistic: true,
+        };
+        return old ? [optimisticComment, ...old] : [optimisticComment];
+      });
+
+      return { previous, postId };
+    },
+
+    onError: (_err, _data, context) => {
+      if (context?.postId) {
+        queryClient.setQueryData(
+          ["comments", context.postId],
+          context.previous
+        );
+      }
+    },
+
+    onSettled: (_data, _err, _variables) => {
+      if (_variables?.postId) {
+        queryClient.invalidateQueries({
+          queryKey: ["comments", _variables.postId],
+        });
+      }
     },
   });
 };
