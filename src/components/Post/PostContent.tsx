@@ -122,7 +122,7 @@ const PostContent = ({ post, slug }: PropsType) => {
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 mb-5 md:mb-0">
               <div className="flex items-center gap-2">
                 <CiCalendar />
                 <span>Cập nhật lúc: {formatDate(post.createdAt)}</span>
