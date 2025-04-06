@@ -24,7 +24,6 @@ export const metadata = {
     siteName: "WriteFlow",
     images: [
       {
-        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "WriteFlow - Chia sẻ kiến thức",
