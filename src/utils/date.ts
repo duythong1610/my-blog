@@ -4,3 +4,6 @@ export const formatDate = (date?: Date | string | null) => {
   if (!date) return "N/A"; // Trả về N/A nếu không có date
   return dayjs(date).format("DD/MM/YYYY");
 };
+export const formatTime  = (date?: Date | string | null) => {
+  return dayjs(date).fromNow();
+};

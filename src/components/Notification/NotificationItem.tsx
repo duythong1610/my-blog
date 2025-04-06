@@ -1,6 +1,7 @@
 import confetti from "@/assets/images/confetti.png";
 import sad from "@/assets/images/sad.png";
 import Notification from "@/types/notification";
+import { formatTime } from "@/utils/date";
 import dayjs from "dayjs";
 import Image from "next/image";
 
@@ -45,7 +46,7 @@ const NotificationItem = ({ notification, onView }: PropsType) => {
         <div className="flex items-center gap-1">
           <Image width={16} height={16} src={"/icons/time.svg"} alt="" />
           <span className="text-gray font-bold text-xs opacity-60">
-            {dayjs(notification.updatedAt).fromNow()}
+            {formatTime(notification.updatedAt)}
           </span>
         </div>
       </div>

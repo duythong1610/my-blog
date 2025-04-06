@@ -4,6 +4,7 @@ import { getProfile, login } from "@/lib/features/users/userSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { Button, Form, Input, Typography } from "antd";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const { Title, Text } = Typography;
@@ -11,13 +12,14 @@ const { Title, Text } = Typography;
 export default function AuthPage() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
+  const router = useRouter();
 
-  console.log({ user });
   const onFinish = async (values: any) => {
-    const { username, password, fullName } = values;
+    const { username, password } = values;
     try {
       await dispatch(login({ username, password }));
       await dispatch(getProfile());
+      router.push("/");
     } catch (e) {
       console.log(e);
     }

@@ -1,3 +1,5 @@
+"use client";
+
 import { Post } from "@/types/post";
 import { useState } from "react";
 import { FaComment, FaHeart, FaRegComments, FaRegHeart } from "react-icons/fa"; // Icons for like/unlike

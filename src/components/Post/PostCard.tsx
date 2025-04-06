@@ -69,15 +69,17 @@ export default function PostCard({ post, isShowStatus = false }: PropTypes) {
           {/* Author + Title */}
           <div className="flex gap-3 items-center">
             <Image
-              width={50}
-              height={50}
+              width={100}
+              height={100}
               src={post.author.avatar || ""}
-              alt="writeflow_author_avatar"
+              alt={post.author.fullName || "writeflow_author_avatar"}
               className="rounded-full object-cover w-[40px] h-[40px]"
             />
-            <h2 className="font-extrabold text-lg text-[#33404A] dark:text-white line-clamp-2 h-[56px]">
-              {post.title}
-            </h2>
+            <Link href={`/blog/${post.slug}`} className="hover:underline">
+              <h2 className="font-extrabold text-lg text-[#33404A] dark:text-white line-clamp-2 h-[56px]">
+                {post.title}
+              </h2>
+            </Link>
           </div>
         </div>
 

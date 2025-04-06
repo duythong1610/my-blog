@@ -1,29 +1,27 @@
 "use client";
 
-import { motion } from "framer-motion";
-import Link from "next/link";
-import { MenuToggle } from "./MenuToggle";
-import { useRef, useState } from "react";
 import logo from "@/assets/images/logo.png";
-import Image from "next/image";
 import useMenuAnimation from "@/hooks/useMenuAnimation";
-import { usePathname, useRouter } from "next/navigation";
-import { useTheme } from "next-themes";
-import { Badge, Dropdown } from "antd";
 import { useNotification } from "@/hooks/useNotification";
-import InfiniteScroll from "react-infinite-scroll-component";
-import NotificationItem from "./Notification/NotificationItem";
-import { IoIosNotificationsOutline } from "react-icons/io";
-import ThemeSwitcher from "./ThemeSwitcher";
 import Notification from "@/types/notification";
+import { Badge, Dropdown } from "antd";
+import { motion } from "framer-motion";
+import { useTheme } from "next-themes";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useRef, useState } from "react";
+import { IoIosNotificationsOutline } from "react-icons/io";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { MenuToggle } from "./MenuToggle";
+import NotificationItem from "./Notification/NotificationItem";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 const HeaderMobile = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const { theme } = useTheme();
-  const [isOpenNotification, setIsOpenNotification] = useState(false);
   const router = useRouter();
-  const dropdownRef = useRef(null);
 
   const scope = useMenuAnimation(isOpen);
 
@@ -59,7 +57,6 @@ const HeaderMobile = () => {
                   router.push(`/blog/${notification.post.slug}`);
                 } else {
                 }
-                setIsOpenNotification(false);
               }}
               notification={item}
             />
@@ -156,16 +153,11 @@ const HeaderMobile = () => {
           <div className="flex items-center gap-1 md:gap-2 pl-[50px]">
             {/* Thông báo */}
             <Dropdown
-              open={isOpenNotification}
               overlay={notificationMenu}
               trigger={["click"]}
               placement="bottomRight"
             >
-              <div
-                ref={dropdownRef}
-                className="rounded-full p-1 md:p-2 w-8 h-8 md:w-10 md:h-10 hover:bg-purple-100 cursor-pointer group"
-                onClick={() => setIsOpenNotification(!isOpenNotification)}
-              >
+              <div className="rounded-full p-1 md:p-2 w-8 h-8 md:w-10 md:h-10 hover:bg-purple-100 cursor-pointer group">
                 <Badge count={notifications.length} color="#a855f7">
                   <IoIosNotificationsOutline className="text-2xl dark:text-white group-hover:text-purple-500" />
                 </Badge>
