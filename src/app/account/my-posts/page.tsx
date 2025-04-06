@@ -10,7 +10,6 @@ export default function MyPostsPage() {
       limit: 10,
     },
   });
-  if (loadingPost) return <p>Đang tải bài viết...</p>;
 
   return (
     <div className="m-auto">
@@ -22,7 +21,12 @@ export default function MyPostsPage() {
       ) : (
         <div className="grid grid-cols-3 gap-x-6 gap-y-[48px]">
           {posts?.map((post) => (
-            <PostCard key={post._id} post={post} isShowStatus />
+            <PostCard
+              loading={loadingPost}
+              key={post._id}
+              post={post}
+              isShowStatus
+            />
           ))}
         </div>
       )}

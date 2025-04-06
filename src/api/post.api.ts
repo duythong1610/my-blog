@@ -12,6 +12,11 @@ export const postApi = {
       url: "/user/my-post",
       params,
     }),
+  findLikedPost: (params?: any): AxiosPromise<any> =>
+    request({
+      url: "/user/liked-posts",
+      params,
+    }),
   getPostsByUser: (params?: any): AxiosPromise<any> =>
     request({
       url: `/user/post-by-user`,
@@ -26,6 +31,11 @@ export const postApi = {
     request({
       url: "/user/post",
       data,
+      method: "post",
+    }),
+  toggleLike: (postId: string): AxiosPromise<any> =>
+    request({
+      url: `/user/like/${postId}`,
       method: "post",
     }),
   update: (id: number, data: any): AxiosPromise<any> =>

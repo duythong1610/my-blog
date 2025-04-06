@@ -131,7 +131,7 @@ const PostContent = ({ post, slug }: PropsType) => {
                 </div>
               </div>
               <div className="flex flex-col md:items-end gap-3 mb-5 md:mb-0">
-                <PostSummary post={post} />
+                <PostSummary post={data} />
                 <div className="flex items-center gap-2">
                   <CiCalendar />
                   <span>Cập nhật lúc: {formatDate(post.createdAt)}</span>

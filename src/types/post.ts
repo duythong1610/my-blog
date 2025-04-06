@@ -14,5 +14,6 @@ export interface Post {
   tags: Tag[];
   viewCount: number;
   totalLike: number;
+  liked: boolean;
   totalComment: number;
 }

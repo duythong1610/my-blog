@@ -12,6 +12,8 @@ import { LuLogOut, LuNotebookPen } from "react-icons/lu";
 import ConfirmLogoutModal, {
   ConfirmLogoutModalRef,
 } from "@/components/Modal/ConfirmLogoutModal";
+import { FaHeart } from "react-icons/fa";
+import { IoMdHeartEmpty } from "react-icons/io";
 interface MenuItem {
   key: string;
   label: string;
@@ -30,9 +32,9 @@ const menuItems: MenuItem[] = [
     icon: <LuNotebookPen className="text-2xl" />,
   },
   {
-    key: "/account/favorite",
+    key: "/account/liked-posts",
     label: "Yêu thích",
-    icon: <BsEmojiHeartEyes className="text-2xl" />,
+    icon: <IoMdHeartEmpty className="text-2xl" />,
   },
   {
     key: "/account/logout",
