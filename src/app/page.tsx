@@ -5,11 +5,21 @@ import Sidebar from "@/components/Sidebar";
 export const metadata = {
   title: "WriteFlow - Chia sẻ kiến thức, kết nối cộng đồng",
   description:
-    "Nền tảng nơi bạn có thể khám phá, học hỏi và chia sẻ kiến thức qua các bài viết chất lượng.",
+    "WriteFlow là cộng đồng nơi mọi lập trình viên – từ người mới bắt đầu đến chuyên gia – đều có thể chia sẻ kiến thức, kinh nghiệm thực tế và hành trình sự nghiệp, góp phần xây dựng một môi trường học hỏi tích cực và đầy cảm hứng.",
+  keywords: [
+    "WriteFlow",
+    "lập trình",
+    "chia sẻ kiến thức",
+    "blog lập trình",
+    "lập trình viên",
+    "dev blog",
+    "cộng đồng công nghệ",
+    "học lập trình",
+  ],
   openGraph: {
     title: "WriteFlow - Chia sẻ kiến thức, kết nối cộng đồng",
     description:
-      "Nền tảng nơi bạn có thể khám phá, học hỏi và chia sẻ kiến thức qua các bài viết chất lượng.",
+      "WriteFlow là cộng đồng nơi mọi lập trình viên – từ người mới bắt đầu đến chuyên gia – đều có thể chia sẻ kiến thức, kinh nghiệm thực tế và hành trình sự nghiệp, góp phần xây dựng một môi trường học hỏi tích cực và đầy cảm hứng.",
     url: "https://writeflow.whatdaporice.website",
     siteName: "WriteFlow",
     images: [
@@ -27,7 +37,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "WriteFlow - Chia sẻ kiến thức",
     description:
-      "Nơi bạn có thể khám phá, học hỏi và chia sẻ kiến thức qua các bài viết chất lượng.",
+      "WriteFlow là cộng đồng nơi mọi lập trình viên – từ người mới bắt đầu đến chuyên gia – đều có thể chia sẻ kiến thức, kinh nghiệm thực tế và hành trình sự nghiệp, góp phần xây dựng một môi trường học hỏi tích cực và đầy cảm hứng.",
     images: ["/og-image.png"],
   },
 };

@@ -12,7 +12,7 @@ export default function Footer() {
   const { theme } = useTheme();
   return (
     <footer className="py-5 px-5 md:px-10 mt-10 border-t border-gray-200">
-      <div className="max-w-7xl mx-auto flex md:flex-row flex-col gap-5 md:gap-0">
+      <div className="max-w-7xl mx-auto flex md:flex-row flex-col gap-5 md:gap-20">
         {/* Logo & Description */}
         <div className="md:w-[600px]">
           <div className="flex items-center font-black uppercase">
@@ -25,8 +25,12 @@ export default function Footer() {
             />{" "}
             WriteFlow
           </div>
-          <p className="mt-5 text-sm text-gray-400">
-            Chia sẻ kiến thức, kỹ năng lập trình, và cuộc sống của một dev.
+          <p className="mt-5 text-base text-gray-500">
+            Chúng tôi tin rằng kiến thức nên được sẻ chia. Tại WriteFlow, bất kỳ
+            ai cũng có thể kể câu chuyện của mình, chia sẻ kinh nghiệm lập trình
+            và truyền cảm hứng cho cộng đồng. Dù bạn là người mới học code hay
+            lập trình viên nhiều năm kinh nghiệm, mỗi bài viết đều là một mảnh
+            ghép quý giá giúp cộng đồng phát triển vững mạnh hơn từng ngày.
           </p>
         </div>
 
