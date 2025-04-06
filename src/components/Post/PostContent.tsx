@@ -108,8 +108,8 @@ const PostContent = ({ post, slug }: PropsType) => {
                   className="object-cover rounded-full w-[64px] h-[64px]"
                   src={post.author.avatar || ""}
                   alt={"author_avatar"}
-                  width={64}
-                  height={64}
+                  width={200}
+                  height={200}
                 />
                 <div className="flex flex-col gap-1">
                   <span>Tác giả</span>

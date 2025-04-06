@@ -39,7 +39,11 @@ export default function Footer() {
               </h3>
               <ul className="flex flex-col gap-2 text-lg font-semibold">
                 <li>
-                  <Link href="/about" className="">
+                  <Link
+                    target="_blank"
+                    href="https://whatdaporice.website"
+                    className=""
+                  >
                     Về tôi
                   </Link>
                 </li>
@@ -49,12 +53,12 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/privacy" className="">
+                  <Link href="/chinh-sach-bao-mat" className="">
                     Chính sách bảo mật
                   </Link>
                 </li>
                 <li>
-                  <Link href="/privacy" className="">
+                  <Link href="#" className="">
                     Hỏi đáp
                   </Link>
                 </li>
@@ -65,21 +69,33 @@ export default function Footer() {
             <div>
               <h3 className="text-base font-semibold mb-4 md:mb-10">Kết nối</h3>
               <div className="flex flex-col gap-2 text-lg font-semibold">
-                <Link href="#" className="flex items-center gap-2">
+                <Link
+                  target="_blank"
+                  href="https://www.facebook.com/16LuckyNumber"
+                  className="flex items-center gap-2"
+                >
                   <FaFacebook size={20} />
                   Facebook
                 </Link>
 
-                <Link href="#" className="flex items-center gap-2">
+                <Link
+                  target="_blank"
+                  href="https://www.instagram.com/auduythong"
+                  className="flex items-center gap-2"
+                >
                   <FaInstagram size={20} />
                   Instagram
                 </Link>
-                <Link href="#" className="flex items-center gap-2">
+                <Link
+                  target="_blank"
+                  href="https://github.com/duythong1610"
+                  className="flex items-center gap-2"
+                >
                   <FaGithub size={20} />
                   Github
                 </Link>
                 <Link
-                  href="mailto:hello@myblog.com"
+                  href="mailto:auduythong1610@gmail.com"
                   className="flex items-center gap-2"
                 >
                   <CiMail size={20} />
