@@ -145,3 +145,70 @@
   transform: translateX(-100%);
   will-change: transform;
 }
+
+/* Dark mode custom styles */
+.pagination-custom .ant-pagination-item,
+.pagination-custom .ant-pagination-prev .ant-pagination-item-link,
+.pagination-custom .ant-pagination-next .ant-pagination-item-link {
+  background-color: #333; /* Màu nền item trong dark mode */
+  color: white;
+  border: 1px solid #666; /* Đường viền của item */
+}
+
+.pagination-custom .ant-pagination-item a {
+  color: #fff; /* Màu chữ của item trong dark mode */
+}
+
+.pagination-custom .ant-pagination-item:hover a,
+.pagination-custom .ant-pagination-item-active a {
+  color: #ffffff; /* Màu chữ khi hover hoặc active */
+}
+
+.pagination-custom .ant-pagination-item-active {
+  background-color: #4a90e2; /* Màu nền khi item được chọn */
+  border-color: #4a90e2; /* Đường viền khi item được chọn */
+}
+
+.pagination-custom .ant-pagination-prev,
+.pagination-custom .ant-pagination-next {
+  color: #fff; /* Màu của nút next và prev */
+}
+
+.pagination-custom .ant-pagination-prev:hover,
+.pagination-custom .ant-pagination-next:hover {
+  color: #4a90e2; /* Màu của nút next và prev khi hover */
+}
+
+.pagination-custom .ant-pagination-disabled {
+  color: #ccc; /* Màu của nút phân trang khi bị disabled */
+}
+
+.pagination-custom .ant-pagination-item-link {
+  color: #fff; /* Màu của icon next và prev */
+}
+
+.pagination-custom .ant-pagination-item-link:hover {
+  color: #4a90e2; /* Màu của icon next và prev khi hover */
+}
+
+/* Light mode custom styles */
+@media (prefers-color-scheme: light) {
+  .pagination-custom .ant-pagination-item {
+    background-color: #fff;
+    border: 1px solid #ccc;
+  }
+
+  .pagination-custom .ant-pagination-item a {
+    color: #333;
+  }
+
+  .pagination-custom .ant-pagination-item:hover a,
+  .pagination-custom .ant-pagination-item-active a {
+    color: #4a90e2;
+  }
+
+  .pagination-custom .ant-pagination-item-active {
+    background-color: #f0f0f0;
+    border-color: #f0f0f0;
+  }
+}

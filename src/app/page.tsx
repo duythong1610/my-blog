@@ -1,6 +1,5 @@
 import HomeHero from "@/components/HomeHero";
-import PostList from "@/components/PostList";
-import Sidebar from "@/components/Sidebar";
+import PostSection from "@/components/PostSection";
 
 export const metadata = {
   title: "WriteFlow - Chia sẻ kiến thức, kết nối cộng đồng",
@@ -39,8 +38,7 @@ export default function Home() {
       <HomeHero />
       <div className="max-w-[1440px] m-auto pb-[200px]">
         <div className="flex md:flex-row flex-col-reverse gap-8">
-          <PostList />
-          <Sidebar />
+          <PostSection />
         </div>
       </div>
     </div>

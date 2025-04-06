@@ -1,0 +1,62 @@
+"use client";
+import { usePost } from "@/hooks/usePost";
+import PostCard from "./Post/PostCard";
+import FilterSidebar from "./FilterSidebar";
+import { useCallback } from "react";
+import { debounce } from "lodash";
+import { Pagination } from "antd";
+
+const PostSection = () => {
+  const { posts, loadingPost, setQueryPost, queryPost, totalPost } = usePost({
+    initQuery: {
+      page: 1,
+      limit: 9,
+    },
+  });
+
+  console.log(totalPost);
+
+  const handleSearch = useCallback(
+    debounce((keyword: string) => {
+      setQueryPost((prevQuery) => ({ ...prevQuery, search: keyword }));
+    }, 300),
+    []
+  );
+
+  const handleTagClick = useCallback((tagId: string) => {
+    setQueryPost((prevQuery) => ({ ...prevQuery, tags: tagId }));
+  }, []);
+
+  const handlePageChange = (page: number) => {
+    setQueryPost((prevQuery) => ({ ...prevQuery, page }));
+  };
+
+  return (
+    <>
+      <div className="flex-1">
+        <h1 className="font-extrabold text-xl md:text-3xl text-[#050505] dark:text-white leading-[50px] md:mb-6">
+          Tất cả bài viết
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-4 md:gap-y-[48px]">
+          {posts?.map((post) => (
+            <PostCard loading={loadingPost} key={post._id} post={post} />
+          ))}
+        </div>
+        <div className="flex justify-center mt-8">
+          <Pagination
+            current={queryPost.page}
+            pageSize={queryPost.limit}
+            total={totalPost}
+            onChange={handlePageChange}
+            showSizeChanger={false}
+            hideOnSinglePage={true}
+            className="pagination-custom"
+          />
+        </div>
+      </div>
+      <FilterSidebar onSearch={handleSearch} onTagClick={handleTagClick} />
+    </>
+  );
+};
+
+export default PostSection;

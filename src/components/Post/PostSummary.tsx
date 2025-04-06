@@ -1,36 +1,83 @@
 "use client";
 
 import { Post } from "@/types/post";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaComment, FaHeart, FaRegComments, FaRegHeart } from "react-icons/fa"; // Icons for like/unlike
 import { AiOutlineEye } from "react-icons/ai"; // Icon for views
-const PostSummary = ({ post }: { post: Post }) => {
-  // Sử dụng state để theo dõi lượt tim
-  const [liked, setLiked] = useState(false);
-  const [likes, setLikes] = useState(post.totalLike || 0); // Assuming `likes` is part of the post data
+import { useMutation, useQueryClient } from "@tanstack/react-query"; // react-query for optimistic update
+import { toggleLikePost } from "@/services/post";
 
-  // Hàm để xử lý thay đổi trạng thái tim
+const PostSummary = ({ post }: { post: Post }) => {
+  const queryClient = useQueryClient();
+
+  console.log(post);
+  const [liked, setLiked] = useState<boolean>();
+  const [likes, setLikes] = useState(post.totalLike || 0); // Initialize like count
+
+  useEffect(() => {
+    setLiked(post.liked);
+  }, [post.liked]);
+
+  const { mutate } = useMutation({
+    mutationFn: toggleLikePost,
+    onMutate: async ({ postId }) => {
+      await queryClient.cancelQueries({ queryKey: ["postDetail"] });
+
+      const previous = queryClient.getQueryData(["postDetail"]);
+
+      queryClient.setQueryData(["postDetail"], (old: any) => {
+        return {
+          ...old,
+          totalLike: liked ? old.totalLike - 1 : old.totalLike + 1, // Optimistically update like count
+        };
+      });
+
+      return { previous, postId };
+    },
+    onError: (_err, _postId, context) => {
+      // Revert state back to previous in case of error
+      if (context?.postId) {
+        queryClient.setQueryData(["postDetail"], context.previous);
+      }
+    },
+    onSettled: (_data, _err, _variables) => {
+      // Refetch post data to sync with backend
+      if (_variables?.postId) {
+        queryClient.invalidateQueries({
+          queryKey: ["postDetail", _variables.postId],
+        });
+      }
+    },
+  });
+
+  // Handle Like button click
   const handleLike = () => {
-    setLiked(!liked);
-    setLikes(liked ? likes - 1 : likes + 1); // Update likes count
+    // Trigger the mutation to toggle like
+    mutate({ postId: post._id });
+
+    // Use the functional form to ensure the latest state is used
+    setLiked((prevLiked) => {
+      const newLikedState = !prevLiked;
+      setLikes((prevLikes) => (newLikedState ? prevLikes + 1 : prevLikes - 1));
+      return newLikedState;
+    });
   };
 
   return (
     <div className="flex items-center gap-6">
-      {/* Số người xem với icon */}
+      {/* View count with icon */}
       <div className="flex items-center gap-1">
         <AiOutlineEye className="text-gray-500 !text-2xl" />
         <span className="text-lg">{post.viewCount || 283}</span>
       </div>
 
-      {/* Số lượng comment với icon */}
+      {/* Comment count with icon */}
       <div className="flex items-center gap-1">
         <FaRegComments className="text-gray-500 !text-2xl" />
         <span className="text-lg">{post.totalComment || 21}</span>
       </div>
 
-      {/* Nút Like với icon có thể thay đổi */}
-
+      {/* Like button with icon */}
       <div
         className="flex items-center gap-1 cursor-pointer"
         onClick={handleLike}
