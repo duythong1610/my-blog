@@ -62,8 +62,8 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="">
-                    Hỏi đáp
+                  <Link href="/dieu-khoan-su-dung" className="">
+                    Điều khoản sử dụng
                   </Link>
                 </li>
               </ul>

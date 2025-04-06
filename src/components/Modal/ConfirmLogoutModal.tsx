@@ -59,6 +59,7 @@ const ConfirmLogoutModal = React.forwardRef(({}, ref) => {
         </p>
         <div className="flex items-center gap-3">
           <Button
+            size="large"
             block
             onClick={() => setVisible(false)}
             className="rounded-[20px]"
@@ -66,6 +67,7 @@ const ConfirmLogoutModal = React.forwardRef(({}, ref) => {
             Đóng
           </Button>
           <Button
+            size="large"
             type="primary"
             className="rounded-[20px]"
             block
