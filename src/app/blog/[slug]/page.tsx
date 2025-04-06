@@ -2,6 +2,7 @@ import PostContent from "@/components/Post/PostContent";
 import { getPostDetail } from "@/services/post";
 import { Metadata } from "next";
 import { NextPage } from "next";
+import { notFound } from "next/navigation";
 import removeMarkdown from "remove-markdown";
 interface BlogDetailPageProps {
   params: { slug: string };
@@ -39,7 +40,10 @@ export async function generateMetadata({
 const BlogDetailPage: NextPage<BlogDetailPageProps> = async ({ params }) => {
   const post = await getPostDetail(params.slug);
 
-  console.log(post);
+  if (!post) {
+    notFound();
+  }
+
   // Structured Data (JSON-LD)
   const structuredData = {
     "@context": "https://schema.org",
