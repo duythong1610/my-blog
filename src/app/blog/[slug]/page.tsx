@@ -2,7 +2,7 @@ import PostContent from "@/components/Post/PostContent";
 import { getPostDetail } from "@/services/post";
 import { Metadata } from "next";
 import { NextPage } from "next";
-
+import removeMarkdown from "remove-markdown";
 interface BlogDetailPageProps {
   params: { slug: string };
 }
@@ -17,10 +17,10 @@ export async function generateMetadata({
   const url = `https://writeflow.whatdaporice.website/blog/${params.slug}`;
   return {
     title: post?.title || "Bài viết",
-    description: post?.content || "Chi tiết bài viết",
+    description: removeMarkdown(post?.content) || "Chi tiết bài viết",
     openGraph: {
       title: post?.title,
-      description: post?.title,
+      description: removeMarkdown(post?.content),
       url,
       siteName: "WriteFlow",
       images: [post?.thumbnail],
@@ -30,7 +30,7 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: post?.title,
-      description: post?.title,
+      description: removeMarkdown(post?.content),
       images: [post?.thumbnail],
     },
   };
@@ -39,6 +39,7 @@ export async function generateMetadata({
 const BlogDetailPage: NextPage<BlogDetailPageProps> = async ({ params }) => {
   const post = await getPostDetail(params.slug);
 
+  console.log(post);
   // Structured Data (JSON-LD)
   const structuredData = {
     "@context": "https://schema.org",
@@ -51,7 +52,7 @@ const BlogDetailPage: NextPage<BlogDetailPageProps> = async ({ params }) => {
       "@type": "Person",
       name: post.author?.name || "Admin",
     },
-    description: post.excerpt,
+    description: post.title,
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": `https://writeflow.whatdaporice.website/blog/${params.slug}`,

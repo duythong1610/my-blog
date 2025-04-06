@@ -1,14 +1,22 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: false,
   images: {
-    domains: [
-      "danviet.mediacdn.vn",
-      "aptech.fpt.edu.vn",
-      "https://res.cloudinary.com",
-      "res.cloudinary.com",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "danviet.mediacdn.vn",
+      },
+      {
+        protocol: "https",
+        hostname: "aptech.fpt.edu.vn",
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
     ],
   },
-  reactStrictMode: false,
 };
 
 export default nextConfig;

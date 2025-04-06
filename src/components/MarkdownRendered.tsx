@@ -101,7 +101,7 @@ const MarkdownRenderer = ({
     setCopiedStates(() => ({ [blockId]: true }));
   };
 
-  if (!SyntaxHighlighter) return <div>Loading code highlighter...</div>;
+  if (!SyntaxHighlighter) return <div>Đang tải...</div>;
 
   return (
     <div className="mx-auto md:p-6 rounded-lg">
