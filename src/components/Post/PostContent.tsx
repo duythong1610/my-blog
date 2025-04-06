@@ -11,6 +11,8 @@ import { CiCalendar } from "react-icons/ci";
 import { FaChevronDown } from "react-icons/fa";
 import MarkdownRenderer from "../MarkdownRendered";
 import { getPostDetail } from "@/services/post";
+import FloatButtonGroup from "../FloatButtonGroup";
+import PostSummary from "./PostSummary";
 
 interface PropsType {
   post: Post;
@@ -85,75 +87,79 @@ const PostContent = ({ post, slug }: PropsType) => {
   if (!data) return "Bài viết không tồn tại";
 
   return (
-    <div className="flex md:flex-row flex-col-reverse gap-6">
-      {/* Blog Content */}
-      <div className="w-full md:w-[70%] md:pr-6">
-        <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-1 flex-wrap">
-            {post.tags.map((item) => (
-              <div
-                key={item._id}
-                className="bg-purple-50 text-xs md:text-sm rounded-[8px] py-1 px-2 w-fit text-purple-500"
-              >
-                {item.name}
-              </div>
-            ))}
-          </div>
-          <h1 className="text-3xl font-extrabold my-5">{post.title}</h1>
+    <>
+      <div className="flex md:flex-row flex-col-reverse gap-6">
+        <FloatButtonGroup />
+        {/* Blog Content */}
+        <div className="w-full md:w-[70%] md:pr-6">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-1 flex-wrap">
+              {post.tags.map((item) => (
+                <div
+                  key={item._id}
+                  className="bg-purple-50 text-xs md:text-sm rounded-[8px] py-1 px-2 w-fit text-purple-500"
+                >
+                  {item.name}
+                </div>
+              ))}
+            </div>
+            <h1 className="text-3xl font-extrabold my-5">{post.title}</h1>
 
-          <div className="flex flex-col gap-3 md:gap-0 md:flex-row md:items-center justify-between">
-            <div>
-              <div className="flex items-center gap-3">
-                <Image
-                  className="object-cover rounded-full w-[64px] h-[64px]"
-                  src={post.author.avatar || ""}
-                  alt={"author_avatar"}
-                  width={200}
-                  height={200}
-                />
-                <div className="flex flex-col gap-1">
-                  <span>Tác giả</span>
-                  <Link
-                    href={`/user/${post.author.username}`}
-                    className="text-[#33404A] dark:text-white font-bold"
-                  >
-                    {post.author?.fullName}
-                  </Link>
+            <div className="flex flex-col gap-3 md:gap-0 md:flex-row md:items-center justify-between">
+              <div>
+                <div className="flex items-center gap-3">
+                  <Image
+                    className="object-cover rounded-full w-[64px] h-[64px]"
+                    src={post.author.avatar || ""}
+                    alt={"author_avatar"}
+                    width={200}
+                    height={200}
+                  />
+                  <div className="flex flex-col gap-1">
+                    <span>Tác giả</span>
+                    <Link
+                      href={`/user/${post.author.username}`}
+                      className="text-[#33404A] dark:text-white font-bold"
+                    >
+                      {post.author?.fullName}
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col items-end gap-3 mb-5 md:mb-0">
+                <PostSummary post={post} />
+                <div className="flex items-center gap-2">
+                  <CiCalendar />
+                  <span>Cập nhật lúc: {formatDate(post.createdAt)}</span>
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-3 mb-5 md:mb-0">
-              <div className="flex items-center gap-2">
-                <CiCalendar />
-                <span>Cập nhật lúc: {formatDate(post.createdAt)}</span>
-              </div>
-            </div>
           </div>
+
+          {/* Use updated MarkdownRenderer with heading extraction */}
+          <MarkdownRenderer
+            content={post.content}
+            onHeadingsExtracted={handleHeadingsExtracted}
+          />
         </div>
 
-        {/* Use updated MarkdownRenderer with heading extraction */}
-        <MarkdownRenderer
-          content={post.content}
-          onHeadingsExtracted={handleHeadingsExtracted}
-        />
+        <div className="md:sticky md:top-[100px] md:h-max md:p-4 md:max-w-[400px] w-full md:w-[30%]">
+          <Collapse
+            expandIconPosition="right"
+            expandIcon={({ isActive }) => (
+              <FaChevronDown
+                className="!text-xl dark:fill-white"
+                style={{ rotate: isActive ? "180deg" : "0deg" }}
+              />
+            )}
+            defaultActiveKey={["1"]}
+            bordered={false}
+            items={items}
+            className="w-full md:w-[400px] bg-gray-50 dark:bg-[#222]"
+          ></Collapse>
+        </div>
       </div>
-
-      <div className="md:sticky md:top-[100px] md:h-max md:p-4 md:max-w-[400px] w-full md:w-[30%]">
-        <Collapse
-          expandIconPosition="right"
-          expandIcon={({ isActive }) => (
-            <FaChevronDown
-              className="!text-xl dark:fill-white"
-              style={{ rotate: isActive ? "180deg" : "0deg" }}
-            />
-          )}
-          defaultActiveKey={["1"]}
-          bordered={false}
-          items={items}
-          className="w-full md:w-[400px] bg-gray-50 dark:bg-[#222]"
-        ></Collapse>
-      </div>
-    </div>
+    </>
   );
 };
 

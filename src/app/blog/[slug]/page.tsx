@@ -40,6 +40,7 @@ export async function generateMetadata({
 const BlogDetailPage: NextPage<BlogDetailPageProps> = async ({ params }) => {
   const post = await getPostDetail(params.slug);
 
+  console.log(post);
   if (!post) {
     notFound();
   }

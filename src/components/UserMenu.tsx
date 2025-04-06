@@ -160,10 +160,12 @@ export default function UserMenu() {
 
         {/* Avatar và Menu */}
         <Dropdown overlay={menu} trigger={["click"]} placement="bottomRight">
-          <Avatar
-            src={user.avatar}
-            icon={!user.avatar && <UserOutlined />}
-            className="cursor-pointer"
+          <Image
+            width={200}
+            height={200}
+            src={user.avatar || ""}
+            className="cursor-pointer rounded-full w-[40px] h-[40px] object-cover"
+            alt={user.username}
           />
         </Dropdown>
       </div>

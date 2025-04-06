@@ -12,4 +12,7 @@ export interface Post {
   slug: string;
   thumbnail: string;
   tags: Tag[];
+  viewCount: number;
+  totalLike: number;
+  totalComment: number;
 }
