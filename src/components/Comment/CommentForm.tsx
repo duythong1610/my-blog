@@ -18,7 +18,10 @@ const CommentForm: React.FC<CommentFormProps> = ({
   currentUser,
   onSuccess,
 }) => {
-  const { mutate: createComment, isPending } = useCreateComment();
+  const { mutate: createComment, isPending } = useCreateComment({
+    postId,
+    currentUser,
+  });
   const [form] = useForm();
   const content = Form.useWatch("content", form);
 
