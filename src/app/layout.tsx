@@ -5,6 +5,7 @@ import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import "@/styles/custom.scss";
 import { Raleway } from "next/font/google";
 import ReduxProvider from "../providers/ReduxProvider";
+import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 
 const raleway = Raleway({
@@ -53,8 +54,9 @@ export default function RootLayout({
       <ReduxProvider>
         <ReactQueryProvider>
           <body
-            className={`${raleway.className} bg-white dark:bg-[#0e100f] text-black dark:text-white !p-0`}
+            className={`${raleway.className} bg-white  dark:bg-[#0e100f] text-black dark:text-white !p-0`}
           >
+            <NextTopLoader color="#a855f7" />
             <ThemeProviderWrapper>
               <Header />
               <main className="container mx-auto p-4 pt-[100px]">

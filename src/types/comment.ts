@@ -1,10 +1,12 @@
+import { Post } from "./post";
 import { User } from "./user";
 
 export interface Comment {
   _id: string;
-  postId: string; // ObjectId của bài viết
-  author: User | string; // Có thể là ObjectId hoặc đã populate thành IUser
+  post: Post;
+  user: User;
   content: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  parent: Comment | null;
+  createdAt: Date;
+  updatedAt: Date;
 }

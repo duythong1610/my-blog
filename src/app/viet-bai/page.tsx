@@ -4,7 +4,9 @@ import { postApi } from "@/api/post.api";
 import DynamicMDXEditor from "@/components/DynamicMDXEditor";
 import MarkdownRenderer from "@/components/MarkdownRendered";
 import { ConfirmLogoutModalRef } from "@/components/Modal/ConfirmLogoutModal";
-import PostSuccessModal from "@/components/Modal/PostSuccessModal";
+import PostSuccessModal, {
+  PostSuccessModalRef,
+} from "@/components/Modal/PostSuccessModal";
 import ThumbnailPostUpload from "@/components/Upload/ThumbnailPostUpload";
 import { useTag } from "@/hooks/useTag";
 import "@mdxeditor/editor/style.css";
@@ -18,7 +20,7 @@ const CreatePostPage = () => {
   const [markdown, setMarkdown] = useState("");
   const [loading, setLoading] = useState(false);
   const thumbnail = Form.useWatch("thumbnail", form);
-  const confirmLogoutModalRef = useRef<ConfirmLogoutModalRef>();
+  const postSuccessModalRef = useRef<PostSuccessModalRef>();
   const [editorKey, setEditorKey] = useState(Date.now());
 
   const { tags } = useTag({
@@ -66,7 +68,7 @@ const CreatePostPage = () => {
         content: markdown,
       });
 
-      confirmLogoutModalRef.current?.handleOpen();
+      postSuccessModalRef.current?.handleOpen();
 
       form.resetFields();
       setMarkdown("");
@@ -159,7 +161,7 @@ const CreatePostPage = () => {
         <h2 className="text-xl font-bold mb-4">Xem trước</h2>
         <MarkdownRenderer content={markdown} />
       </div>
-      <PostSuccessModal ref={confirmLogoutModalRef} />
+      <PostSuccessModal ref={postSuccessModalRef} />
     </div>
   );
 };

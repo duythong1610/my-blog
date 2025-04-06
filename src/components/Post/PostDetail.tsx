@@ -13,6 +13,8 @@ import MarkdownRenderer from "../MarkdownRendered";
 import { getPostDetail } from "@/services/post";
 import FloatButtonGroup from "../FloatButtonGroup";
 import PostSummary from "./PostSummary";
+import CommentSystem from "../Comment/CommentSystem";
+import { useAppSelector } from "@/lib/hook";
 
 interface PropsType {
   post: Post;
@@ -26,6 +28,8 @@ interface Heading {
 }
 
 const PostContent = ({ post, slug }: PropsType) => {
+  const user = useAppSelector((state) => state.user.info);
+
   const { data } = useQuery<Post>({
     queryKey: ["postDetail"],
     queryFn: () => getPostDetail(slug),
@@ -126,7 +130,7 @@ const PostContent = ({ post, slug }: PropsType) => {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col items-end gap-3 mb-5 md:mb-0">
+              <div className="flex flex-col md:items-end gap-3 mb-5 md:mb-0">
                 <PostSummary post={post} />
                 <div className="flex items-center gap-2">
                   <CiCalendar />
@@ -141,6 +145,7 @@ const PostContent = ({ post, slug }: PropsType) => {
             content={post.content}
             onHeadingsExtracted={handleHeadingsExtracted}
           />
+          <CommentSystem postId={post._id} currentUser={user} />
         </div>
 
         <div className="md:sticky md:top-[100px] md:h-max md:p-4 md:max-w-[400px] w-full md:w-[30%]">

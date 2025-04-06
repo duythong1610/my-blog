@@ -1,7 +1,6 @@
-import PostContent from "@/components/Post/PostContent";
+import PostDetail from "@/components/Post/PostDetail";
 import { getPostDetail } from "@/services/post";
-import { Metadata } from "next";
-import { NextPage } from "next";
+import { Metadata, NextPage } from "next";
 import { notFound } from "next/navigation";
 import removeMarkdown from "remove-markdown";
 interface BlogDetailPageProps {
@@ -72,7 +71,7 @@ const BlogDetailPage: NextPage<BlogDetailPageProps> = async ({ params }) => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      <PostContent post={post} slug={params.slug} />
+      <PostDetail post={post} slug={params.slug} />
     </div>
   );
 };

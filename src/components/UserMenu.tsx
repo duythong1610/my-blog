@@ -21,17 +21,9 @@ import ThemeSwitcher from "./ThemeSwitcher";
 
 export default function UserMenu() {
   const router = useRouter();
-  const [isOpenNotification, setIsOpenNotification] = useState(false);
-  const dropdownRef = useRef(null);
   const user = useAppSelector((state) => state.user.info);
 
   const confirmLogoutModalRef = useRef<ConfirmLogoutModalRef>();
-
-  useClickAway(dropdownRef, () => {
-    setIsOpenNotification(false);
-  });
-
-  console.log("object");
 
   const { notifications, fetchNotification } = useNotification({
     initQuery: {
@@ -60,7 +52,7 @@ export default function UserMenu() {
     <Menu
       items={[
         {
-          key: "account",
+          key: "account/profile",
           label: "Tài khoản của tôi",
           icon: <UserOutlined className="!text-base mb-[2px]" />,
           onClick: () => router.push("/account"),
@@ -101,7 +93,6 @@ export default function UserMenu() {
                   router.push(`/blog/${notification.post.slug}`);
                 } else {
                 }
-                setIsOpenNotification(false);
               }}
               notification={item}
             />
@@ -141,16 +132,11 @@ export default function UserMenu() {
       <div className="flex items-center gap-2">
         {/* Thông báo */}
         <Dropdown
-          open={isOpenNotification}
           overlay={notificationMenu}
           trigger={["click"]}
           placement="bottomRight"
         >
-          <div
-            ref={dropdownRef}
-            className="rounded-full p-2 w-10 h-10 hover:bg-purple-100 cursor-pointer group"
-            onClick={() => setIsOpenNotification(!isOpenNotification)}
-          >
+          <div className="rounded-full p-2 w-10 h-10 hover:bg-purple-100 cursor-pointer group">
             <Badge count={notifications.length} color="#a855f7">
               <IoIosNotificationsOutline className="text-2xl dark:text-white group-hover:text-purple-500" />
             </Badge>
