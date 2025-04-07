@@ -1,10 +1,7 @@
 import { notificationSettingApi } from "@/api/notification-setting.api";
-import { postApi } from "@/api/post.api";
-import { updateNotificationSettings } from "@/services/notification-settings";
 import { NotificationSettings } from "@/types/notificationSettings";
-import { Post } from "@/types/post";
 import { QueryParam } from "@/types/query";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { debounce } from "lodash";
 import { useCallback, useState } from "react";
 
@@ -47,21 +44,6 @@ export const useNotificationSettings = ({
     []
   );
 
-  const handleUpdateNotificationSettings = (notificationSettingsId: string) => {
-    const queryClient = useQueryClient();
-
-    return useMutation({
-      mutationFn: (data: NotificationSettings) =>
-        updateNotificationSettings(notificationSettingsId, data),
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["notificationSettings"] });
-      },
-    });
-  };
-  console.log({ isLoading, isFetching });
-
-  console.log({ status, isError, error });
-
   return {
     notificationSettings: data?.notificationSettings,
     totalNotificationSettings: data?.total || 0,
@@ -71,6 +53,5 @@ export const useNotificationSettings = ({
     setQueryNotificationSettings: setQuery,
     debounceSearchNotificationSettings,
     isError,
-    handleUpdateNotificationSettings,
   };
 };
