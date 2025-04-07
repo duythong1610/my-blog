@@ -15,63 +15,94 @@ const FollowAction = ({ userId }: { userId: string }) => {
   const queryClient = useQueryClient();
   const user = useAppSelector((state) => state.user.info);
 
-  // ✅ Kiểm tra trạng thái theo dõi
-  const handleCheckFollow = async (userId: string) => {
-    const response = await followApi.checkFollow({ userId });
-    return response.data;
-  };
-
+  // ✅ Fetch trạng thái theo dõi
   const { data, isLoading } = useQuery<DataProps>({
     queryKey: ["isFollowing", userId],
-    queryFn: () => handleCheckFollow(userId),
+    queryFn: async () => {
+      const response = await followApi.checkFollow({ userId });
+      return response.data;
+    },
     enabled: !!userId && !!user,
     refetchOnWindowFocus: false,
     gcTime: Infinity,
   });
 
-  // ✅ Mutation để theo dõi
+  // ✅ Follow mutation (optimistic update)
   const followMutation = useMutation({
     mutationFn: () => followApi.follow({ followingId: userId }),
-    onSuccess: () => {
-      const followersQuery = { page: 1, limit: 10, userId };
-      queryClient.invalidateQueries({ queryKey: ["isFollowing", userId] });
-      queryClient.invalidateQueries({
-        queryKey: ["followers", followersQuery],
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["isFollowing", userId] });
+
+      const previousData = queryClient.getQueryData<DataProps>([
+        "isFollowing",
+        userId,
+      ]);
+
+      // Cập nhật optimistic
+      queryClient.setQueryData(["isFollowing", userId], {
+        isFollowing: true,
       });
-      message.success("Đã theo dõi người dùng!");
+
+      return { previousData };
     },
-    onError: () => {
+    onError: (_, __, context) => {
+      // Rollback nếu lỗi
+      if (context?.previousData) {
+        queryClient.setQueryData(["isFollowing", userId], context.previousData);
+      }
       message.error("Theo dõi thất bại!");
     },
-  });
-
-  // ✅ Mutation để bỏ theo dõi
-  const unfollowMutation = useMutation({
-    mutationFn: () => followApi.unFollow({ followingId: userId }),
-    onSuccess: () => {
+    onSettled: () => {
       const followersQuery = { page: 1, limit: 10, userId };
-      queryClient.invalidateQueries({ queryKey: ["isFollowing", userId] });
       queryClient.invalidateQueries({
         queryKey: ["followers", followersQuery],
       });
-      message.success("Đã bỏ theo dõi người dùng!");
     },
-    onError: () => {
-      message.error("Bỏ theo dõi thất bại!");
+    onSuccess: () => {
+      message.success("Đã theo dõi người dùng!");
     },
   });
 
-  const handleFollow = () => {
-    followMutation.mutate();
-  };
+  // ✅ Unfollow mutation (optimistic update)
+  const unfollowMutation = useMutation({
+    mutationFn: () => followApi.unFollow({ followingId: userId }),
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["isFollowing", userId] });
 
-  const handleUnfollow = () => {
-    unfollowMutation.mutate();
-  };
+      const previousData = queryClient.getQueryData<DataProps>([
+        "isFollowing",
+        userId,
+      ]);
+
+      // Cập nhật optimistic
+      queryClient.setQueryData(["isFollowing", userId], {
+        isFollowing: false,
+      });
+
+      return { previousData };
+    },
+    onError: (_, __, context) => {
+      // Rollback nếu lỗi
+      if (context?.previousData) {
+        queryClient.setQueryData(["isFollowing", userId], context.previousData);
+      }
+      message.error("Bỏ theo dõi thất bại!");
+    },
+    onSettled: () => {
+      const followersQuery = { page: 1, limit: 10, userId };
+      queryClient.invalidateQueries({
+        queryKey: ["followers", followersQuery],
+      });
+    },
+    onSuccess: () => {
+      message.success("Đã bỏ theo dõi người dùng!");
+    },
+  });
+
+  const handleFollow = () => followMutation.mutate();
+  const handleUnfollow = () => unfollowMutation.mutate();
 
   if (!user || userId === user?._id || isLoading) return null;
-
-  console.log({ user });
 
   return (
     <div>
@@ -86,7 +117,7 @@ const FollowAction = ({ userId }: { userId: string }) => {
         </Button>
       ) : (
         <Button
-          loading={isLoading || followMutation.isPending}
+          loading={followMutation.isPending}
           type="primary"
           icon={<SlUserFollowing />}
           className="rounded-[20px]"

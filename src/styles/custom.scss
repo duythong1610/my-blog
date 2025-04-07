@@ -267,3 +267,7 @@
   --basePageBg: black;
   background: var(--basePageBg);
 }
+
+.ant-tooltip-inner {
+  background-color: #333 !important;
+}

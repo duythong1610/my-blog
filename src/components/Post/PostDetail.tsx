@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Collapse, CollapseProps } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { CiCalendar } from "react-icons/ci";
 import { FaChevronDown } from "react-icons/fa";
 import MarkdownRenderer from "../MarkdownRendered";
@@ -29,7 +29,7 @@ interface Heading {
 
 const PostContent = ({ post, slug }: PropsType) => {
   const user = useAppSelector((state) => state.user.info);
-
+  const commentRef = useRef<HTMLDivElement>(null);
   const { data } = useQuery<Post>({
     queryKey: ["postDetail"],
     queryFn: () => getPostDetail(slug),
@@ -40,6 +40,10 @@ const PostContent = ({ post, slug }: PropsType) => {
 
   const [headings, setHeadings] = useState<Heading[]>([]);
   const { handleScroll } = useHeadsObserver(headings.map(({ id }) => id));
+
+  const scrollToComments = () => {
+    commentRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   // Handler for when headings are extracted from markdown
   const handleHeadingsExtracted = (extractedHeadings: Heading[]) => {
@@ -93,7 +97,8 @@ const PostContent = ({ post, slug }: PropsType) => {
   return (
     <>
       <div className="flex md:flex-row flex-col-reverse gap-6">
-        <FloatButtonGroup />
+        <FloatButtonGroup author={data.author} />
+
         {/* Blog Content */}
         <div className="w-full md:w-[70%] md:pr-6">
           <div className="flex flex-col gap-4">
@@ -112,13 +117,18 @@ const PostContent = ({ post, slug }: PropsType) => {
             <div className="flex flex-col gap-3 md:gap-0 md:flex-row md:items-center justify-between">
               <div>
                 <div className="flex items-center gap-3">
-                  <Image
-                    className="object-cover rounded-full w-[64px] h-[64px]"
-                    src={post.author.avatar || ""}
-                    alt={"author_avatar"}
-                    width={200}
-                    height={200}
-                  />
+                  <Link
+                    href={`/user/${post.author.username}`}
+                    className="text-[#33404A] dark:text-white font-bold"
+                  >
+                    <Image
+                      className="object-cover rounded-full w-[64px] h-[64px]"
+                      src={post.author.avatar || ""}
+                      alt={"author_avatar"}
+                      width={200}
+                      height={200}
+                    />
+                  </Link>
                   <div className="flex flex-col gap-1">
                     <span>Tác giả</span>
                     <Link
@@ -131,7 +141,7 @@ const PostContent = ({ post, slug }: PropsType) => {
                 </div>
               </div>
               <div className="flex flex-col md:items-end gap-3 mb-5 md:mb-0">
-                <PostSummary post={data} />
+                <PostSummary onScrollComment={scrollToComments} post={data} />
                 <div className="flex items-center gap-2">
                   <CiCalendar />
                   <span>Cập nhật lúc: {formatDate(post.createdAt)}</span>
@@ -145,7 +155,9 @@ const PostContent = ({ post, slug }: PropsType) => {
             content={post.content}
             onHeadingsExtracted={handleHeadingsExtracted}
           />
-          <CommentSystem postId={post._id} currentUser={user} />
+          <div ref={commentRef}>
+            <CommentSystem postId={post._id} currentUser={user} />
+          </div>
         </div>
 
         <div className="md:sticky md:top-[100px] md:h-max md:p-4 md:max-w-[400px] w-full md:w-[30%]">

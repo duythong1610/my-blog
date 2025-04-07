@@ -8,6 +8,7 @@ import ReduxProvider from "../providers/ReduxProvider";
 import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
+import { headers } from "next/headers";
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -50,6 +51,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const heads = headers();
+  console.log(heads);
+
+  const pathname = heads.get("next-url");
+
+  console.log(pathname);
   return (
     <html lang="en" suppressHydrationWarning>
       <ReduxProvider>

@@ -112,7 +112,7 @@ export default function AccountLayout({ children }: AccountLayoutProps) {
           </ul>
         </nav>
       </aside>
-      <nav className="fixed bottom-[10px] left-4 right-4 z-50 bg-black dark:text-white dark:bg-[#111] rounded-[40px]  md:hidden">
+      <nav className="fixed bottom-[10px] py-1 left-4 right-4 z-50 bg-black dark:text-white dark:bg-[#111] rounded-[40px]  md:hidden">
         <ul className="flex justify-between items-center py-2">
           {menuItems.map((item) => {
             const isActive = pathname === item.key;

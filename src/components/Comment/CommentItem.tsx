@@ -2,9 +2,10 @@ import { useDeleteComment, useUpdateComment } from "@/hooks/useCommentMutation";
 import { Comment } from "@/types/comment";
 import { User } from "@/types/user";
 import { formatTime } from "@/utils/date";
-import { Button } from "antd";
+import { Button, Tooltip } from "antd";
 import React, { useState } from "react";
 import CommentForm from "./CommentForm";
+import { RiVerifiedBadgeFill } from "react-icons/ri";
 
 interface CommentItemProps {
   comment: Comment & { replies?: (Comment & { replies?: Comment[] })[] };
@@ -52,7 +53,17 @@ const CommentItem: React.FC<CommentItemProps> = ({
               className="w-8 h-8 rounded-full mr-2 object-cover"
             />
             <div>
-              <div className="font-medium">{comment.user.fullName}</div>
+              <div className="flex items-center gap-2">
+                <div className="font-medium">{comment.user.fullName}</div>
+                <div>
+                  {(comment?.user.username == "writeflow" ||
+                    comment?.user.username == "auduythong") && (
+                    <Tooltip title="Tài khoản đã được xác minh">
+                      <RiVerifiedBadgeFill className="text-lg md:text-xl fill-purple-500" />
+                    </Tooltip>
+                  )}
+                </div>
+              </div>
               <div className="text-xs dark:text-gray-400 text-gray-500">
                 {formatTime(comment.createdAt)}
               </div>

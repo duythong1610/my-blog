@@ -161,7 +161,7 @@ const MarkdownRenderer = ({
             return (
               <blockquote
                 {...props}
-                className="border-l-[6px] border-purple-500 px-4 py-3  bg-gray-100 dark:bg-[#222] italic text-lg font-semibold my-6 rounded-md"
+                className="border-l-[4px] md:border-l-[6px] border-purple-500 px-4 py-3  bg-gray-100 dark:bg-[#222] italic text-base md:text-lg font-semibold my-6 rounded-md"
               >
                 <div className="blockquote-content [&>p]:mb-0">{children}</div>
               </blockquote>

@@ -8,7 +8,7 @@ interface PropTypes {
 
 export default function FollowerCard({ follower }: PropTypes) {
   return (
-    <div className="bg-slate-50 rounded-xl p-4">
+    <div className="bg-slate-50 dark:bg-[#222] rounded-xl p-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Image

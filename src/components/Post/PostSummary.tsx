@@ -9,7 +9,13 @@ import { toggleLikePost } from "@/services/post";
 import { Tooltip } from "antd";
 import { useAppSelector } from "@/lib/hook";
 
-const PostSummary = ({ post }: { post: Post }) => {
+const PostSummary = ({
+  post,
+  onScrollComment,
+}: {
+  post: Post;
+  onScrollComment: () => void;
+}) => {
   const queryClient = useQueryClient();
   const user = useAppSelector((state) => state.user.info);
 
@@ -79,7 +85,10 @@ const PostSummary = ({ post }: { post: Post }) => {
       {/* Comment count with icon */}
       <div className="flex items-center gap-1">
         <Tooltip title="Bình luận">
-          <FaRegComments className="text-gray-500 !text-2xl" />
+          <FaRegComments
+            className="text-gray-500 !text-2xl"
+            onClick={() => onScrollComment()}
+          />
         </Tooltip>
         <span className="text-lg">{post.totalComment}</span>
       </div>
