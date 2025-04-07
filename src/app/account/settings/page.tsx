@@ -1,5 +1,8 @@
 "use client";
 import { useNotificationSettings } from "@/hooks/useNotificationSettings";
+import { updateNotificationSettings } from "@/services/notification-settings";
+import { NotificationSettings } from "@/types/notificationSettings";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button, List, message, Switch, Typography } from "antd";
 import { useEffect, useState } from "react";
 
@@ -34,13 +37,24 @@ const notificationTypes = [
 ];
 
 const NotificationSettingsPage = () => {
-  const { notificationSettings, handleUpdateNotificationSettings } =
-    useNotificationSettings({
-      initQuery: {
-        page: 1,
-        limit: 50,
+  const { notificationSettings } = useNotificationSettings({
+    initQuery: {
+      page: 1,
+      limit: 50,
+    },
+  });
+
+  const handleUpdateNotificationSettings = (notificationSettingsId: string) => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+      mutationFn: (data: NotificationSettings) =>
+        updateNotificationSettings(notificationSettingsId, data),
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["notificationSettings"] });
       },
     });
+  };
 
   const updateMutation = handleUpdateNotificationSettings(
     notificationSettings?._id ?? ""
@@ -96,6 +110,7 @@ const NotificationSettingsPage = () => {
         dataSource={notificationTypes}
         renderItem={(item) => (
           <List.Item
+            key={item.key}
             actions={[
               <Switch
                 checked={settings[item.key]}
