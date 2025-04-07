@@ -40,9 +40,13 @@ const PostSection = () => {
           Tất cả bài viết
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-4 md:gap-y-[48px]">
-          {posts?.map((post) => (
-            <PostCard loading={loadingPost} key={post._id} post={post} />
-          ))}
+          {loadingPost
+            ? Array.from({ length: 6 }).map((_, index) => (
+                <PostCard loading={true} key={index} post={{} as any} />
+              ))
+            : posts?.map((post) => (
+                <PostCard loading={false} key={post._id} post={post} />
+              ))}
         </div>
         <div className="flex justify-center mt-10">
           <Pagination
