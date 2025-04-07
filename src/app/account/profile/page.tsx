@@ -58,7 +58,9 @@ export default function ProfilePage() {
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-4">
-            <h1 className="font-bold text-xl">Tài khoản của tôi</h1>
+            <h1 className="font-bold text-xl dark:text-white">
+              Tài khoản của tôi
+            </h1>
             <Link
               target="_blank"
               href={`/user/${user.info?.username}`}
@@ -68,16 +70,16 @@ export default function ProfilePage() {
               <GoArrowUpRight className="text-lg" />
             </Link>
           </div>
-          <Form.Item className="mb-0">
+          <Form.Item className="mb-0 hidden md:block">
             <Button type="primary" htmlType="submit" loading={loading}>
               Lưu thông tin
             </Button>
           </Form.Item>
         </div>
 
-        <Row gutter={[16, 16]}>
-          <Col span={12}>
-            <div className="bg-gray-50 rounded-xl overflow-hidden">
+        <div className="flex md:flex-row flex-col gap-4 items-center">
+          <div className="w-full md:w-1/2">
+            <div className="bg-gray-50  dark:bg-[#222] rounded-xl overflow-hidden">
               <div className="relative h-[200px]">
                 <div className="absolute w-full z-0">
                   <Form.Item label="" name={"coverPhoto"}>
@@ -89,7 +91,7 @@ export default function ProfilePage() {
                     />
                   </Form.Item>
                 </div>
-                <div className="absolute -bottom-6 left-5 z-10">
+                <div className="absolute -bottom-10 md:-bottom-6 left-5 z-10">
                   <Form.Item label="" name={"avatar"} className="mb-0">
                     <AvatarUpload
                       onUploadOk={(url) => form.setFieldValue("avatar", url)}
@@ -102,7 +104,7 @@ export default function ProfilePage() {
                 <div className="px-3 pb-3">
                   <h1 className="text-lg font-bold mb-2">Thông tin cá nhân</h1>
                   <Form.Item
-                    label="Tên đăng nhập"
+                    label={"Tên đăng nhập"}
                     name="username"
                     rules={[
                       {
@@ -158,8 +160,8 @@ export default function ProfilePage() {
                 </div>
               </div>
             </div>
-          </Col>
-          <Col span={12}>
+          </div>
+          <div className="w-full md:w-1/2">
             <div className="flex flex-col gap-3">
               <div className="bg-slate-50 dark:bg-[#222] rounded-xl p-3">
                 <h1 className="text-lg font-bold mb-2">Giới thiệu</h1>
@@ -211,9 +213,20 @@ export default function ProfilePage() {
                   />
                 </Form.Item>
               </div>
+              <Form.Item className="mb-0 md:hidden block">
+                <Button
+                  type="primary"
+                  block
+                  size="large"
+                  htmlType="submit"
+                  loading={loading}
+                >
+                  Lưu thông tin
+                </Button>
+              </Form.Item>
             </div>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </Form>
     </div>
   );

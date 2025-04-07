@@ -27,7 +27,7 @@ export default function AuthPage() {
 
   return (
     <div className="flex items-center justify-center min-h-[70vh] ">
-      <div className="w-96 p-6 shadow-lg rounded-xl bg-white dark:bg-gray-800">
+      <div className="w-96 p-6 shadow-lg rounded-xl bg-white dark:bg-[#222]">
         <Title
           level={2}
           className="text-center text-gray-900 dark:text-gray-200"

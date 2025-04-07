@@ -54,16 +54,21 @@ export default function AccountLayout({ children }: AccountLayoutProps) {
   const confirmLogoutModalRef = useRef<ConfirmLogoutModalRef>();
 
   return (
-    <div className="flex min-h-screen max-w-7xl m-auto">
+    <div className="flex md:flex-row flex-col min-h-screen max-w-7xl m-auto">
       {/* Sidebar */}
-      <aside className="w-64 bg-white rounded-xl">
+      <aside className="w-64 hidden md:block">
         <nav>
           <div className="my px-3">
-            <div className="flex items-center gap-3">
-              <Avatar src={user.info?.avatar} className="w-[60px] h-[60px]" />
+            <div className="flex items-center md:gap-3 gap-2">
+              <Avatar
+                src={user.info?.avatar}
+                className="w-10 h-10 md:w-[60px] md:h-[60px]"
+              />
               <div>
-                <p className="font-bold">{user.info?.fullName}</p>
-                <span className="font-medium text-gray-400">
+                <p className="font-bold md:text-base text-sm">
+                  {user.info?.fullName}
+                </p>
+                <span className="font-medium text-gray-400 md:text-base text-sm">
                   {user.info?.rank}
                 </span>
               </div>
@@ -73,8 +78,8 @@ export default function AccountLayout({ children }: AccountLayoutProps) {
             {menuItems.map((item) => (
               <li
                 key={item.key}
-                className={`my-1.5 py-3 px-4 ${
-                  pathname === item.key ? "bg-purple-50" : ""
+                className={`my-[2px] md:my-1.5 py-2 md:py-3 px-4 md:text-base text-sm ${
+                  pathname === item.key ? "bg-purple-50 dark:bg-[#222]" : ""
                 }`}
               >
                 {item.key === "/account/logout" ? (
@@ -107,9 +112,43 @@ export default function AccountLayout({ children }: AccountLayoutProps) {
           </ul>
         </nav>
       </aside>
+      <nav className="fixed bottom-[10px] left-4 right-4 z-50 bg-black dark:text-white dark:bg-[#111] rounded-[40px]  md:hidden">
+        <ul className="flex justify-between items-center py-2">
+          {menuItems.map((item) => {
+            const isActive = pathname === item.key;
+            const classes = isActive
+              ? "text-purple-500 font-semibold"
+              : "text-gray-500 dark:text-gray-400";
+
+            return (
+              <li key={item.key} className="flex-1 text-center">
+                {item.key === "/account/logout" ? (
+                  <button
+                    onClick={() => confirmLogoutModalRef.current?.handleOpen()}
+                    className={`flex flex-col items-center justify-center w-full ${classes}`}
+                  >
+                    <div className="text-lg">{item.icon}</div>
+                    <span className="text-xs line-clamp-1">{item.label}</span>
+                  </button>
+                ) : (
+                  <Link
+                    href={item.key}
+                    className={`flex flex-col items-center justify-center w-full ${classes}`}
+                  >
+                    <div className="text-lg">{item.icon}</div>
+                    <span className="text-xs line-clamp-1 max-w-[70px]">
+                      {item.label}
+                    </span>
+                  </Link>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
 
       {/* Nội dung */}
-      <main className="flex-1 pl-6">{children}</main>
+      <main className="flex-1 md:pl-6">{children}</main>
       <ConfirmLogoutModal ref={confirmLogoutModalRef} />
     </div>
   );

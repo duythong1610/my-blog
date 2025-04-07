@@ -6,9 +6,12 @@ import { FaComment, FaHeart, FaRegComments, FaRegHeart } from "react-icons/fa"; 
 import { AiOutlineEye } from "react-icons/ai"; // Icon for views
 import { useMutation, useQueryClient } from "@tanstack/react-query"; // react-query for optimistic update
 import { toggleLikePost } from "@/services/post";
+import { Tooltip } from "antd";
+import { useAppSelector } from "@/lib/hook";
 
 const PostSummary = ({ post }: { post: Post }) => {
   const queryClient = useQueryClient();
+  const user = useAppSelector((state) => state.user.info);
 
   console.log(post);
   const [liked, setLiked] = useState<boolean>();
@@ -67,14 +70,18 @@ const PostSummary = ({ post }: { post: Post }) => {
     <div className="flex items-center gap-6">
       {/* View count with icon */}
       <div className="flex items-center gap-1">
-        <AiOutlineEye className="text-gray-500 !text-2xl" />
+        <Tooltip title="Lượt xem">
+          <AiOutlineEye className="text-gray-500 !text-2xl" />
+        </Tooltip>
         <span className="text-lg">{post.viewCount || 283}</span>
       </div>
 
       {/* Comment count with icon */}
       <div className="flex items-center gap-1">
-        <FaRegComments className="text-gray-500 !text-2xl" />
-        <span className="text-lg">{post.totalComment || 21}</span>
+        <Tooltip title="Bình luận">
+          <FaRegComments className="text-gray-500 !text-2xl" />
+        </Tooltip>
+        <span className="text-lg">{post.totalComment}</span>
       </div>
 
       {/* Like button with icon */}
@@ -83,9 +90,13 @@ const PostSummary = ({ post }: { post: Post }) => {
         onClick={handleLike}
       >
         {liked ? (
-          <FaHeart className="text-purple-500 !text-xl" />
+          <Tooltip title="Bỏ yêu thích">
+            <FaHeart className="text-purple-500 !text-xl" />
+          </Tooltip>
         ) : (
-          <FaRegHeart className="text-gray-500 !text-xl" />
+          <Tooltip title="Yêu thích">
+            <FaRegHeart className="text-gray-500 !text-xl" />
+          </Tooltip>
         )}
         <span className="text-lg min-w-[15px]">{likes}</span>
       </div>

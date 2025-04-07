@@ -4,7 +4,7 @@ import React from "react";
 const PrivacyPolicyPage = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-10 text-gray-800 dark:text-gray-200">
-      <h1 className="text-3xl font-bold mb-6">🛡️ Chính sách bảo mật</h1>
+      <h1 className="text-3xl font-bold mb-6">Chính sách bảo mật</h1>
       <p className="mb-4">Cập nhật lần cuối: 06/04/2025</p>
 
       <p className="mb-6">

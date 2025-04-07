@@ -13,8 +13,11 @@ export default function ThemeProviderWrapper({
 }: {
   children: React.ReactNode;
 }) {
-  const { theme } = useTheme(); // Hook để lấy theme từ next-themes
   const dispatch = useAppDispatch();
+
+  const { theme } = useTheme();
+
+  const isDark = theme === "dark";
 
   useEffect(() => {
     const token = getToken();
@@ -31,17 +34,23 @@ export default function ThemeProviderWrapper({
   const darkTheme = {
     colorPrimary: "#a855f7",
     fontFamily: `__Raleway_2c93db', '__Raleway_Fallback_2c93db`,
+    colorTextBase: "#ffffff", // màu chữ chính
+    colorTextPlaceholder: "#999999", // màu chữ placeholder
+    colorTextLabel: "#ffffff", // màu label form
+    colorBgContainer: "#1f1f1f", // nền input
+    colorBgElevated: "#141414", // nền popup datepicker, dropdown...
+    colorBorder: "#333333", // viền input
+    colorSplit: "#444444", // viền separator trong DatePicker
+    colorIcon: "#bbbbbb", // màu icon
+    colorIconHover: "#ffffff", // màu icon khi hover
   };
-
   return (
     <ConfigProvider
       theme={{
-        token: theme === "dark" ? darkTheme : lightTheme,
+        token: isDark ? darkTheme : lightTheme,
       }}
     >
-      <AntdRegistry>
-        <ThemeProvider attribute="data-mode">{children}</ThemeProvider>
-      </AntdRegistry>
+      {children}
     </ConfigProvider>
   );
 }
