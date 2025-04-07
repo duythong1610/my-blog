@@ -37,6 +37,8 @@ const notificationTypes = [
 ];
 
 const NotificationSettingsPage = () => {
+  const queryClient = useQueryClient();
+
   const { notificationSettings } = useNotificationSettings({
     initQuery: {
       page: 1,
@@ -44,9 +46,7 @@ const NotificationSettingsPage = () => {
     },
   });
 
-  const handleUpdateNotificationSettings = (notificationSettingsId: string) => {
-    const queryClient = useQueryClient();
-
+  const useUpdateNotificationSettings = (notificationSettingsId: string) => {
     return useMutation({
       mutationFn: (data: NotificationSettings) =>
         updateNotificationSettings(notificationSettingsId, data),
@@ -56,7 +56,7 @@ const NotificationSettingsPage = () => {
     });
   };
 
-  const updateMutation = handleUpdateNotificationSettings(
+  const updateMutation = useUpdateNotificationSettings(
     notificationSettings?._id ?? ""
   );
 
@@ -113,6 +113,7 @@ const NotificationSettingsPage = () => {
             key={item.key}
             actions={[
               <Switch
+                key={item.key}
                 checked={settings[item.key]}
                 onChange={(checked) => toggleSwitch(item.key, checked)}
               />,
