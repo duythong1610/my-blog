@@ -98,7 +98,10 @@ export default function PostCard({
               alt={post.author.fullName || "writeflow_author_avatar"}
               className="rounded-full object-cover w-[40px] h-[40px]"
             />
-            <Link href={`/blog/${post.slug}`} className="hover:underline">
+            <Link
+              href={`/blog/${post.slug}`}
+              className="hover:underline flex-1"
+            >
               <h2 className="font-extrabold text-lg text-[#33404A] dark:text-white line-clamp-2 h-[56px]">
                 {post.title}
               </h2>

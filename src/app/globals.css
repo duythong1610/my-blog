@@ -49,4 +49,8 @@ body {
   background-color: #8b4df9; /* Darker purple when hovered */
 }
 
-
+.ant-input-outlined:focus-within,
+.ant-picker-outlined:focus-within,
+.ant-btn-color-primary {
+  box-shadow: none;
+}

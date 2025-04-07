@@ -71,7 +71,7 @@ export default function UserMenu() {
   const notificationMenu = (
     <div className="w-[350px] bg-white dark:bg-black rounded-lg shadow-xl py-3 px-2">
       <div className="flex items-center justify-between mt-2 px-3">
-        <h1 className="text-base font-bold ">Thông báo</h1>
+        <h1 className="text-base font-bold dark:text-white">Thông báo</h1>
         <span className="text-purple-500 font-medium text-sm cursor-pointer">
           Đánh dấu là đã đọc
         </span>

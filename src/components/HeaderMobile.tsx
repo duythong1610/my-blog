@@ -16,12 +16,17 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { MenuToggle } from "./MenuToggle";
 import NotificationItem from "./Notification/NotificationItem";
 import ThemeSwitcher from "./ThemeSwitcher";
+import { GrLinkNext } from "react-icons/gr";
+import { useAppDispatch, useAppSelector } from "@/lib/hook";
+import { logout } from "@/lib/features/users/userSlice";
 
 const HeaderMobile = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const { theme } = useTheme();
   const router = useRouter();
+  const user = useAppSelector((state) => state.user.info);
+  const dispatch = useAppDispatch();
 
   const scope = useMenuAnimation(isOpen);
 
@@ -31,6 +36,12 @@ const HeaderMobile = () => {
       limit: 50,
     },
   });
+
+  const handleLogout = () => {
+    setIsOpen(false);
+    dispatch(logout());
+    router.push("/login");
+  };
 
   const notificationMenu = (
     <div className="w-[350px] bg-white dark:bg-black rounded-lg shadow-xl py-3 px-2">
@@ -129,7 +140,7 @@ const HeaderMobile = () => {
           </ul>
         </motion.div>
       </nav>
-      <nav className="p-4 h-20 block md:hidden bg-white dark:bg-[#0e100f] shadow-md overflow-hidden fixed top-0 left-0 right-0 z-10">
+      <nav className="p-4 h-20 block md:hidden bg-white dark:bg-[#0d0d0d40] backdrop-blur-[5px] shadow-md fixed top-0 left-0 right-0 z-10">
         <motion.div
           initial={{ y: 100 }}
           animate={{ y: 0 }}
@@ -150,12 +161,12 @@ const HeaderMobile = () => {
               </div>
             </Link>
           </div>
-          <div className="flex items-center gap-1 md:gap-2 pl-[50px]">
+          <div className="flex items-center gap-1 md:gap-2 pl-[60px]">
             {/* Thông báo */}
             <Dropdown
               overlay={notificationMenu}
               trigger={["click"]}
-              placement="bottomRight"
+              placement="bottomCenter"
             >
               <div className="rounded-full p-1 md:p-2 w-8 h-8 md:w-10 md:h-10 hover:bg-purple-100 cursor-pointer group">
                 <Badge count={notifications.length} color="#a855f7">
@@ -166,14 +177,54 @@ const HeaderMobile = () => {
             <ThemeSwitcher />
           </div>
           <div ref={scope}>
-            <nav className="menu border-purple-400 border-b-[3px] bg-white dark:bg-[#222] md:hidden">
-              <ul className="flex gap-5 flex-col items-center text-3xl">
+            <nav className="menu border-purple-400 border-b-[3px] bg-white dark:bg-[#222] md:hidden px-5">
+              {user && (
+                <>
+                  <div className="flex items-center gap-3">
+                    <Image
+                      className="object-cover rounded-full w-[64px] h-[64px]"
+                      src={user.avatar || ""}
+                      alt={"author_avatar"}
+                      width={200}
+                      height={200}
+                    />
+                    <div className="flex flex-col gap-1">
+                      <Link
+                        href={`/account/profile`}
+                        onClick={() => setIsOpen(false)}
+                        className="text-[#33404A] dark:text-white font-bold"
+                      >
+                        {user?.fullName}
+                      </Link>
+                      <span>@{user.username}</span>
+                    </div>
+                  </div>
+                  <div className="flex flex-col mt-3">
+                    <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">
+                      Bạn muốn chia sẻ?
+                    </span>
+                    <Link
+                      href={"/viet-bai"}
+                      className="font-bold text-sm w-fit"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <div className="flex items-center gap-1 cursor-pointer hover:underline">
+                        Đăng bài ngay
+                        <GrLinkNext className="text-sm" />
+                      </div>
+                    </Link>
+                  </div>
+                </>
+              )}
+
+              <ul className="flex gap-4 flex-col mt-5 text-xl">
                 <li>
                   <Link
                     href="/"
                     className={`font-medium hover:text-purple-500 ${
                       pathname === "/" ? " text-purple-500 !font-bold" : ""
                     }`}
+                    onClick={() => setIsOpen(false)}
                   >
                     Trang chủ
                   </Link>
@@ -184,6 +235,7 @@ const HeaderMobile = () => {
                     className={`font-medium hover:text-purple-500 ${
                       pathname === "/post" ? " text-purple-500 !font-bold" : ""
                     }`}
+                    onClick={() => setIsOpen(false)}
                   >
                     Bài viết
                   </Link>
@@ -194,6 +246,7 @@ const HeaderMobile = () => {
                     className={`font-medium hover:text-purple-500 ${
                       pathname === "/about" ? " text-purple-500 !font-bold" : ""
                     }`}
+                    onClick={() => setIsOpen(false)}
                   >
                     Hỏi đáp
                   </Link>
@@ -206,11 +259,37 @@ const HeaderMobile = () => {
                         ? " text-purple-500 !font-bold"
                         : ""
                     }`}
+                    onClick={() => setIsOpen(false)}
                   >
                     Khóa học
                   </Link>
                 </li>
               </ul>
+              {!user ? (
+                <div className="flex items-center gap-3 mt-10">
+                  <div className="w-1/2 m-auto">
+                    <Link href="/login" onClick={() => setIsOpen(false)}>
+                      <div className="bg-purple-500 border-none text-white hover:bg-purple-400 rounded-[40px] py-2 px-3 m-auto">
+                        <div className="text-center">
+                          <span className="font-bold">Đăng nhập</span>
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center gap-3 mt-10">
+                  <div className="w-1/2 m-auto">
+                    <div onClick={() => handleLogout()}>
+                      <div className="bg-purple-500 border-none text-white hover:bg-purple-400 rounded-[40px] py-2 px-3 m-auto">
+                        <div className="text-center">
+                          <span className="font-bold">Đăng xuất</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </nav>
             <MenuToggle toggle={() => setIsOpen(!isOpen)} />
           </div>

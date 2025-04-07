@@ -31,9 +31,11 @@ import "@mdxeditor/editor/style.css";
 import { useState } from "react";
 import { LuImagePlus } from "react-icons/lu";
 import ImageUploadModal from "./ImageUploadModal";
+import { useTheme } from "next-themes";
 
 const MDXEditorComponent = ({ editorKey, markdown, onChange }: any) => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const { theme } = useTheme();
 
   const openImageModal = () => {
     setModalOpen(true);
@@ -157,7 +159,9 @@ export default function App() {
             ),
           }),
         ]}
-        className="border border-gray-300 rounded-md p-4"
+        className={`${
+          theme == "dark" ? "dark-theme" : ""
+        } border border-gray-300 rounded-md p-4 min-h-[300px] custom-scrollbar`}
       />
     </>
   );

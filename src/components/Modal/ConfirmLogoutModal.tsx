@@ -16,7 +16,7 @@ const ConfirmLogoutModal = React.forwardRef(({}, ref) => {
   const handleLogout = () => {
     setVisible(false);
     dispatch(logout());
-    router.push("/auth");
+    router.push("/login");
   };
 
   useImperativeHandle<any, ConfirmLogoutModalRef>(
