@@ -136,9 +136,9 @@ export default function UserMenu() {
           trigger={["click"]}
           placement="bottomRight"
         >
-          <div className="rounded-full p-2 w-10 h-10 hover:bg-purple-100 cursor-pointer group">
+          <div className="rounded-full p-2 w-10 h-10 hover:bg-purple-100 dark:hover:bg-[#222] cursor-pointer group">
             <Badge count={notifications.length} color="#a855f7">
-              <IoIosNotificationsOutline className="text-2xl dark:text-white group-hover:text-purple-500" />
+              <IoIosNotificationsOutline className="text-2xl dark:text-white group-hover:text-purple-500 dark:group-hover:text-white" />
             </Badge>
           </div>
         </Dropdown>

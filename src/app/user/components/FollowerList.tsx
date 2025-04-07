@@ -21,7 +21,7 @@ export default function FollowerList({ userId }: { userId: string }) {
       {followers?.length === 0 ? (
         <p>Chưa có người theo dõi.</p>
       ) : (
-        <div className="grid grid-cols-2 gap-x-6 gap-y-[48px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {followers?.map((follower) => (
             <FollowerCard key={follower._id} follower={follower} />
           ))}

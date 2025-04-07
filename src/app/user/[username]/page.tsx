@@ -19,6 +19,7 @@ import FollowAction from "../components/FollowAction";
 import FollowerList from "../components/FollowerList";
 import FollowingList from "../components/FollowingList";
 import UserPost from "../components/UserPost";
+import { RiVerifiedBadgeFill } from "react-icons/ri";
 
 interface UserDetailPageProps {
   params: { username: string };
@@ -196,13 +197,17 @@ const UserDetailPage: NextPage<UserDetailPageProps> = async ({ params }) => {
       <div>
         <div className="relative h-[250px] md:h-[450px]">
           <div className="absolute w-full z-0">
-            <Image
-              src={user?.coverPhoto}
-              alt={"anh-bia"}
-              width={1500}
-              height={600}
-              className="!w-full h-[250px] md:h-[450px] object-cover rounded-xl"
-            ></Image>
+            {user?.coverPhoto ? (
+              <Image
+                src={user?.coverPhoto}
+                alt={"anh-bia"}
+                width={1500}
+                height={600}
+                className="!w-full h-[250px] md:h-[450px] object-cover rounded-xl"
+              ></Image>
+            ) : (
+              <div className="!w-full h-[250px] md:h-[450px]  rounded-xl bg-[#555]"></div>
+            )}
           </div>
           <div className="absolute -bottom-[25%] md:-bottom-[90px] left-5">
             <div className="flex items-end gap-4 mb-2">
@@ -217,13 +222,15 @@ const UserDetailPage: NextPage<UserDetailPageProps> = async ({ params }) => {
           </div>
         </div>
 
-        <div className="pl-[140px] md:pl-[200px] mt-2 flex items-center justify-between">
+        <div className="pl-[140px] md:pl-[200px] mt-2 gap-3 flex flex-col md:flex-row items-center justify-between">
           <div>
             <div className="flex items-center gap-2">
               <p className="font-bold text-2xl md:text-3xl">{user?.fullName}</p>
-              {user?.rank == "Master" && (
-                <Tooltip title="Người có đóng góp nhiều nhất">
-                  <FaMedal className="text-xl md:text-2xl text-purple-500" />
+
+              {(user?.username == "writeflow" ||
+                user?.username == "auduythong") && (
+                <Tooltip title="Tài khoản đã được xác minh">
+                  <RiVerifiedBadgeFill className="text-xl md:text-2xl fill-purple-500" />
                 </Tooltip>
               )}
             </div>

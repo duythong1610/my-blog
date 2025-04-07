@@ -58,7 +58,7 @@ const CommentSystem: React.FC<CommentSystemProps> = ({
   const organizedComments = organizeComments(comments);
 
   return (
-    <div>
+    <div id="#comment">
       <h2 className="text-xl font-semibold mb-4">Bình luận</h2>
       <CommentForm postId={postId} currentUser={currentUser} />
 

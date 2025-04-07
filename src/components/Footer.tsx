@@ -25,7 +25,7 @@ export default function Footer() {
             />{" "}
             WriteFlow
           </div>
-          <p className="mt-5 text-base text-gray-500">
+          <p className="mt-5 text-base text-gray-500 dark:text-gray-300">
             Chúng tôi tin rằng kiến thức nên được sẻ chia. Tại WriteFlow, bất kỳ
             ai cũng có thể kể câu chuyện của mình, chia sẻ kinh nghiệm lập trình
             và truyền cảm hứng cho cộng đồng. Dù bạn là người mới học code hay

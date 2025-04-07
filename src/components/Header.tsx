@@ -18,7 +18,7 @@ export default function Header() {
       {isMobile ? (
         <HeaderMobile />
       ) : (
-        <header className="w-full p-4  m-auto fixed top-0 left-0 right-0 z-50 bg-white dark:bg-[#0e100f] shadow-md">
+        <header className="w-full p-4  m-auto fixed top-0 left-0 right-0 z-50 bg-white dark:bg-[#0d0d0d40] backdrop-blur-[5px] shadow-md">
           <div className="max-w-7xl mx-auto flex justify-between items-center">
             {/* Logo */}
             <Link href="/" className="text-base font-black uppercase">

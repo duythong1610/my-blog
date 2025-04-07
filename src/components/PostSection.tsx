@@ -16,6 +16,8 @@ const PostSection = () => {
 
   console.log(totalPost);
 
+  console.log(loadingPost);
+
   const handleSearch = useCallback(
     debounce((keyword: string) => {
       setQueryPost((prevQuery) => ({ ...prevQuery, search: keyword }));
@@ -34,7 +36,7 @@ const PostSection = () => {
   return (
     <>
       <div className="flex-1">
-        <h1 className="font-extrabold text-xl md:text-3xl text-[#050505] dark:text-white leading-[50px] md:mb-6">
+        <h1 className="font-extrabold text-xl md:text-3xl text-[#050505] dark:text-white leading-[50px] md:mb-10">
           Tất cả bài viết
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-4 md:gap-y-[48px]">
@@ -42,7 +44,7 @@ const PostSection = () => {
             <PostCard loading={loadingPost} key={post._id} post={post} />
           ))}
         </div>
-        <div className="flex justify-center mt-8">
+        <div className="flex justify-center mt-10">
           <Pagination
             current={queryPost.page}
             pageSize={queryPost.limit}
@@ -50,7 +52,7 @@ const PostSection = () => {
             onChange={handlePageChange}
             showSizeChanger={false}
             hideOnSinglePage={true}
-            className="pagination-custom"
+            // className="pagination-custom"
           />
         </div>
       </div>
