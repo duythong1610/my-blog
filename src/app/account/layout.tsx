@@ -14,6 +14,7 @@ import ConfirmLogoutModal, {
 } from "@/components/Modal/ConfirmLogoutModal";
 import { FaHeart } from "react-icons/fa";
 import { IoMdHeartEmpty } from "react-icons/io";
+import { IoSettingsOutline } from "react-icons/io5";
 interface MenuItem {
   key: string;
   label: string;
@@ -31,10 +32,16 @@ const menuItems: MenuItem[] = [
     label: "Bài viết của tôi",
     icon: <LuNotebookPen className="text-2xl" />,
   },
+
   {
     key: "/account/liked-posts",
     label: "Yêu thích",
     icon: <IoMdHeartEmpty className="text-2xl" />,
+  },
+  {
+    key: "/account/settings",
+    label: "Cài đặt",
+    icon: <IoSettingsOutline className="text-2xl" />,
   },
   {
     key: "/account/logout",
