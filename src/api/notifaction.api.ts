@@ -7,4 +7,14 @@ export const notificationApi = {
       url: "/user/notification",
       params,
     }),
+  isRead: (id: string): AxiosPromise<any> =>
+    request({
+      url: `/user/notification/${id}/read`,
+      method: "patch",
+    }),
+  markAll: (): AxiosPromise<any> =>
+    request({
+      url: `/user/notification/mark-all-read`,
+      method: "patch",
+    }),
 };

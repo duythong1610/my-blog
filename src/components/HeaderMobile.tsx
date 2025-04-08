@@ -3,7 +3,7 @@
 import logo from "@/assets/images/logo.png";
 import useMenuAnimation from "@/hooks/useMenuAnimation";
 import { useNotification } from "@/hooks/useNotification";
-import Notification from "@/types/notification";
+import Notification, { NotificationType } from "@/types/notification";
 import { Badge, Dropdown } from "antd";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
@@ -19,6 +19,7 @@ import ThemeSwitcher from "./ThemeSwitcher";
 import { GrLinkNext } from "react-icons/gr";
 import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { logout } from "@/lib/features/users/userSlice";
+import { notificationApi } from "@/api/notifaction.api";
 
 const HeaderMobile = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,6 +44,13 @@ const HeaderMobile = () => {
     router.push("/login");
   };
 
+  const handleReadNotification = async (notificationId: string) => {
+    try {
+      await notificationApi.isRead(notificationId);
+      fetchNotification();
+    } catch (error) {}
+  };
+
   const notificationMenu = (
     <div className="w-[350px] bg-white dark:bg-black rounded-lg shadow-xl py-3 px-2">
       <div className="flex items-center justify-between mt-2 px-3">
@@ -63,10 +71,16 @@ const HeaderMobile = () => {
           {notifications.map((item) => (
             <NotificationItem
               key={item._id}
-              onView={(notification: Notification) => {
-                if (notification.type == "post_approved") {
+              onView={async (notification: Notification) => {
+                if (
+                  notification.type == NotificationType.postApprove ||
+                  notification.type == NotificationType.comment
+                ) {
                   router.push(`/blog/${notification.post.slug}`);
                 } else {
+                }
+                if (!notification.isRead) {
+                  await handleReadNotification(notification._id);
                 }
               }}
               notification={item}
