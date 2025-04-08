@@ -2,7 +2,7 @@
 
 import { useNotification } from "@/hooks/useNotification";
 import { useAppSelector } from "@/lib/hook";
-import Notification from "@/types/notification";
+import Notification, { NotificationType } from "@/types/notification";
 import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Badge, Dropdown, Menu } from "antd";
 import Image from "next/image";
@@ -18,6 +18,7 @@ import ConfirmLogoutModal, {
 } from "./Modal/ConfirmLogoutModal";
 import NotificationItem from "./Notification/NotificationItem";
 import ThemeSwitcher from "./ThemeSwitcher";
+import { notificationApi } from "@/api/notifaction.api";
 
 export default function UserMenu() {
   const router = useRouter();
@@ -25,12 +26,27 @@ export default function UserMenu() {
 
   const confirmLogoutModalRef = useRef<ConfirmLogoutModalRef>();
 
-  const { notifications, fetchNotification } = useNotification({
-    initQuery: {
-      page: 1,
-      limit: 50,
-    },
-  });
+  const { notifications, fetchNotification, unreadTotalNotification } =
+    useNotification({
+      initQuery: {
+        page: 1,
+        limit: 50,
+      },
+    });
+
+  const handleReadNotification = async (notificationId: string) => {
+    try {
+      await notificationApi.isRead(notificationId);
+      fetchNotification();
+    } catch (error) {}
+  };
+
+  const handleMarkAllAsReadNotification = async () => {
+    try {
+      await notificationApi.markAll();
+      fetchNotification();
+    } catch (error) {}
+  };
 
   if (!user) {
     return (
@@ -72,7 +88,10 @@ export default function UserMenu() {
     <div className="w-[350px] bg-white dark:bg-black rounded-lg shadow-xl py-3 px-2">
       <div className="flex items-center justify-between mt-2 px-3">
         <h1 className="text-base font-bold dark:text-white">Thông báo</h1>
-        <span className="text-purple-500 font-medium text-sm cursor-pointer">
+        <span
+          className="text-purple-500 font-medium text-sm cursor-pointer"
+          onClick={() => handleMarkAllAsReadNotification()}
+        >
           Đánh dấu là đã đọc
         </span>
       </div>
@@ -89,9 +108,16 @@ export default function UserMenu() {
             <NotificationItem
               key={item._id}
               onView={async (notification: Notification) => {
-                if (notification.type == "post_approved") {
+                if (
+                  notification.type == NotificationType.postApprove ||
+                  notification.type == NotificationType.comment
+                ) {
                   router.push(`/blog/${notification.post.slug}`);
                 } else {
+                }
+
+                if (!notification.isRead) {
+                  await handleReadNotification(notification._id);
                 }
               }}
               notification={item}
@@ -137,7 +163,7 @@ export default function UserMenu() {
           placement="bottomRight"
         >
           <div className="rounded-full p-2 w-10 h-10 hover:bg-purple-100 dark:hover:bg-[#222] cursor-pointer group">
-            <Badge count={notifications.length} color="#a855f7">
+            <Badge count={unreadTotalNotification} color="#a855f7">
               <IoIosNotificationsOutline className="text-2xl dark:text-white group-hover:text-purple-500 dark:group-hover:text-white" />
             </Badge>
           </div>

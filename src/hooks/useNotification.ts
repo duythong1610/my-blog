@@ -15,6 +15,7 @@ interface NotificationProps {
 interface DataProps {
   notifications: Notification[];
   total: number;
+  unreadTotal: number;
 }
 
 export const useNotification = ({ initQuery }: NotificationProps) => {
@@ -44,6 +45,7 @@ export const useNotification = ({ initQuery }: NotificationProps) => {
   return {
     notifications: data?.notifications || [],
     totalNotification: data?.total || 0,
+    unreadTotalNotification: data?.unreadTotal ?? 0,
     loadingNotification: isLoading,
     fetchNotification: refetch,
     queryNotification: query,
