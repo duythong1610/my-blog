@@ -23,6 +23,7 @@ import { notificationApi } from "@/api/notifaction.api";
 export default function UserMenu() {
   const router = useRouter();
   const user = useAppSelector((state) => state.user.info);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
   const confirmLogoutModalRef = useRef<ConfirmLogoutModalRef>();
 
@@ -108,12 +109,18 @@ export default function UserMenu() {
             <NotificationItem
               key={item._id}
               onView={async (notification: Notification) => {
-                if (
-                  notification.type == NotificationType.postApprove ||
-                  notification.type == NotificationType.comment
-                ) {
+                setIsNotificationOpen(false);
+                if (notification.type == NotificationType.postApprove) {
                   router.push(`/blog/${notification.post.slug}`);
-                } else {
+                }
+                if (
+                  notification.type == NotificationType.comment ||
+                  notification.type == NotificationType.reply
+                ) {
+                  router.push(`/blog/${notification.post.slug}#comment`);
+                }
+                if (notification.type == NotificationType.follow) {
+                  router.push(`/user/${notification.senders?.[0].username}`);
                 }
 
                 if (!notification.isRead) {
@@ -159,11 +166,17 @@ export default function UserMenu() {
         {/* Thông báo */}
         <Dropdown
           overlay={notificationMenu}
+          open={isNotificationOpen}
+          onOpenChange={(visible) => setIsNotificationOpen(visible)}
           trigger={["click"]}
           placement="bottomRight"
         >
           <div className="rounded-full p-2 w-10 h-10 hover:bg-purple-100 dark:hover:bg-[#222] cursor-pointer group">
-            <Badge count={unreadTotalNotification} color="#a855f7">
+            <Badge
+              count={unreadTotalNotification}
+              color="#a855f7"
+              className="!border-none"
+            >
               <IoIosNotificationsOutline className="text-2xl dark:text-white group-hover:text-purple-500 dark:group-hover:text-white" />
             </Badge>
           </div>

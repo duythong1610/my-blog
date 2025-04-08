@@ -39,7 +39,7 @@ const PostSection = () => {
         <h1 className="font-extrabold text-xl md:text-3xl text-[#050505] dark:text-white leading-[50px] md:mb-10">
           Tất cả bài viết
         </h1>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-4 md:gap-y-[48px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4 md:gap-y-[48px]">
           {loadingPost
             ? Array.from({ length: 6 }).map((_, index) => (
                 <PostCard loading={true} key={index} post={{} as any} />

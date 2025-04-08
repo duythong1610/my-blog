@@ -6,11 +6,11 @@ import { useQuery } from "@tanstack/react-query";
 import { Collapse, CollapseProps } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CiCalendar } from "react-icons/ci";
 import { FaChevronDown } from "react-icons/fa";
 import MarkdownRenderer from "../MarkdownRendered";
-import { getPostDetail } from "@/services/post";
+import { getPostDetail, increasePostView } from "@/services/post";
 import FloatButtonGroup from "../FloatButtonGroup";
 import PostSummary from "./PostSummary";
 import CommentSystem from "../Comment/CommentSystem";
@@ -43,12 +43,34 @@ const PostContent = ({ post, slug }: PropsType) => {
 
   const scrollToComments = () => {
     commentRef.current?.scrollIntoView({ behavior: "smooth" });
+    window.history.pushState(null, "", "#comment");
   };
 
   // Handler for when headings are extracted from markdown
   const handleHeadingsExtracted = (extractedHeadings: Heading[]) => {
     setHeadings(extractedHeadings);
   };
+
+  useEffect(() => {
+    if (slug) {
+      increasePostView(slug);
+    }
+  }, [slug]);
+
+  useEffect(() => {
+    if (window.location.hash === "#comment" && commentRef.current) {
+      const timeout = setTimeout(() => {
+        commentRef.current?.scrollIntoView({ behavior: "smooth" });
+        history.replaceState(
+          null,
+          "",
+          window.location.pathname + window.location.search
+        );
+      }, 500); // đợi mọi thứ render xong
+
+      return () => clearTimeout(timeout);
+    }
+  }, [headings]);
 
   const items: CollapseProps["items"] = [
     {
