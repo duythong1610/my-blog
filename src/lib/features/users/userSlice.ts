@@ -19,32 +19,26 @@ const initialState: UserState = {
   error: null,
 };
 
-// Tạo async thunk cho việc đăng nhập
-export const login = createAsyncThunk(
-  "user/login",
-  async ({ username, password }: { username: string; password: string }) => {
+export const getProfile = createAsyncThunk(
+  "user/getProfile",
+  async (_, { rejectWithValue }) => {
     try {
-      const response = await authApi.login({ username, password });
+      const response = await authApi.profile();
       return response.data;
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      rejectWithValue(error.response.data.message || "Get profile failed");
     }
   }
 );
-
-export const getProfile = createAsyncThunk("user/getProfile", async () => {
-  try {
-    const response = await authApi.profile();
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-});
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    login: (state, action) => {
+      state.isAuthenticated = true;
+      setToken(action.payload);
+    },
     logout: (state) => {
       state.info = null;
       state.isAuthenticated = false;
@@ -54,10 +48,6 @@ const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(login.fulfilled, (state, action) => {
-      state.isAuthenticated = true;
-      setToken(action.payload); // Giả sử bạn có setToken function
-    });
     builder.addCase(getProfile.fulfilled, (state, action) => {
       state.isAuthenticated = true;
       state.info = action.payload;
@@ -66,5 +56,5 @@ const userSlice = createSlice({
 });
 
 // Export action logout và reducer
-export const { logout } = userSlice.actions;
+export const { logout, login } = userSlice.actions;
 export default userSlice.reducer;

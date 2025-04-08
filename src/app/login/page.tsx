@@ -1,8 +1,9 @@
 "use client";
 
+import { authApi } from "@/api/auth.api";
 import { getProfile, login } from "@/lib/features/users/userSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hook";
-import { Button, Form, Input, Typography } from "antd";
+import { Button, Form, Input, message, Typography } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -13,15 +14,23 @@ export default function AuthPage() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const onFinish = async (values: any) => {
     const { username, password } = values;
+    setLoading(true);
     try {
-      await dispatch(login({ username, password }));
-      await dispatch(getProfile());
+      const response = await authApi.login({ username, password });
+      if (response.data) {
+        dispatch(login(response.data));
+        await dispatch(getProfile());
+      }
       router.push("/");
+      message.success("Đăng nhập thành công!");
     } catch (e) {
-      console.log(e);
+      console.error("Login or profile fetch failed", e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -59,7 +68,13 @@ export default function AuthPage() {
             <Input.Password size="large" placeholder="Mật khẩu" />
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit" block size="large">
+            <Button
+              type="primary"
+              htmlType="submit"
+              block
+              size="large"
+              loading={loading}
+            >
               Đăng nhập
             </Button>
           </Form.Item>
