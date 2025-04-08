@@ -27,6 +27,11 @@ export const postApi = {
     request({
       url: `/user/post/${slug}`,
     }),
+  increasePostView: (slug: string): AxiosPromise<any> =>
+    request({
+      url: `/user/view/${slug}`,
+      method: "patch",
+    }),
   create: (data: any): AxiosPromise<any> =>
     request({
       url: "/user/post",

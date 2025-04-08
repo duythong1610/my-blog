@@ -77,7 +77,7 @@ const PostSummary = ({
       {/* View count with icon */}
       <div className="flex items-center gap-1">
         <Tooltip title="Lượt xem">
-          <AiOutlineEye className="text-gray-500 !text-2xl" />
+          <AiOutlineEye className="text-gray-500 dark:text-white !text-2xl" />
         </Tooltip>
         <span className="text-lg">{post.viewCount || 283}</span>
       </div>
@@ -86,7 +86,7 @@ const PostSummary = ({
       <div className="flex items-center gap-1">
         <Tooltip title="Bình luận">
           <FaRegComments
-            className="text-gray-500 !text-2xl"
+            className="text-gray-500 dark:text-white !text-2xl cursor-pointer"
             onClick={() => onScrollComment()}
           />
         </Tooltip>
@@ -104,7 +104,7 @@ const PostSummary = ({
           </Tooltip>
         ) : (
           <Tooltip title="Yêu thích">
-            <FaRegHeart className="text-gray-500 !text-xl" />
+            <FaRegHeart className="text-gray-500 dark:text-white !text-xl" />
           </Tooltip>
         )}
         <span className="text-lg min-w-[15px]">{likes}</span>

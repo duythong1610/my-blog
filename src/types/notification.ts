@@ -18,6 +18,7 @@ interface Notification {
   isRead: boolean;
   createdAt: Date;
   updatedAt: Date;
+  senders: User[];
 }
 
 export default Notification;

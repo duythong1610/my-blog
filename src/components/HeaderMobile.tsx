@@ -28,6 +28,7 @@ const HeaderMobile = () => {
   const router = useRouter();
   const user = useAppSelector((state) => state.user.info);
   const dispatch = useAppDispatch();
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
   const scope = useMenuAnimation(isOpen);
 
@@ -72,13 +73,18 @@ const HeaderMobile = () => {
             <NotificationItem
               key={item._id}
               onView={async (notification: Notification) => {
+                setIsNotificationOpen(false);
                 if (
                   notification.type == NotificationType.postApprove ||
                   notification.type == NotificationType.comment
                 ) {
                   router.push(`/blog/${notification.post.slug}`);
-                } else {
                 }
+
+                if (notification.type == NotificationType.follow) {
+                  router.push(`/user/${notification.senders?.[0].username}`);
+                }
+
                 if (!notification.isRead) {
                   await handleReadNotification(notification._id);
                 }
@@ -179,11 +185,17 @@ const HeaderMobile = () => {
             {/* Thông báo */}
             <Dropdown
               overlay={notificationMenu}
+              open={isNotificationOpen}
+              onOpenChange={(visible) => setIsNotificationOpen(visible)}
               trigger={["click"]}
               placement="bottomCenter"
             >
               <div className="rounded-full p-1 md:p-2 w-8 h-8 md:w-10 md:h-10 hover:bg-purple-100 cursor-pointer group">
-                <Badge count={notifications.length} color="#a855f7">
+                <Badge
+                  count={notifications.length}
+                  color="#a855f7"
+                  className="!border-none"
+                >
                   <IoIosNotificationsOutline className="text-2xl dark:text-white group-hover:text-purple-500" />
                 </Badge>
               </div>
