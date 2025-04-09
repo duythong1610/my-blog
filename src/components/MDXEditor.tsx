@@ -13,6 +13,7 @@ import {
   headingsPlugin,
   imagePlugin,
   InsertCodeBlock,
+  InsertTable,
   linkDialogPlugin,
   linkPlugin,
   listsPlugin,
@@ -128,7 +129,9 @@ export default function App() {
                 <ListsToggle />
                 <CodeToggle />
                 <CreateLink />
+                <InsertTable />
                 <InsertCodeBlock />
+
                 <div className="hover:bg-[#e0e1e6] p-1 rounded-md">
                   <LuImagePlus
                     className="text-[20px] text-gray-400"
