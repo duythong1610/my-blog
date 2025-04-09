@@ -183,23 +183,26 @@ const HeaderMobile = () => {
           </div>
           <div className="flex items-center gap-1 md:gap-2 pl-[60px]">
             {/* Thông báo */}
-            <Dropdown
-              overlay={notificationMenu}
-              open={isNotificationOpen}
-              onOpenChange={(visible) => setIsNotificationOpen(visible)}
-              trigger={["click"]}
-              placement="bottomCenter"
-            >
-              <div className="rounded-full p-1 md:p-2 w-8 h-8 md:w-10 md:h-10 hover:bg-purple-100 cursor-pointer group">
-                <Badge
-                  count={notifications.length}
-                  color="#a855f7"
-                  className="!border-none"
-                >
-                  <IoIosNotificationsOutline className="text-2xl dark:text-white group-hover:text-purple-500" />
-                </Badge>
-              </div>
-            </Dropdown>
+            {user && (
+              <Dropdown
+                overlay={notificationMenu}
+                open={isNotificationOpen}
+                onOpenChange={(visible) => setIsNotificationOpen(visible)}
+                trigger={["click"]}
+                placement="bottomCenter"
+              >
+                <div className="rounded-full p-1 md:p-2 w-8 h-8 md:w-10 md:h-10 hover:bg-[#222] cursor-pointer group">
+                  <Badge
+                    count={notifications.length}
+                    color="#a855f7"
+                    className="!border-none"
+                  >
+                    <IoIosNotificationsOutline className="text-2xl dark:text-white group-hover:text-purple-500" />
+                  </Badge>
+                </div>
+              </Dropdown>
+            )}
+
             <ThemeSwitcher />
           </div>
           <div ref={scope}>

@@ -1,8 +1,9 @@
 import React from "react";
-import { Form, Button } from "antd";
+import { Form, Button, message } from "antd";
 import { BsSendCheck } from "react-icons/bs";
 import { useCreateComment } from "@/hooks/useCommentMutation";
 import { useForm } from "antd/es/form/Form";
+import defaultAvatar from "@/assets/images/default-avatar.png";
 import TextArea from "antd/lib/input/TextArea";
 
 interface CommentFormProps {
@@ -26,6 +27,10 @@ const CommentForm: React.FC<CommentFormProps> = ({
   const content = Form.useWatch("content", form);
 
   const handleSubmit = (values: any) => {
+    if (!currentUser) {
+      message.error("Vui lòng đăng nhập để tiếp tục");
+      return;
+    }
     const { content } = values;
     if (content.trim()) {
       createComment(
@@ -52,7 +57,7 @@ const CommentForm: React.FC<CommentFormProps> = ({
     >
       <div className="flex items-start space-x-3">
         <img
-          src={currentUser?.avatar || ""}
+          src={currentUser?.avatar ?? "/default-avatar.png"}
           alt={currentUser?.fullName}
           className="w-8 h-8 rounded-full mr-2 object-cover"
         />

@@ -6,6 +6,7 @@ import { Button, Tooltip } from "antd";
 import React, { useState } from "react";
 import CommentForm from "./CommentForm";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
+import Link from "next/link";
 
 interface CommentItemProps {
   comment: Comment & { replies?: (Comment & { replies?: Comment[] })[] };
@@ -47,14 +48,18 @@ const CommentItem: React.FC<CommentItemProps> = ({
         {/* Comment header */}
         <div className="flex justify-between items-start mb-2">
           <div className="flex items-center">
-            <img
-              src={comment.user?.avatar || ""}
-              alt={comment.user.fullName}
-              className="w-8 h-8 rounded-full mr-2 object-cover"
-            />
+            <Link href={`/user/${comment.user.username}`}>
+              <img
+                src={comment.user?.avatar || ""}
+                alt={comment.user.fullName}
+                className="w-8 h-8 rounded-full mr-2 object-cover"
+              />
+            </Link>
             <div>
               <div className="flex items-center gap-2">
-                <div className="font-medium">{comment.user.fullName}</div>
+                <Link href={`/user/${comment.user.username}`}>
+                  <div className="font-medium">{comment.user.fullName}</div>
+                </Link>
                 <div>
                   {(comment?.user.username == "writeflow" ||
                     comment?.user.username == "auduythong") && (
