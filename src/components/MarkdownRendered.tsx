@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { IoMdCheckmark, IoMdCopy } from "react-icons/io";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 // Interface for heading structure
 interface Heading {
@@ -40,7 +41,7 @@ const removeMarkdownFormatting = (text: string): string => {
 };
 
 const generateIdFromCode = (codeString: string) => {
-  return btoa(codeString).slice(0, 10); // Mã hóa base64 rồi cắt lấy 10 ký tự đầu
+  return btoa(unescape(encodeURIComponent(codeString))); // Mã hóa base64 rồi cắt lấy 10 ký tự đầu
 };
 
 // Updated MarkdownRenderer with heading extraction
@@ -106,6 +107,7 @@ const MarkdownRenderer = ({
   return (
     <div className="mx-auto md:p-6 rounded-lg">
       <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
         components={{
           h1: ({ children, ...props }) => {
             // Extract plain text from potentially complex children structure
@@ -246,6 +248,44 @@ const MarkdownRenderer = ({
               >
                 {children}
               </a>
+            );
+          },
+          table({ children }) {
+            return (
+              <div className="overflow-x-auto my-6">
+                <table className="min-w-full border border-gray-300 dark:border-gray-700 text-sm text-left">
+                  {children}
+                </table>
+              </div>
+            );
+          },
+          thead({ children }) {
+            return (
+              <thead className="bg-gray-100 dark:bg-gray-800">{children}</thead>
+            );
+          },
+          tbody({ children }) {
+            return <tbody>{children}</tbody>;
+          },
+          tr({ children }) {
+            return (
+              <tr className="border-t border-gray-300 dark:border-gray-700">
+                {children}
+              </tr>
+            );
+          },
+          th({ children }) {
+            return (
+              <th className="px-4 py-2 font-semibold text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700">
+                {children}
+              </th>
+            );
+          },
+          td({ children }) {
+            return (
+              <td className="px-4 py-2 text-gray-800 dark:text-gray-100 border border-gray-300 dark:border-gray-700">
+                {children}
+              </td>
             );
           },
         }}
