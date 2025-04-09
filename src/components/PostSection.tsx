@@ -20,13 +20,13 @@ const PostSection = () => {
 
   const handleSearch = useCallback(
     debounce((keyword: string) => {
-      setQueryPost((prevQuery) => ({ ...prevQuery, search: keyword }));
+      setQueryPost((prevQuery) => ({ ...prevQuery, page: 1, search: keyword }));
     }, 300),
     []
   );
 
   const handleTagClick = useCallback((tagId: string) => {
-    setQueryPost((prevQuery) => ({ ...prevQuery, tags: tagId }));
+    setQueryPost((prevQuery) => ({ ...prevQuery, page: 1, tags: tagId }));
   }, []);
 
   const handlePageChange = (page: number) => {
