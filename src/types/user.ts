@@ -17,4 +17,5 @@ export interface User {
   totalComments?: number;
   totalFollowers?: number;
   totalLikes?: number;
+  totalPosts?: number;
 }

@@ -49,6 +49,7 @@ const CreatePostPage = () => {
     tags: string[];
   }) => {
     try {
+      await form.validateFields();
       setLoading(true);
 
       if (!values.title.trim()) {
@@ -91,7 +92,11 @@ const CreatePostPage = () => {
         onFinish={handleSubmit}
         initialValues={{ title: "" }}
       >
-        <Form.Item label="" name={"thumbnail"}>
+        <Form.Item
+          label=""
+          name={"thumbnail"}
+          rules={[{ required: true, message: "Vui lòng chọn ảnh hiển thị" }]}
+        >
           <ThumbnailPostUpload
             onUploadOk={(url) => form.setFieldValue("thumbnail", url)}
             imageUrl={thumbnail}

@@ -43,6 +43,7 @@ export default function ThemeProviderWrapper({
     colorSplit: "#444444", // viền separator trong DatePicker
     colorIcon: "#bbbbbb", // màu icon
     colorIconHover: "#ffffff", // màu icon khi hover
+    controlItemBgActive: "#222", // màu icon khi hover
   };
   return (
     <ConfigProvider

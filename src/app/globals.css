@@ -51,6 +51,7 @@ body {
 
 .ant-input-outlined:focus-within,
 .ant-picker-outlined:focus-within,
+.ant-select-selector,
 .ant-btn-color-primary {
-  box-shadow: none;
+  box-shadow: none !important;
 }

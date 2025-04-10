@@ -32,12 +32,13 @@ const HeaderMobile = () => {
 
   const scope = useMenuAnimation(isOpen);
 
-  const { notifications, fetchNotification } = useNotification({
-    initQuery: {
-      page: 1,
-      limit: 50,
-    },
-  });
+  const { notifications, fetchNotification, unreadTotalNotification } =
+    useNotification({
+      initQuery: {
+        page: 1,
+        limit: 50,
+      },
+    });
 
   const handleLogout = () => {
     setIsOpen(false);
@@ -52,11 +53,21 @@ const HeaderMobile = () => {
     } catch (error) {}
   };
 
+  const handleMarkAllAsReadNotification = async () => {
+    try {
+      await notificationApi.markAll();
+      fetchNotification();
+    } catch (error) {}
+  };
+
   const notificationMenu = (
     <div className="w-[350px] bg-white dark:bg-black rounded-lg shadow-xl py-3 px-2">
       <div className="flex items-center justify-between mt-2 px-3">
         <h1 className="text-base font-bold ">Thông báo</h1>
-        <span className="text-purple-500 font-medium text-sm cursor-pointer">
+        <span
+          className="text-purple-500 font-medium text-sm cursor-pointer"
+          onClick={() => handleMarkAllAsReadNotification()}
+        >
           Đánh dấu là đã đọc
         </span>
       </div>
@@ -74,11 +85,15 @@ const HeaderMobile = () => {
               key={item._id}
               onView={async (notification: Notification) => {
                 setIsNotificationOpen(false);
-                if (
-                  notification.type == NotificationType.postApprove ||
-                  notification.type == NotificationType.comment
-                ) {
+                if (notification.type == NotificationType.postApprove) {
                   router.push(`/blog/${notification.post.slug}`);
+                }
+
+                if (
+                  notification.type == NotificationType.comment ||
+                  notification.type == NotificationType.reply
+                ) {
+                  router.push(`/blog/${notification.post.slug}#comment`);
                 }
 
                 if (notification.type == NotificationType.follow) {
@@ -192,7 +207,7 @@ const HeaderMobile = () => {
               >
                 <div className="rounded-full p-1 md:p-2 w-8 h-8 md:w-10 md:h-10 hover:bg-[#222] cursor-pointer group">
                   <Badge
-                    count={notifications.length}
+                    count={unreadTotalNotification}
                     color="#a855f7"
                     className="!border-none"
                   >
