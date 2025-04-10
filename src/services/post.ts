@@ -1,5 +1,10 @@
 import { postApi } from "@/api/post.api";
 
+export const getPost = async () => {
+  const response = await postApi.findAll();
+  return response.data;
+};
+
 export const increasePostView = async (slug: string) => {
   const response = await postApi.increasePostView(slug);
   return response.data;
