@@ -7,6 +7,11 @@ export const postApi = {
       url: "/user/post",
       params,
     }),
+  findAllRelated: (params?: any): AxiosPromise<any> =>
+    request({
+      url: "/user/related-post",
+      params,
+    }),
   findMyPost: (params?: any): AxiosPromise<any> =>
     request({
       url: "/user/my-post",

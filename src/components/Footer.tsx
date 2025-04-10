@@ -15,13 +15,12 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto flex md:flex-row flex-col gap-5 md:gap-20">
         {/* Logo & Description */}
         <div className="md:w-[600px]">
-          <div className="flex items-center font-black uppercase">
+          <div className="flex items-center font-black uppercase gap-2">
             <Image
               src={logo}
               alt={""}
-              width={50}
-              className="object-contain"
-              style={{ filter: theme == "dark" ? "invert(1)" : "" }}
+              width={40}
+              className="object-contain rounded-full"
             />{" "}
             WriteFlow
           </div>
