@@ -83,7 +83,7 @@ export default function PostCard({
       <div className="flex-1 flex flex-col p-4">
         {/* Tags and Title section - fixed height */}
         <div className="flex flex-col gap-4 mb-4">
-          <div className="flex items-center gap-1 flex-wrap max-h-[52px] overflow-hidden">
+          <div className="flex items-center gap-1 flex-wrap max-h-[60px] overflow-hidden">
             {post.tags.map((item) => (
               <div
                 key={item._id}

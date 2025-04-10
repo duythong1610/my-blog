@@ -20,6 +20,7 @@ import FollowerList from "../components/FollowerList";
 import FollowingList from "../components/FollowingList";
 import UserPost from "../components/UserPost";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
+import UserSummary from "../components/UserSummary";
 
 interface UserDetailPageProps {
   params: { username: string };
@@ -190,6 +191,15 @@ const UserDetailPage: NextPage<UserDetailPageProps> = async ({ params }) => {
         </div>
       ),
     },
+    // {
+    //   key: "summary",
+    //   label: "Thống kê",
+    //   children: (
+    //     <div className="min-h-screen">
+    //       <UserSummary userId={user._id} />
+    //     </div>
+    //   ),
+    // },
   ];
 
   return (

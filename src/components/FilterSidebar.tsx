@@ -37,37 +37,37 @@ export default function FilterSidebar({ onSearch, onTagClick }: PropsType) {
 
   return (
     <div className="w-full md:w-[366px] md:sticky top-[88px] h-max">
-      <div className="mb-2">
-        <div className="px-2 py-3 bg-white dark:bg-[#222] rounded-lg">
-          <div className="flex items-center justify-between gap-10">
-            <input
-              onKeyDown={handleKeyDown}
-              onChange={(e) => {
-                if (e.target.value) {
-                  setKeyword(e.target.value);
-                } else {
-                  onSearch("");
-                }
-              }}
-              type="text"
-              placeholder="Tìm kiếm bài viết..."
-              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none border-none dark:bg-transparent"
-            />
-            <div
-              className="bg-purple-500 p-3 rounded-[12px] w-fit cursor-pointer"
-              onClick={handleIconClick}
-            >
-              <Image
-                src={magnifyingGlassIcon}
-                alt={"icon"}
-                width={24}
-                height={24}
-              ></Image>
+      <div className="bg-white dark:bg-[#222] shadow-md dark:shadow-none p-5 rounded-lg">
+        <div className="mb-2">
+          <div className="rounded-lg">
+            <div className="flex items-center justify-between gap-10">
+              <input
+                onKeyDown={handleKeyDown}
+                onChange={(e) => {
+                  if (e.target.value) {
+                    setKeyword(e.target.value);
+                  } else {
+                    onSearch("");
+                  }
+                }}
+                type="text"
+                placeholder="Tìm kiếm bài viết..."
+                className="w-full py-2 border border-gray-300 rounded-lg focus:outline-none border-none dark:bg-transparent"
+              />
+              <div
+                className="bg-purple-500 p-3 rounded-[12px] w-fit cursor-pointer"
+                onClick={handleIconClick}
+              >
+                <Image
+                  src={magnifyingGlassIcon}
+                  alt={"icon"}
+                  width={24}
+                  height={24}
+                ></Image>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="bg-white dark:bg-[#222] p-4 rounded-lg">
         <h2 className="text-lg font-bold mb-6 mt-8">Thẻ bài viết</h2>
         <ul className="flex flex-col gap-4">
           {tags?.map((tag) => (

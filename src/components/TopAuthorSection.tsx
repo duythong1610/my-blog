@@ -20,7 +20,7 @@ const TopAuthorSection = () => {
 
   return (
     <div className="py-10">
-      <h1 className="font-extrabold text-xl md:text-3xl text-[#050505] dark:text-white leading-[50px] md:mb-10">
+      <h1 className="font-extrabold text-xl md:text-3xl text-[#050505] dark:text-white leading-[50px] md:mb-5">
         Tác giả hàng đầu
       </h1>
       <div className="relative w-full">
@@ -86,6 +86,7 @@ const TopAuthorSection = () => {
             delay: 4000,
             disableOnInteraction: false,
           }}
+          className="!py-5"
         >
           {users?.map((user, index) => (
             <SwiperSlide key={user._id}>

@@ -4,7 +4,9 @@ import { Tooltip } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { AiOutlineEye } from "react-icons/ai";
+import { BsPencil } from "react-icons/bs";
 import { FaRegComments, FaRegHeart } from "react-icons/fa";
+import { LuNotebookPen } from "react-icons/lu";
 import { SlUserFollowing } from "react-icons/sl";
 
 interface PropTypes {
@@ -42,36 +44,44 @@ export default function AuthorCard({ author }: PropTypes) {
           </div>
         </div>
       </div>
-      <div className="flex items-center gap-6 mt-5">
+      <div className="flex items-center gap-x-5 gap-y-1 mt-5 flex-wrap">
         {/* View count with icon */}
-        <div className="flex items-center gap-1">
-          <Tooltip title="Tổng lượt xem">
-            <AiOutlineEye className="text-gray-500 dark:text-white !text-2xl" />
+        <div className="flex items-center gap-1 leading-[20px]">
+          <Tooltip title="Tổng bài viết">
+            <LuNotebookPen className="text-gray-500 dark:text-white !text-[20px]" />
           </Tooltip>
-          <span className="text-lg">{author.totalViews}</span>
+          <span className="!text-[18px]">{author.totalPosts}</span>
+        </div>
+        <div className="flex items-center gap-1 leading-[20px]">
+          <Tooltip title="Tổng lượt xem">
+            <AiOutlineEye className="text-gray-500 dark:text-white !text-[24px]" />
+          </Tooltip>
+          <span className="!text-[18px]">{author.totalViews}</span>
         </div>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 leading-[20px]">
           <Tooltip title="Tổng bình luận">
-            <FaRegComments className="text-gray-500 dark:text-white !text-2xl" />
+            <FaRegComments className="text-gray-500 dark:text-white !text-[24px]" />
           </Tooltip>
-          <span className="text-lg">{author.totalComments}</span>
+          <span className="!text-[18px]">{author.totalComments}</span>
         </div>
 
         {/* Like button with icon */}
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 leading-[20px]">
           <Tooltip title="Tổng yêu thích">
-            <FaRegHeart className="text-gray-500 dark:text-white !text-xl" />
+            <FaRegHeart className="text-gray-500 dark:text-white !text-[20px]" />
           </Tooltip>
 
-          <span className="text-lg min-w-[15px]">{author.totalLikes}</span>
+          <span className="!text-[18px] min-w-[15px]">{author.totalLikes}</span>
         </div>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 leading-[20px]">
           <Tooltip title="Tổng theo dõi">
-            <SlUserFollowing className="text-gray-500 dark:text-white !text-xl" />
+            <SlUserFollowing className="text-gray-500 dark:text-white !text-[20px]" />
           </Tooltip>
 
-          <span className="text-lg min-w-[15px]">{author.totalFollowers}</span>
+          <span className="!text-[18px] min-w-[15px]">
+            {author.totalFollowers}
+          </span>
         </div>
       </div>
     </div>

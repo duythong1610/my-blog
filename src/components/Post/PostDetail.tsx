@@ -127,9 +127,8 @@ const PostContent = ({ post, slug }: PropsType) => {
     <>
       <div className="flex md:flex-row flex-col-reverse gap-6">
         <FloatButtonGroup author={data.author} />
-
-        {/* Blog Content */}
-        <div className="w-full md:w-[70%] md:pr-6">
+        <div className="w-full md:w-[70%]">
+          {/* Blog Content */}
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-1 flex-wrap">
               {post.tags.map((item) => (

@@ -77,7 +77,7 @@ const NotificationItem = ({ notification, onView }: PropsType) => {
       <div
         className={`px-4 py-2 ${
           !notification.isRead ? "bg-purple-50 dark:bg-[#222]" : ""
-        }   rounded-xl cursor-pointer dark:hover:bg-[#333] hover:bg-purple-100`}
+        }  rounded-xl cursor-pointer dark:hover:bg-[#333] hover:bg-purple-100`}
       >
         <h2 className="text-sm font-bold dark:text-white flex items-center gap-2">
           {title}

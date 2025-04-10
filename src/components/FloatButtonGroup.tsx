@@ -17,8 +17,8 @@ const FloatButtonGroup = ({ author }: { author: User }) => {
   const currentUrl = window.location.href;
 
   return (
-    <>
-      <div className="hidden md:block md:sticky md:top-[100px] md:h-max md:py-[200px] md:max-w-[400px] w-[50px]">
+    <div className="w-[50px]">
+      <div className="hidden md:block md:sticky md:top-[100px] md:h-max md:py-[200px] md:max-w-[400px] ">
         <div className="flex flex-col gap-3 items-center">
           {/* Nút chia sẻ Facebook */}
           <Tooltip title="Chia sẻ bài viết đến facebook">
@@ -90,7 +90,7 @@ const FloatButtonGroup = ({ author }: { author: User }) => {
           </Tooltip>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

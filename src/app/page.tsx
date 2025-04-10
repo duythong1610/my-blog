@@ -37,7 +37,7 @@ export default function Home() {
   return (
     <div>
       <HomeHero />
-      <div className="max-w-[1440px] m-auto pb-[200px]">
+      <div className="max-w-[1440px] m-auto pb-[50px]">
         <div className="flex md:flex-row flex-col-reverse gap-8">
           <PostSection />
         </div>

@@ -25,6 +25,7 @@ const FollowAction = ({ userId }: { userId: string }) => {
     enabled: !!userId && !!user,
     refetchOnWindowFocus: false,
     gcTime: Infinity,
+    staleTime: Infinity,
   });
 
   // ✅ Follow mutation (optimistic update)
