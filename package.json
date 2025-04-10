@@ -50,6 +50,7 @@
     "remark-gfm": "^4.0.1",
     "remove-markdown": "^0.6.0",
     "sass": "^1.86.2",
+    "swiper": "^11.2.6",
     "uuid": "^11.1.0"
   },
   "devDependencies": {

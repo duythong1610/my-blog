@@ -127,7 +127,7 @@ const HeaderMobile = () => {
                 alt=""
                 width={100}
                 height={100}
-                className="w-[80px] h-[80px] object-contain"
+                className="w-[80px] h-[80px] object-contain rounded-full"
               />
             </Link>
           </div>
@@ -169,13 +169,12 @@ const HeaderMobile = () => {
         >
           <div className="font-medium text-lg">
             <Link href="/" className="text-base font-black uppercase">
-              <div className="flex items-center">
+              <div className="flex items-center gap-2">
                 <Image
                   src={logo}
                   alt={""}
-                  width={50}
-                  className="object-contain"
-                  style={{ filter: theme == "dark" ? "invert(1)" : "" }}
+                  width={40}
+                  className="object-contain rounded-full"
                 />{" "}
                 WriteFlow
               </div>

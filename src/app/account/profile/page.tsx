@@ -91,7 +91,7 @@ export default function ProfilePage() {
                     />
                   </Form.Item>
                 </div>
-                <div className="absolute -bottom-10 md:-bottom-6 left-5 z-10">
+                <div className="absolute -bottom-10 md:-bottom-6 left-5 z-[5]">
                   <Form.Item label="" name={"avatar"} className="mb-0">
                     <AvatarUpload
                       onUploadOk={(url) => form.setFieldValue("avatar", url)}

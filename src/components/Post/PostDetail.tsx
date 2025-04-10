@@ -15,6 +15,8 @@ import FloatButtonGroup from "../FloatButtonGroup";
 import PostSummary from "./PostSummary";
 import CommentSystem from "../Comment/CommentSystem";
 import { useAppSelector } from "@/lib/hook";
+import RelatedPosts from "./RelatedPost";
+import { useRelatedPost } from "@/hooks/useRelatedPost";
 
 interface PropsType {
   post: Post;
@@ -30,12 +32,17 @@ interface Heading {
 const PostContent = ({ post, slug }: PropsType) => {
   const user = useAppSelector((state) => state.user.info);
   const commentRef = useRef<HTMLDivElement>(null);
+
   const { data } = useQuery<Post>({
     queryKey: ["postDetail"],
     queryFn: () => getPostDetail(slug),
     refetchOnWindowFocus: false,
     gcTime: Infinity,
     initialData: post,
+  });
+
+  const { relatedPosts, loadingRelatedPosts } = useRelatedPost({
+    initQuery: { page: 1, limit: 50, postId: post._id },
   });
 
   const [headings, setHeadings] = useState<Heading[]>([]);
@@ -177,6 +184,9 @@ const PostContent = ({ post, slug }: PropsType) => {
             content={post.content}
             onHeadingsExtracted={handleHeadingsExtracted}
           />
+
+          {relatedPosts.length > 0 && <RelatedPosts posts={relatedPosts} />}
+
           <div ref={commentRef}>
             <CommentSystem postId={post._id} currentUser={user} />
           </div>

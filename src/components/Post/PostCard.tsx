@@ -10,7 +10,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 interface PropTypes {
   post: Post;
   isShowStatus?: boolean;
-  loading: boolean; // Thêm loading để biết liệu có nên hiển thị skeleton
+  loading: boolean;
 }
 
 export default function PostCard({
@@ -45,14 +45,15 @@ export default function PostCard({
 
   return (
     <div className="bg-white dark:bg-[#222] rounded-[24px] border border-gray-200 dark:border-none shadow-md h-full flex flex-col">
-      <div className="group relative overflow-hidden rounded-t-[24px]">
-        <Link href={`/blog/${post.slug}`}>
+      {/* Image container with fixed height */}
+      <div className="group relative overflow-hidden rounded-t-[24px] h-[200px]">
+        <Link href={`/blog/${post.slug}`} className="h-full block">
           <Image
             src={post.thumbnail}
             alt=""
             width={300}
             height={200}
-            className="object-cover h-[200px] w-full transition-transform duration-300 group-hover:scale-110"
+            className="object-cover h-full w-full transition-transform duration-300 group-hover:scale-110"
           />
         </Link>
         {isShowStatus && (
@@ -78,9 +79,11 @@ export default function PostCard({
           </div>
         )}
       </div>
-      <div className="flex-1 flex flex-col justify-between p-4">
-        <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-1 flex-wrap">
+      {/* Content with flex-1 to take remaining space */}
+      <div className="flex-1 flex flex-col p-4">
+        {/* Tags and Title section - fixed height */}
+        <div className="flex flex-col gap-4 mb-4">
+          <div className="flex items-center gap-1 flex-wrap max-h-[52px] overflow-hidden">
             {post.tags.map((item) => (
               <div
                 key={item._id}
@@ -108,7 +111,12 @@ export default function PostCard({
             </Link>
           </div>
         </div>
-        <div className="mt-6 flex items-center justify-between">
+
+        {/* Spacer to push footer to bottom */}
+        <div className="flex-grow"></div>
+
+        {/* Footer section with date and button */}
+        <div className="flex items-center justify-between mt-auto">
           <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-white">
             <CiCalendar />
             <span>{formatDate(post.createdAt)}</span>

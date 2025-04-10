@@ -22,13 +22,12 @@ export default function Header() {
           <div className="max-w-7xl mx-auto flex justify-between items-center">
             {/* Logo */}
             <Link href="/" className="text-base font-black uppercase">
-              <div className="flex items-center">
+              <div className="flex items-center gap-2">
                 <Image
                   src={logo}
                   alt={""}
-                  width={50}
-                  className="object-contain"
-                  style={{ filter: theme == "dark" ? "invert(1)" : "" }}
+                  width={40}
+                  className="object-contain rounded-full"
                 />{" "}
                 WriteFlow
               </div>
