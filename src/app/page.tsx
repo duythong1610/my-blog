@@ -1,5 +1,6 @@
 import HomeHero from "@/components/HomeHero";
 import PostSection from "@/components/PostSection";
+import TopAuthorSection from "@/components/TopAuthorSection";
 
 export const metadata = {
   title: "WriteFlow - Chia sẻ kiến thức, kết nối cộng đồng",
@@ -39,6 +40,9 @@ export default function Home() {
       <div className="max-w-[1440px] m-auto pb-[200px]">
         <div className="flex md:flex-row flex-col-reverse gap-8">
           <PostSection />
+        </div>
+        <div className="md:mt-20 mt-10">
+          <TopAuthorSection />
         </div>
       </div>
     </div>

@@ -79,7 +79,7 @@ const PostSummary = ({
         <Tooltip title="Lượt xem">
           <AiOutlineEye className="text-gray-500 dark:text-white !text-2xl" />
         </Tooltip>
-        <span className="text-lg">{post.viewCount || 283}</span>
+        <span className="text-lg">{post.viewCount}</span>
       </div>
 
       {/* Comment count with icon */}

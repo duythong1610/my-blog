@@ -6,4 +6,9 @@ export const userApi = {
     request({
       url: `/user/profile-detail/${username}`,
     }),
+  findTopAuthor: (params?: any): AxiosPromise<any> =>
+    request({
+      url: "/user/top-authors",
+      params,
+    }),
 };

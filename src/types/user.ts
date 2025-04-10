@@ -13,4 +13,8 @@ export interface User {
   role: "user" | "admin"; // Phân quyền
   createdAt?: Date;
   updatedAt?: Date;
+  totalViews?: number;
+  totalComments?: number;
+  totalFollowers?: number;
+  totalLikes?: number;
 }
