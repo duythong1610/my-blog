@@ -72,7 +72,7 @@ const RelatedPosts = ({ posts }: { posts: Post[] }) => {
           pagination={{ clickable: true }}
           loop={true}
           autoplay={{
-            delay: 2500,
+            delay: 4000,
             disableOnInteraction: false,
           }}
           className="!pb-12 !h-full"
