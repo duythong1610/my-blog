@@ -1,9 +1,0 @@
-# *
-User-agent: *
-Allow: /
-
-# Host
-Host: https://writeflow.whatdaporice.website
-
-# Sitemaps
-Sitemap: https://writeflow.whatdaporice.website/sitemap.xml
