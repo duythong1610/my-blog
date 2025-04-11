@@ -67,7 +67,7 @@ const RelatedPosts = ({ posts }: { posts: Post[] }) => {
         <Swiper
           modules={[Pagination, Autoplay]}
           spaceBetween={20}
-          slidesPerView={isMobile ? 1 : 3}
+          slidesPerView={isMobile ? 1 : 4}
           onSwiper={(swiper) => (swiperRef.current = swiper)}
           pagination={{ clickable: true }}
           loop={true}

@@ -8,5 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       disallow: "/private/",
     },
     sitemap: "https://writeflow.asia/sitemap.xml",
+    host: "https://writeflow.asia",
   };
 }
