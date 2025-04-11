@@ -127,7 +127,7 @@ const PostContent = ({ post, slug }: PropsType) => {
     <>
       <div className="flex md:flex-row flex-col-reverse gap-6">
         <FloatButtonGroup author={data.author} />
-        <div className="w-full md:w-[70%]">
+        <div className="w-full md:w-[60%]">
           {/* Blog Content */}
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-1 flex-wrap">
@@ -183,15 +183,9 @@ const PostContent = ({ post, slug }: PropsType) => {
             content={post.content}
             onHeadingsExtracted={handleHeadingsExtracted}
           />
-
-          {relatedPosts.length > 0 && <RelatedPosts posts={relatedPosts} />}
-
-          <div ref={commentRef}>
-            <CommentSystem postId={post._id} currentUser={user} />
-          </div>
         </div>
 
-        <div className="md:sticky md:top-[100px] md:h-max md:p-4 md:max-w-[400px] w-full md:w-[30%]">
+        <div className="md:sticky md:top-[100px] md:h-max md:p-4 md:max-w-[400px] w-full md:w-[40%]">
           <Collapse
             expandIconPosition="right"
             expandIcon={({ isActive }) => (
@@ -203,9 +197,15 @@ const PostContent = ({ post, slug }: PropsType) => {
             defaultActiveKey={["1"]}
             bordered={false}
             items={items}
-            className="w-full md:w-[400px] bg-gray-50 dark:bg-[#222]"
+            className="w-full bg-gray-50 dark:bg-[#222]"
           ></Collapse>
         </div>
+      </div>
+      <div>
+        {relatedPosts.length > 0 && <RelatedPosts posts={relatedPosts} />}
+      </div>
+      <div ref={commentRef}>
+        <CommentSystem postId={post._id} currentUser={user} />
       </div>
     </>
   );

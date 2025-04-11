@@ -4,6 +4,8 @@ import { useTag } from "@/hooks/useTag";
 import magnifyingGlassIcon from "@/assets/icons/MagnifyingGlass.svg";
 import Image from "next/image";
 import { useState } from "react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 interface PropsType {
   onSearch: (keyword: string) => void;
@@ -14,25 +16,23 @@ export default function FilterSidebar({ onSearch, onTagClick }: PropsType) {
   const [keyword, setKeyword] = useState("");
   const [activeTag, setActiveTag] = useState<string | null>(null);
 
-  const { tags } = useTag({
+  const { tags, loadingTag } = useTag({
     initQuery: { page: 1, limit: 50, hasPosts: true },
   });
 
-  // Hàm xử lý sự kiện nhấn Enter
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       onSearch(keyword);
     }
   };
 
-  // Hàm xử lý sự kiện nhấn vào icon tìm kiếm
   const handleIconClick = () => {
     onSearch(keyword);
   };
 
   const handleTagClick = (tagId: string) => {
-    setActiveTag(tagId); // Cập nhật tag được chọn
-    onTagClick(tagId); // Cập nhật query tìm kiếm với tag được chọn
+    setActiveTag(tagId);
+    onTagClick(tagId);
   };
 
   return (
@@ -63,30 +63,42 @@ export default function FilterSidebar({ onSearch, onTagClick }: PropsType) {
                   alt={"icon"}
                   width={24}
                   height={24}
-                ></Image>
+                />
               </div>
             </div>
           </div>
         </div>
+
         <h2 className="text-lg font-bold mb-6 mt-8">Thẻ bài viết</h2>
-        <ul className="flex flex-col gap-4">
-          {tags?.map((tag) => (
-            <li
-              key={tag._id}
-              onClick={() => handleTagClick(tag._id)} // Khi nhấn vào tag
-              className={`cursor-pointer hover:text-purple-500 ${
-                activeTag === tag._id
-                  ? "text-purple-500 font-medium"
-                  : "hover:underline"
-              }`}
-            >
-              <div className="flex items-center justify-between">
-                <span>{tag.name}</span>
-                <span>{tag.totalPosts > 0 ? tag.totalPosts : ""}</span>
-              </div>
-            </li>
-          ))}
-        </ul>
+
+        {loadingTag ? (
+          <ul className="flex flex-col gap-4">
+            {Array.from({ length: 10 }).map((_, idx) => (
+              <li key={idx}>
+                <Skeleton height={20} />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <ul className="flex flex-col gap-4">
+            {tags?.map((tag) => (
+              <li
+                key={tag._id}
+                onClick={() => handleTagClick(tag._id)}
+                className={`cursor-pointer hover:text-purple-500 ${
+                  activeTag === tag._id
+                    ? "text-purple-500 font-medium"
+                    : "hover:underline"
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span>{tag.name}</span>
+                  <span>{tag.totalPosts > 0 ? tag.totalPosts : ""}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
