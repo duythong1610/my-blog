@@ -1,18 +1,4 @@
-import { getPost } from "@/services/post";
-import { Post } from "@/types/post";
-
-export const revalidate = 3600;
-
 export default async function sitemap() {
-  const response = await getPost();
-
-  const post = response.posts.map((post: Post) => ({
-    url: `https://writeflow.asia/blog/${post.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "daily",
-    priority: 1,
-  }));
-
   return [
     {
       url: "https://writeflow.asia/opengraph-image.png",
@@ -86,6 +72,5 @@ export default async function sitemap() {
       changeFrequency: "daily",
       priority: 0.7,
     },
-    ...post,
   ];
 }
