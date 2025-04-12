@@ -5,8 +5,10 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: "/private/",
     },
-    sitemap: "https://writeflow.asia/sitemap.xml",
+    sitemap: [
+      "https://writeflow.asia/sitemap.xml",
+      "https://writeflow.asia/blog-sitemap.xml",
+    ],
   };
 }

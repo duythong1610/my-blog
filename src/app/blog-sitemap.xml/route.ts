@@ -1,5 +1,7 @@
 import { getPost } from "@/services/post";
 import { Post } from "@/types/post";
+import dayjs from "dayjs";
+import { NextResponse } from "next/server";
 
 export const revalidate = 3600;
 
@@ -17,9 +19,10 @@ export async function GET() {
   response.posts.forEach((post: Post) => {
     urls.push({
       loc: `https://writeflow.asia/blog/${post.slug}`,
-      lastmod: new Date().toISOString(),
+      lastmod:
+        dayjs(post?.updatedAt).format("YYYY-MM-DD") || new Date().toISOString(),
       changefreq: "daily",
-      priority: "1.0",
+      priority: "0.8",
     });
   });
 
@@ -39,7 +42,7 @@ export async function GET() {
       .join("")}
   </urlset>`;
 
-  return new Response(sitemap, {
+  return new NextResponse(sitemap, {
     headers: {
       "Content-Type": "application/xml",
     },
