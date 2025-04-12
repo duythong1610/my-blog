@@ -6,6 +6,11 @@ export const userApi = {
     request({
       url: `/user/profile-detail/${username}`,
     }),
+  summary: (params?: any): AxiosPromise<any> =>
+    request({
+      url: `/user/summary`,
+      params,
+    }),
   findTopAuthor: (params?: any): AxiosPromise<any> =>
     request({
       url: "/user/top-authors",

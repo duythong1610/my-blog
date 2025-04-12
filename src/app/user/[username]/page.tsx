@@ -164,12 +164,17 @@ const UserDetailPage: NextPage<UserDetailPageProps> = async ({ params }) => {
                   )}
                 </div>
               </div>
+              <div className="bg-gray-50 dark:bg-[#222] rounded-xl overflow-hidden p-4">
+                <h1 className="text-lg font-bold mb-2">Thống kê</h1>
+                <UserSummary userId={user._id} />
+              </div>
 
               {/* Đang theo dõi */}
               <div className="bg-gray-50 dark:bg-[#222] rounded-xl overflow-hidden p-4">
                 <h1 className="text-lg font-bold mb-2">Đang theo dõi</h1>
                 <FollowingList userId={user._id} />
               </div>
+              {/* Đang theo dõi */}
             </div>
 
             {/* Right Column (span=16) */}
@@ -191,15 +196,6 @@ const UserDetailPage: NextPage<UserDetailPageProps> = async ({ params }) => {
         </div>
       ),
     },
-    // {
-    //   key: "summary",
-    //   label: "Thống kê",
-    //   children: (
-    //     <div className="min-h-screen">
-    //       <UserSummary userId={user._id} />
-    //     </div>
-    //   ),
-    // },
   ];
 
   return (
