@@ -4,14 +4,53 @@ import logo from "@/assets/images/logo.png";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import UserMenu from "./UserMenu";
 import { isMobile } from "react-device-detect";
 import HeaderMobile from "./HeaderMobile";
+import { useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { authApi } from "@/api/auth.api";
+import { useAppDispatch } from "@/lib/hook";
+import { getProfile, login } from "@/lib/features/users/userSlice";
+import { message } from "antd";
 
 export default function Header() {
   const pathname = usePathname();
   const { theme } = useTheme();
+  const { data, status } = useSession();
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  console.log(status);
+  console.log(data);
+
+  useEffect(() => {
+    const handleOAuthLogin = async () => {
+      if (status === "authenticated" && data?.user?.email) {
+        try {
+          const response = await authApi.oauth({
+            email: data.user.email,
+            name: data.user.name,
+            image: data.user.image,
+            provider: data.user?.provider || "google",
+          });
+
+          if (response.data) {
+            dispatch(login(response.data.accessToken));
+            await dispatch(getProfile());
+            message.success("Đăng nhập thành công!");
+            router.push("/");
+          }
+        } catch (err) {
+          console.error("OAuth login failed", err);
+          message.error("Đăng nhập bằng Google thất bại");
+        }
+      }
+    };
+
+    handleOAuthLogin();
+  }, [status]);
 
   return (
     <>

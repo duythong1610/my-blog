@@ -40,7 +40,7 @@ export default function Home() {
       <div className="max-w-[1440px] m-auto pb-[50px]">
         <div className="flex md:flex-row flex-col-reverse gap-8">
           <PostSection />
-        </div>
+      </div>
         <div className="md:mt-20 mt-10">
           <TopAuthorSection />
         </div>

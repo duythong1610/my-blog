@@ -8,6 +8,12 @@ export const authApi = {
       data,
       method: "post",
     }),
+  oauth: (data: any): AxiosPromise<any> =>
+    request({
+      url: "/user/oauth",
+      data,
+      method: "post",
+    }),
 
   register: (data: any): AxiosPromise<any> =>
     request({

@@ -20,6 +20,7 @@ import { GrLinkNext } from "react-icons/gr";
 import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { logout } from "@/lib/features/users/userSlice";
 import { notificationApi } from "@/api/notifaction.api";
+import { signOut } from "next-auth/react";
 
 const HeaderMobile = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,7 +41,8 @@ const HeaderMobile = () => {
       },
     });
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await signOut({ callbackUrl: "/login" });
     setIsOpen(false);
     dispatch(logout());
     router.push("/login");

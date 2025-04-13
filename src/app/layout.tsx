@@ -9,6 +9,7 @@ import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { headers } from "next/headers";
+import SessionProviderWrapper from "@/providers/SessionProviderWrapper";
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -61,16 +62,18 @@ export default function RootLayout({
           <body
             className={`${raleway.className} bg-white  dark:bg-[#0e100f] text-black dark:text-white !p-0`}
           >
-            <NextTopLoader color="#a855f7" />
-            <ThemeProvider attribute="data-mode">
-              <ThemeProviderWrapper>
-                <Header />
-                <main className="container mx-auto p-4 pt-[100px]">
-                  {children}
-                </main>
-                <Footer />
-              </ThemeProviderWrapper>
-            </ThemeProvider>
+            <SessionProviderWrapper>
+              <NextTopLoader color="#a855f7" />
+              <ThemeProvider attribute="data-mode">
+                <ThemeProviderWrapper>
+                  <Header />
+                  <main className="container mx-auto p-4 pt-[100px]">
+                    {children}
+                  </main>
+                  <Footer />
+                </ThemeProviderWrapper>
+              </ThemeProvider>
+            </SessionProviderWrapper>
           </body>
         </ReactQueryProvider>
       </ReduxProvider>

@@ -3,6 +3,7 @@ import { useAppDispatch } from "@/lib/hook";
 import { Button, Modal } from "antd";
 import { useRouter } from "next/navigation";
 import React, { useImperativeHandle, useState } from "react";
+import { signOut } from "next-auth/react";
 
 export interface ConfirmLogoutModalRef {
   handleOpen: () => void;
@@ -13,7 +14,8 @@ const ConfirmLogoutModal = React.forwardRef(({}, ref) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await signOut({ callbackUrl: "/login" }); // chuyển về trang login
     setVisible(false);
     dispatch(logout());
     router.push("/login");

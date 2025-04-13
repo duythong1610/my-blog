@@ -15,6 +15,21 @@ const nextConfig = {
         protocol: "https",
         hostname: "res.cloudinary.com",
       },
+      // Google profile images
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+      },
+      // Facebook profile images
+      {
+        protocol: "https",
+        hostname: "platform-lookaside.fbsbx.com",
+      },
+      // GitHub profile images
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+      },
     ],
   },
 };
