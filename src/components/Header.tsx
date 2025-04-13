@@ -33,7 +33,8 @@ export default function Header() {
             email: data.user.email,
             name: data.user.name,
             image: data.user.image,
-            provider: data.user?.provider || "google",
+            //@ts-ignore
+            provider: data.user?.provider,
           });
 
           if (response.data) {
