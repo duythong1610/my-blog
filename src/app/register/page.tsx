@@ -52,9 +52,7 @@ export default function AuthPage() {
               </span>
             }
             name="fullName"
-            rules={[
-              { required: true, message: "Vui lòng nhập tên người dùng!" },
-            ]}
+            rules={[{ required: true, message: "Vui lòng nhập họ và tên!" }]}
           >
             <Input size="large" placeholder="Nhập họ và tên" />
           </Form.Item>

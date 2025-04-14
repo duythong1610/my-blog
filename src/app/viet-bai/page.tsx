@@ -23,7 +23,7 @@ const CreatePostPage = () => {
   const postSuccessModalRef = useRef<PostSuccessModalRef>();
   const [editorKey, setEditorKey] = useState(Date.now());
 
-  const { tags } = useTag({
+  const { tags, debounceSearchTag } = useTag({
     initQuery: {
       page: 1,
       limit: 10,
@@ -125,6 +125,9 @@ const CreatePostPage = () => {
           ]}
         >
           <Select
+            onSelect={() => debounceSearchTag("")}
+            filterOption={false}
+            onSearch={debounceSearchTag}
             mode="multiple"
             placeholder="Chọn thẻ bài viết"
             size="large"

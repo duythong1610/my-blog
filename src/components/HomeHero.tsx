@@ -5,15 +5,15 @@ import Image from "next/image";
 export default function HomeHero() {
   return (
     <section className="text-center mt-8 mb-[96px]">
-      <div className="flex items-center justify-between">
-        <div>
+      <div className="flex items-center justify-center">
+        {/* <div>
           <Image
             src={calendarIcon}
             alt={""}
             width={150}
             className="object-contain"
           />
-        </div>
+        </div> */}
         <div>
           <h1>
             <span className="font-black text-purple-500 uppercase text-[42px] md:text-[64px]">
@@ -32,14 +32,14 @@ export default function HomeHero() {
             trình học hỏi!
           </p>
         </div>
-        <div>
+        {/* <div>
           <Image
             src={handWritingIcon}
             alt={""}
             width={150}
             className="object-contain"
           />
-        </div>
+        </div> */}
       </div>
     </section>
   );

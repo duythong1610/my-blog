@@ -20,7 +20,7 @@ export default function UserPost({ userId }: { userId: string }) {
       {posts?.length === 0 ? (
         <p>Chưa có bài viết nào.</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 md:gap-y-[48px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 md:gap-y-[24px]">
           {posts?.map((post) => (
             <PostCard loading={loadingPost} key={post._id} post={post} />
           ))}
