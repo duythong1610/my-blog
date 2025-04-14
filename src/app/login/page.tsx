@@ -5,7 +5,7 @@ import { getProfile, login } from "@/lib/features/users/userSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { Button, Form, Input, message, Typography } from "antd";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import {
@@ -21,9 +21,9 @@ export default function AuthPage() {
   const user = useAppSelector((state) => state.user);
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect") || "/";
   const { data, status } = useSession();
-  console.log(status);
-  console.log(data);
 
   const onFinish = async (values: any) => {
     const { username, password } = values;
@@ -34,7 +34,8 @@ export default function AuthPage() {
         dispatch(login(response.data));
         await dispatch(getProfile());
       }
-      router.push("/");
+
+      router.push(redirect);
       message.success("Đăng nhập thành công!");
     } catch (e) {
       console.error("Login or profile fetch failed", e);
@@ -99,12 +100,12 @@ export default function AuthPage() {
           <GoogleLoginButton onClick={() => handleOAuthSignIn("google")}>
             Đăng nhập với Google
           </GoogleLoginButton>
-          <FacebookLoginButton onClick={() => handleOAuthSignIn("facebook")}>
+          {/* <FacebookLoginButton onClick={() => handleOAuthSignIn("facebook")}>
             Đăng nhập với Facebook
-          </FacebookLoginButton>
-          {/* <GithubLoginButton onClick={() => handleOAuthSignIn("github")}>
+          </FacebookLoginButton> */}
+          <GithubLoginButton onClick={() => handleOAuthSignIn("github")}>
             Đăng nhập với Github
-          </GithubLoginButton> */}
+          </GithubLoginButton>
 
           {/* Form đăng nhập thông thường nếu cần */}
         </div>

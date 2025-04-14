@@ -25,33 +25,33 @@ export default function Header() {
   console.log(status);
   console.log(data);
 
-  useEffect(() => {
-    const handleOAuthLogin = async () => {
-      if (status === "authenticated" && data?.user?.email) {
-        try {
-          const response = await authApi.oauth({
-            email: data.user.email,
-            name: data.user.name,
-            image: data.user.image,
-            //@ts-ignore
-            provider: data.user?.provider,
-          });
+  // useEffect(() => {
+  //   const handleOAuthLogin = async () => {
+  //     if (status === "authenticated" && data?.user?.email) {
+  //       try {
+  //         const response = await authApi.oauth({
+  //           email: data.user.email,
+  //           name: data.user.name,
+  //           image: data.user.image,
+  //           //@ts-ignore
+  //           provider: data.user?.provider,
+  //         });
 
-          if (response.data) {
-            dispatch(login(response.data.accessToken));
-            await dispatch(getProfile());
-            message.success("Đăng nhập thành công!");
-            router.push("/");
-          }
-        } catch (err) {
-          console.error("OAuth login failed", err);
-          message.error("Đăng nhập bằng Google thất bại");
-        }
-      }
-    };
+  //         if (response.data) {
+  //           dispatch(login(response.data.accessToken));
+  //           await dispatch(getProfile());
+  //           message.success("Đăng nhập thành công!");
+  //           router.push("/");
+  //         }
+  //       } catch (err) {
+  //         console.error("OAuth login failed", err);
+  //         message.error("Đăng nhập bằng Google thất bại");
+  //       }
+  //     }
+  //   };
 
-    handleOAuthLogin();
-  }, [status]);
+  //   handleOAuthLogin();
+  // }, [status]);
 
   return (
     <>
