@@ -41,7 +41,7 @@ export default function ThemeProviderWrapper({
     if (token) {
       dispatch(getProfile());
     }
-  }, []);
+  }, [session]);
 
   const lightTheme = {
     colorPrimary: "#a855f7",
