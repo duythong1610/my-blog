@@ -6,7 +6,15 @@ import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { useEffect } from "react";
 import { useAppDispatch } from "@/lib/hook";
 import { getProfile } from "@/lib/features/users/userSlice";
-import { getToken } from "@/utils/auth";
+import { getToken, setToken } from "@/utils/auth";
+import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
+
+declare module "next-auth" {
+  interface Session {
+    accessToken?: string;
+  }
+}
 
 export default function ThemeProviderWrapper({
   children,
@@ -14,10 +22,19 @@ export default function ThemeProviderWrapper({
   children: React.ReactNode;
 }) {
   const dispatch = useAppDispatch();
+  const { data: session } = useSession();
+
+  console.log(session);
 
   const { theme } = useTheme();
 
   const isDark = theme === "dark";
+
+  useEffect(() => {
+    if (session?.accessToken) {
+      setToken(session.accessToken);
+    }
+  }, [session]);
 
   useEffect(() => {
     const token = getToken();

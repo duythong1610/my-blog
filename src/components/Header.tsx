@@ -8,50 +8,59 @@ import { usePathname, useRouter } from "next/navigation";
 import UserMenu from "./UserMenu";
 import { isMobile } from "react-device-detect";
 import HeaderMobile from "./HeaderMobile";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { authApi } from "@/api/auth.api";
-import { useAppDispatch } from "@/lib/hook";
+import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { getProfile, login } from "@/lib/features/users/userSlice";
 import { message } from "antd";
+import { getToken } from "@/utils/auth";
 
 export default function Header() {
   const pathname = usePathname();
   const { theme } = useTheme();
-  const { data, status } = useSession();
+  const user = useAppSelector((state) => state.user.info);
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const [isOAuthHandled, setIsOAuthHandled] = useState(false);
 
-  console.log(status);
-  console.log(data);
+  // const handleOAuthLogin = async () => {
+  //   if (status === "authenticated" && data?.user?.email && !isOAuthHandled) {
+  //     try {
+  //       const response = await authApi.oauth({
+  //         email: data.user.email,
+  //         name: data.user.name,
+  //         image: data.user.image,
+  //         //@ts-ignore
+  //         provider: data.user?.provider,
+  //         //@ts-ignore
+  //         providerId: data.user?.providerId,
+  //       });
+
+  //       if (response.data) {
+  //         dispatch(login(response.data.accessToken));
+  //         await dispatch(getProfile());
+  //         setIsOAuthHandled(true);
+  //         message.success("Đăng nhập thành công!");
+  //       }
+  //     } catch (err) {
+  //       console.error("OAuth login failed", err);
+  //       message.error("Đăng nhập bằng Google thất bại");
+  //     }
+  //   }
+  // };
 
   // useEffect(() => {
-  //   const handleOAuthLogin = async () => {
-  //     if (status === "authenticated" && data?.user?.email) {
-  //       try {
-  //         const response = await authApi.oauth({
-  //           email: data.user.email,
-  //           name: data.user.name,
-  //           image: data.user.image,
-  //           //@ts-ignore
-  //           provider: data.user?.provider,
-  //         });
+  //   if (!user && status === "authenticated" && data && !isOAuthHandled) {
+  //     debugger;
+  //     handleOAuthLogin();
+  //   }
 
-  //         if (response.data) {
-  //           dispatch(login(response.data.accessToken));
-  //           await dispatch(getProfile());
-  //           message.success("Đăng nhập thành công!");
-  //           router.push("/");
-  //         }
-  //       } catch (err) {
-  //         console.error("OAuth login failed", err);
-  //         message.error("Đăng nhập bằng Google thất bại");
-  //       }
-  //     }
-  //   };
-
-  //   handleOAuthLogin();
-  // }, [status]);
+  //   if (user && !isOAuthHandled) {
+  //     debugger;
+  //     dispatch(getProfile());
+  //   }
+  // }, [status, data, isOAuthHandled, user, dispatch]);
 
   return (
     <>

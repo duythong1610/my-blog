@@ -3,6 +3,7 @@
 import { authApi } from "@/api/auth.api";
 import { getProfile, login } from "@/lib/features/users/userSlice";
 import { useAppDispatch } from "@/lib/hook";
+import { usernameRules } from "@/utils/validation";
 import { Button, Form, Input, message, Typography } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -40,9 +41,7 @@ export default function AuthPage() {
               </span>
             }
             name="username"
-            rules={[
-              { required: true, message: "Vui lòng nhập tên người dùng!" },
-            ]}
+            rules={usernameRules}
           >
             <Input size="large" placeholder="Nhập tên người dùng" />
           </Form.Item>

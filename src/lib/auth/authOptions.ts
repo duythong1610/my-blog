@@ -1,9 +1,8 @@
 import { authApi } from "@/api/auth.api";
 import { NextAuthOptions, User } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import FacebookProvider from "next-auth/providers/facebook";
-import GithubProvider from "next-auth/providers/github";
 import { JWT } from "next-auth/jwt";
+import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 
 interface OAuthProviderInfo {
   provider: string;
@@ -81,8 +80,10 @@ export const authOptions: NextAuthOptions = {
         token.accessToken = (user as any).accessToken;
       }
 
+      console.log({ account });
       if (account) {
         token.provider = account.provider;
+        token.providerId = account.providerAccountId;
       }
 
       return token;
@@ -93,6 +94,7 @@ export const authOptions: NextAuthOptions = {
       session.user.role = token.role;
       session.accessToken = token.accessToken;
       session.user.provider = token.provider;
+      session.user.providerId = token.providerId;
       return session;
     },
   },
