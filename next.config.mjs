@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
+  future: {
+    legacyBrowser: false,
+  },
   images: {
     remotePatterns: [
       {

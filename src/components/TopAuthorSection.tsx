@@ -88,9 +88,9 @@ const TopAuthorSection = () => {
           }}
           className="!py-5"
         >
-          {users?.map((user, index) => (
+          {users?.map((user) => (
             <SwiperSlide key={user._id}>
-              <AuthorCard author={user} />
+              <AuthorCard author={user} key={user._id} />
             </SwiperSlide>
           ))}
         </Swiper>

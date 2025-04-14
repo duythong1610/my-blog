@@ -14,7 +14,7 @@ export async function generateMetadata({
   params: { slug: string };
 }): Promise<Metadata> {
   const post = await getPostDetail(params.slug);
-  const url = `https://writeflow.whatdaporice.website/blog/${params.slug}`;
+  const url = `https://writeflow.asia/blog/${params.slug}`;
   return {
     title: post?.title || "Bài viết",
     description: removeMarkdown(post?.content) || "Chi tiết bài viết",
@@ -59,7 +59,7 @@ const BlogDetailPage: NextPage<BlogDetailPageProps> = async ({ params }) => {
     description: post.title,
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://writeflow.whatdaporice.website/blog/${params.slug}`,
+      "@id": `https://writeflow.asia/blog/${params.slug}`,
     },
   };
 

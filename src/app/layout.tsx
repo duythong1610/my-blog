@@ -1,4 +1,3 @@
-import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import ThemeProviderWrapper from "@/components/ThemeProviderWrapper";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
@@ -10,6 +9,12 @@ import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { headers } from "next/headers";
 import SessionProviderWrapper from "@/providers/SessionProviderWrapper";
+import dynamic from "next/dynamic";
+
+const Footer = dynamic(() => import("@/components/Footer"), {
+  ssr: false,
+  loading: () => <div>Loading footer...</div>,
+});
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -37,7 +42,7 @@ export const metadata = {
     title: "WriteFlow - Chia sẻ kiến thức, kết nối cộng đồng",
     description:
       "WriteFlow là cộng đồng nơi mọi lập trình viên – từ người mới bắt đầu đến chuyên gia – đều có thể chia sẻ kiến thức, kinh nghiệm thực tế và hành trình sự nghiệp, góp phần xây dựng một môi trường học hỏi tích cực và đầy cảm hứng.",
-    url: "https://writeflow.whatdaporice.website",
+    url: "https://writeflow.asia",
     siteName: "WriteFlow",
     locale: "vi_VN",
     type: "website",
@@ -60,7 +65,7 @@ export default function RootLayout({
       <ReduxProvider>
         <ReactQueryProvider>
           <body
-            className={`${raleway.className} bg-white  dark:bg-[#0e100f] text-black dark:text-white !p-0`}
+            className={`${raleway.className} bg-white dark:bg-[#0e100f] text-black dark:text-white !p-0`}
           >
             <SessionProviderWrapper>
               <NextTopLoader color="#a855f7" />

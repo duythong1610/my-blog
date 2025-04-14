@@ -18,7 +18,7 @@ export default function AuthorCard({ author }: PropTypes) {
     <div className="bg-white dark:bg-[#222] rounded-xl p-4 shadow-md">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Link href={`/user/${author.username}`} key={author._id}>
+          <Link href={`/user/${author.username}`}>
             <Image
               src={author.avatar || ""}
               alt={""}
@@ -29,7 +29,7 @@ export default function AuthorCard({ author }: PropTypes) {
           </Link>
           <div className="flex flex-col gap-3">
             <div>
-              <Link href={`/user/${author.username}`} key={author._id}>
+              <Link href={`/user/${author.username}`}>
                 <h1 className="font-bold text-lg">{author.fullName}</h1>
               </Link>
               <Link href={`/user/${author.username}`} key={author._id}>

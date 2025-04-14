@@ -42,7 +42,7 @@ export async function generateMetadata({
       title: `${user.fullName} (@${user.username}) | WriteFlow`,
       description:
         user.bio || "Tham gia cộng đồng chia sẻ tri thức tại WriteFlow.",
-      url: `https://writeflow.whatdaporice.website/user/${user.username}`,
+      url: `https://writeflow.asia/user/${user.username}`,
       siteName: "WriteFlow",
       images: [
         {
@@ -61,7 +61,7 @@ export async function generateMetadata({
         user.bio || "Tham gia cộng đồng chia sẻ tri thức tại WriteFlow.",
       images: [user.avatar],
     },
-    metadataBase: new URL("https://writeflow.whatdaporice.website/"),
+    metadataBase: new URL("https://writeflow.asia/"),
   };
 }
 
