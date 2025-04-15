@@ -30,6 +30,7 @@ export default function MyPostsPage() {
                   key={post._id}
                   post={post}
                   isShowStatus
+                  isShowEdit
                 />
               ))}
         </div>

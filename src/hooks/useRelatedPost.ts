@@ -40,10 +40,6 @@ export const useRelatedPost = ({ initQuery }: PostProps) => {
     []
   );
 
-  console.log({ isLoading, isFetching });
-
-  console.log({ status, isError, error });
-
   return {
     relatedPosts: data?.posts || [],
     totalPost: data?.total || 0,

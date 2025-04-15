@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Collapse, CollapseProps } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { CiCalendar } from "react-icons/ci";
 import { FaChevronDown } from "react-icons/fa";
 import MarkdownRenderer from "../MarkdownRendered";
@@ -48,10 +48,10 @@ const PostContent = ({ post, slug }: PropsType) => {
   const [headings, setHeadings] = useState<Heading[]>([]);
   const { handleScroll } = useHeadsObserver(headings.map(({ id }) => id));
 
-  const scrollToComments = () => {
+  const scrollToComments = useCallback(() => {
     commentRef.current?.scrollIntoView({ behavior: "smooth" });
     window.history.pushState(null, "", "#comment");
-  };
+  }, []);
 
   // Handler for when headings are extracted from markdown
   const handleHeadingsExtracted = (extractedHeadings: Heading[]) => {
@@ -172,7 +172,7 @@ const PostContent = ({ post, slug }: PropsType) => {
                 <PostSummary onScrollComment={scrollToComments} post={data} />
                 <div className="flex items-center gap-2">
                   <CiCalendar />
-                  <span>Cập nhật lúc: {formatDate(post.createdAt)}</span>
+                  <span>Cập nhật lúc: {formatDate(post.updatedAt)}</span>
                 </div>
               </div>
             </div>

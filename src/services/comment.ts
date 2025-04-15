@@ -1,7 +1,7 @@
 import { commentApi } from "@/api/comment.api";
 
-export const getCommentsByPostId = async (postId: string) => {
-  const res = await commentApi.getAll({ postId });
+export const getCommentsByPostId = async (query: any) => {
+  const res = await commentApi.getAll({ ...query });
   return res.data;
 };
 

@@ -5,7 +5,7 @@ import { UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ReactNode, useRef } from "react";
+import { Fragment, ReactNode, useRef } from "react";
 import { BsEmojiHeartEyes } from "react-icons/bs";
 import { LuLogOut, LuNotebookPen } from "react-icons/lu";
 
@@ -91,7 +91,7 @@ export default function AccountLayout({ children }: AccountLayoutProps) {
               >
                 {item.key === "/account/logout" ? (
                   <button
-                    className={`link font-medium ${
+                    className={`link font-medium  ${
                       pathname === item.key ? "text-purple-500" : ""
                     }`}
                     onClick={() => confirmLogoutModalRef.current?.handleOpen()}
@@ -127,27 +127,20 @@ export default function AccountLayout({ children }: AccountLayoutProps) {
               ? "text-purple-500 font-semibold"
               : "text-gray-500 dark:text-gray-400";
 
+            if (item.key == "/account/logout") {
+              return null;
+            }
             return (
               <li key={item.key} className="flex-1 text-center">
-                {item.key === "/account/logout" ? (
-                  <button
-                    onClick={() => confirmLogoutModalRef.current?.handleOpen()}
-                    className={`flex flex-col items-center justify-center w-full ${classes}`}
-                  >
-                    <div className="text-lg">{item.icon}</div>
-                    <span className="text-xs line-clamp-1">{item.label}</span>
-                  </button>
-                ) : (
-                  <Link
-                    href={item.key}
-                    className={`flex flex-col items-center justify-center w-full ${classes}`}
-                  >
-                    <div className="text-lg">{item.icon}</div>
-                    <span className="text-xs line-clamp-1 max-w-[70px]">
-                      {item.label}
-                    </span>
-                  </Link>
-                )}
+                <Link
+                  href={item.key}
+                  className={`flex flex-col items-center justify-center w-full ${classes}`}
+                >
+                  <div className="text-lg">{item.icon}</div>
+                  <span className="text-xs line-clamp-1 max-w-[70px]">
+                    {item.label}
+                  </span>
+                </Link>
               </li>
             );
           })}

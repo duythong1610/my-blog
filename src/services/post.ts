@@ -15,6 +15,11 @@ export const getPostDetail = async (slug: string) => {
   return response.data;
 };
 
+export const getPostForEdit = async (slug: string) => {
+  const response = await postApi.getPostForEdit(slug);
+  return response.data;
+};
+
 export const toggleLikePost = async ({ postId }: { postId: string }) => {
   const res = await postApi.toggleLike(postId);
   return res.data;

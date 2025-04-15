@@ -15,10 +15,6 @@ const PostSection = () => {
     },
   });
 
-  console.log(totalPost);
-
-  console.log(loadingPost);
-
   const handleSearch = useCallback(
     debounce((keyword: string) => {
       setQueryPost((prevQuery) => ({ ...prevQuery, page: 1, search: keyword }));
@@ -73,7 +69,6 @@ const PostSection = () => {
             onChange={handlePageChange}
             showSizeChanger={false}
             hideOnSinglePage={true}
-            // className="pagination-custom"
           />
         </div>
       </div>

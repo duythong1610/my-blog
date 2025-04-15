@@ -42,10 +42,6 @@ export const useTopAuthor = ({ initQuery }: AuthorProps) => {
     []
   );
 
-  console.log({ isLoading, isFetching });
-
-  console.log({ status, isError, error });
-
   return {
     users: data?.users,
     totalAuthors: data?.total || 0,

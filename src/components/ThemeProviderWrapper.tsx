@@ -24,8 +24,6 @@ export default function ThemeProviderWrapper({
   const dispatch = useAppDispatch();
   const { data: session } = useSession();
 
-  console.log(session);
-
   const { theme } = useTheme();
 
   const isDark = theme === "dark";

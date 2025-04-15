@@ -40,10 +40,6 @@ export const useFollowing = ({ initQuery }: PostProps) => {
     []
   );
 
-  console.log({ isLoading, isFetching });
-
-  console.log({ status, isError, error });
-
   return {
     following: data?.users,
     totalFollowing: data?.total || 0,

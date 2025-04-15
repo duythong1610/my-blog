@@ -80,7 +80,6 @@ export const authOptions: NextAuthOptions = {
         token.accessToken = (user as any).accessToken;
       }
 
-      console.log({ account });
       if (account) {
         token.provider = account.provider;
         token.providerId = account.providerAccountId;

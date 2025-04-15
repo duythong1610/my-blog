@@ -38,6 +38,7 @@ const notificationTypes = [
 
 const NotificationSettingsPage = () => {
   const queryClient = useQueryClient();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { notificationSettings } = useNotificationSettings({
     initQuery: {
@@ -61,6 +62,7 @@ const NotificationSettingsPage = () => {
   );
 
   const handleSave = async () => {
+    setLoading(true);
     if (!notificationSettings) return;
 
     try {
@@ -71,6 +73,8 @@ const NotificationSettingsPage = () => {
       message.success("Cập nhật cài đặt thông báo thành công");
     } catch (error) {
       message.error("Có lỗi xảy ra, vui lòng thử lại");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -100,7 +104,12 @@ const NotificationSettingsPage = () => {
       <div className="flex items-center justify-between mb-3">
         <h1 className="font-bold text-xl">Cài đặt thông báo</h1>
         <div className="md:block hidden">
-          <Button type="primary" htmlType="submit" onClick={() => handleSave()}>
+          <Button
+            type="primary"
+            htmlType="submit"
+            onClick={() => handleSave()}
+            loading={loading}
+          >
             Lưu cài đặt
           </Button>
         </div>
@@ -133,6 +142,7 @@ const NotificationSettingsPage = () => {
           block
           htmlType="submit"
           onClick={() => handleSave()}
+          loading={loading}
         >
           Lưu cài đặt
         </Button>

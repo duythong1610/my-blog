@@ -22,6 +22,12 @@ export const postApi = {
       url: "/user/liked-posts",
       params,
     }),
+
+  getPostForEdit: (slug: string): AxiosPromise<any> =>
+    request({
+      url: `/user/post-edit/${slug}`,
+    }),
+
   getPostsByUser: (params?: any): AxiosPromise<any> =>
     request({
       url: `/user/post-by-user`,
@@ -32,6 +38,7 @@ export const postApi = {
     request({
       url: `/user/post/${slug}`,
     }),
+
   increasePostView: (slug: string): AxiosPromise<any> =>
     request({
       url: `/user/view/${slug}`,
@@ -48,7 +55,7 @@ export const postApi = {
       url: `/user/like/${postId}`,
       method: "post",
     }),
-  update: (id: number, data: any): AxiosPromise<any> =>
+  update: (id: string, data: any): AxiosPromise<any> =>
     request({
       url: `/user/post/${id}`,
       method: "patch",

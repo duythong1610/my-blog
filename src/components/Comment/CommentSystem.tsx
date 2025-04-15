@@ -1,15 +1,14 @@
-import React, { useRef } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useDeleteComment } from "@/hooks/useCommentMutation";
 import { getCommentsByPostId } from "@/services/comment";
-import { User } from "@/types/user";
 import { Comment } from "@/types/comment";
-import CommentForm from "./CommentForm";
-import CommentItem from "./CommentItem";
-import { PostSuccessModalRef } from "../Modal/PostSuccessModal";
+import { User } from "@/types/user";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import React, { useMemo, useRef } from "react";
 import ConfirmDeleteCommentModal, {
   ConfirmDeleteCommentModalRef,
 } from "../Modal/ConfirmDeleteCommentModal";
-import { useDeleteComment } from "@/hooks/useCommentMutation";
+import CommentForm from "./CommentForm";
+import CommentItem from "./CommentItem";
 
 interface CommentSystemProps {
   postId: string;
@@ -21,13 +20,22 @@ const CommentSystem: React.FC<CommentSystemProps> = ({
   currentUser,
 }) => {
   const {
-    data: comments = [],
+    data,
     isLoading,
     error,
-  } = useQuery({
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
     queryKey: ["comments", postId],
-    queryFn: () => getCommentsByPostId(postId),
+    queryFn: ({ pageParam = 1 }) =>
+      getCommentsByPostId({ postId, page: pageParam, limit: 10 }),
+    getNextPageParam: (lastPage, allPages) => {
+      if (lastPage.length < 10) return undefined; // No more pages
+      return allPages.length + 1; // Next page
+    },
     refetchOnWindowFocus: false,
+    initialPageParam: 1,
   });
 
   const { mutate: deleteComment } = useDeleteComment(postId);
@@ -55,7 +63,17 @@ const CommentSystem: React.FC<CommentSystemProps> = ({
     return rootComments;
   };
 
-  const organizedComments = organizeComments(comments);
+  const flatComments = useMemo(
+    () =>
+      data?.pages.reduce((acc, page) => [...acc, ...page], [] as Comment[]) ||
+      [],
+    [data?.pages]
+  );
+
+  const organizedComments = useMemo(
+    () => organizeComments(flatComments),
+    [flatComments]
+  );
 
   return (
     <div id="#comment">
@@ -93,11 +111,21 @@ const CommentSystem: React.FC<CommentSystemProps> = ({
             />
           ))
         )}
+        {hasNextPage && (
+          <div className="flex justify-center mt-4">
+            <button
+              onClick={() => fetchNextPage()}
+              disabled={isFetchingNextPage}
+              className="px-4 py-2 text-sm bg-gray-200 hover:bg-gray-300 rounded"
+            >
+              {isFetchingNextPage ? "Đang tải..." : "Xem thêm bình luận"}
+            </button>
+          </div>
+        )}
       </div>
       <ConfirmDeleteCommentModal
         ref={confirmDeleteCommentModalRef}
         onSubmitOk={(commentId) => {
-          console.log(commentId);
           deleteComment(commentId);
         }}
       />

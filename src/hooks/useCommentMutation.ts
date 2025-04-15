@@ -5,6 +5,7 @@ import {
   updateComment,
 } from "@/services/comment";
 import { User } from "@/types/user";
+import { Comment } from "@/types/comment";
 
 export const useCreateComment = ({
   postId,
@@ -17,44 +18,73 @@ export const useCreateComment = ({
 
   return useMutation({
     mutationFn: createComment,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments", postId] });
-    },
-    onMutate: async ({ postId, content }) => {
-      await queryClient.cancelQueries({ queryKey: ["comments", postId] });
-      const previous = queryClient.getQueryData(["comments", postId]);
 
-      // Optimistic update
+    onMutate: async ({
+      content,
+      parentId,
+    }: {
+      content: string;
+      parentId?: string;
+    }) => {
+      await queryClient.cancelQueries({ queryKey: ["comments", postId] });
+
+      const previous = queryClient.getQueryData(["comments", postId]) as {
+        pages: Comment[][];
+        pageParams: unknown[];
+      };
+
+      const optimisticComment = {
+        _id: `temp-${Date.now()}`,
+        content,
+        postId,
+        parent: parentId ? { _id: parentId } : null,
+        createdAt: new Date().toISOString(),
+        user: currentUser,
+        isOptimistic: true,
+      };
+
       queryClient.setQueryData(["comments", postId], (old: any) => {
-        const optimisticComment = {
-          _id: `temp-${Date.now()}`, // temporary id
-          content,
-          postId,
-          createdAt: new Date().toISOString(),
-          user: currentUser,
-          isOptimistic: true,
+        if (!old || !old.pages) {
+          return {
+            pages: [[optimisticComment]],
+            pageParams: [1],
+          };
+        }
+
+        return {
+          ...old,
+          pages: [[optimisticComment, ...old.pages[0]], ...old.pages.slice(1)],
         };
-        return old ? [optimisticComment, ...old] : [optimisticComment];
       });
 
-      return { previous, postId };
+      return { previous, optimisticComment };
     },
 
     onError: (_err, _data, context) => {
-      if (context?.postId) {
-        queryClient.setQueryData(
-          ["comments", context.postId],
-          context.previous
-        );
+      if (context?.previous) {
+        queryClient.setQueryData(["comments", postId], context.previous);
       }
     },
 
-    onSettled: (_data, _err, _variables) => {
-      if (_variables?.postId) {
-        queryClient.invalidateQueries({
-          queryKey: ["comments", _variables.postId],
+    onSuccess: (data, _variables, context) => {
+      if (context?.optimisticComment) {
+        queryClient.setQueryData(["comments", postId], (old: any) => {
+          return {
+            ...old,
+            pages: old.pages.map((page: Comment[]) =>
+              page.map((c) =>
+                c._id === context.optimisticComment._id
+                  ? { ...data, user: currentUser }
+                  : c
+              )
+            ),
+          };
         });
       }
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["comments", postId] });
     },
   });
 };

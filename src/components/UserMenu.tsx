@@ -19,6 +19,7 @@ import ConfirmLogoutModal, {
 import NotificationItem from "./Notification/NotificationItem";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { notificationApi } from "@/api/notifaction.api";
+import { isMobile } from "react-device-detect";
 
 export default function UserMenu() {
   const router = useRouter();

@@ -12,8 +12,6 @@ export default function FollowerList({ userId }: { userId: string }) {
     },
   });
 
-  console.log(followers);
-
   if (loadingFollowers) return <p>Đang tải...</p>;
 
   return (

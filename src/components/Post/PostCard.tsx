@@ -6,16 +6,19 @@ import { CiCalendar } from "react-icons/ci";
 import registerIcon from "@/assets/icons/register.svg";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { BsPencil } from "react-icons/bs";
 
 interface PropTypes {
   post: Post;
   isShowStatus?: boolean;
+  isShowEdit?: boolean;
   loading: boolean;
 }
 
 export default function PostCard({
   post,
   isShowStatus = false,
+  isShowEdit = false,
   loading,
 }: PropTypes) {
   if (loading) {
@@ -44,8 +47,18 @@ export default function PostCard({
   }
 
   return (
-    <div className="bg-white dark:bg-[#222] rounded-[24px] border border-gray-200 dark:border-none shadow-md h-full flex flex-col">
-      {/* Image container with fixed height */}
+    <div className="relative group bg-white dark:bg-[#222] rounded-[24px] border border-gray-200 dark:border-none shadow-md h-full flex flex-col">
+      {isShowEdit && (
+        <div className="absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+          <Link
+            href={`/post/edit/${post.slug}`}
+            className="flex items-center gap-1 bg-purple-500 hover:bg-purple-600 text-white text-sm px-3 py-1 rounded-[8px] font-semibold shadow"
+          >
+            <BsPencil size={14} />
+            Chỉnh sửa
+          </Link>
+        </div>
+      )}
       <div className="group relative overflow-hidden rounded-t-[24px] h-[200px]">
         <Link href={`/blog/${post.slug}`} className="h-full block">
           <Image
@@ -79,9 +92,7 @@ export default function PostCard({
           </div>
         )}
       </div>
-      {/* Content with flex-1 to take remaining space */}
       <div className="flex-1 flex flex-col p-4">
-        {/* Tags and Title section - fixed height */}
         <div className="flex flex-col gap-4 mb-4">
           <div className="flex items-center gap-1 flex-wrap max-h-[60px] overflow-hidden">
             {post.tags.map((item) => (
@@ -112,10 +123,8 @@ export default function PostCard({
           </div>
         </div>
 
-        {/* Spacer to push footer to bottom */}
         <div className="flex-grow"></div>
 
-        {/* Footer section with date and button */}
         <div className="flex items-center justify-between mt-auto">
           <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-white">
             <CiCalendar />

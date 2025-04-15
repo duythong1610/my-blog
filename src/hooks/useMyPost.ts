@@ -40,10 +40,6 @@ export const useMyPost = ({ initQuery }: PostProps) => {
     []
   );
 
-  console.log({ isLoading, isFetching });
-
-  console.log({ status, isError, error });
-
   return {
     posts: data?.posts,
     totalPost: data?.total || 0,

@@ -3,7 +3,6 @@
 import { useSummary } from "@/hooks/useSummary";
 
 export default function UserSummary({ userId }: { userId: string }) {
-  console.log(userId);
   const { summary } = useSummary({
     initQuery: {
       page: 1,

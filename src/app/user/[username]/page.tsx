@@ -68,8 +68,6 @@ export async function generateMetadata({
 const UserDetailPage: NextPage<UserDetailPageProps> = async ({ params }) => {
   const user = await getUserDetail(params.username);
 
-  console.log({ user });
-
   const items: TabsProps["items"] = [
     {
       key: "info",

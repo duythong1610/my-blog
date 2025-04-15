@@ -19,7 +19,6 @@ const PostSummary = ({
   const queryClient = useQueryClient();
   const user = useAppSelector((state) => state.user.info);
 
-  console.log(post);
   const [liked, setLiked] = useState<boolean>();
   const [likes, setLikes] = useState(post.totalLike || 0); // Initialize like count
 
