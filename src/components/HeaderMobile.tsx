@@ -177,7 +177,7 @@ const HeaderMobile = () => {
           </ul>
         </motion.div>
       </nav>
-      <nav className="p-4 h-20 block md:hidden bg-white dark:bg-[#0d0d0d40] backdrop-blur-[5px] shadow-md fixed top-0 left-0 right-0 z-10">
+      <nav className="p-4 h-20 block md:hidden bg-white dark:bg-[#0d0d0d40] backdrop-blur-[5px] shadow-md fixed top-0 left-0 right-0 z-20">
         <motion.div
           initial={{ y: 100 }}
           animate={{ y: 0 }}
