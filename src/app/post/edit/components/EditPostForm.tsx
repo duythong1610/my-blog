@@ -93,6 +93,7 @@ const EditPostForm = ({ slug }: Props) => {
     if (data) {
       form.setFieldsValue({ ...data, id: data._id });
       setMarkdown(data.content);
+      setEditorKey(Date.now());
     }
   }, [data]);
 
@@ -112,6 +113,9 @@ const EditPostForm = ({ slug }: Props) => {
             onUploadOk={(url) => form.setFieldValue("thumbnail", url)}
             imageUrl={thumbnail}
           />
+          <div className="text-center font-medium text-gray-400 mt-3">
+            Tỉ lệ ảnh đề xuất - 2:1
+          </div>
         </Form.Item>
 
         <Form.Item name="title" label="Tiêu đề" rules={[{ required: true }]}>

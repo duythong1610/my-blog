@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { GrLinkNext } from "react-icons/gr";
-import { IoIosNotificationsOutline } from "react-icons/io";
+import { IoIosNotificationsOutline, IoMdHeartEmpty } from "react-icons/io";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useClickAway } from "react-use";
 import ConfirmLogoutModal, {
@@ -20,6 +20,8 @@ import NotificationItem from "./Notification/NotificationItem";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { notificationApi } from "@/api/notifaction.api";
 import { isMobile } from "react-device-detect";
+import { IoSettingsOutline } from "react-icons/io5";
+import { LuLogOut, LuNotebookPen } from "react-icons/lu";
 
 export default function UserMenu() {
   const router = useRouter();
@@ -73,12 +75,30 @@ export default function UserMenu() {
           key: "account/profile",
           label: "Tài khoản của tôi",
           icon: <UserOutlined className="!text-base mb-[2px]" />,
-          onClick: () => router.push("/account"),
+          onClick: () => router.push("/account/profile"),
+        },
+        {
+          key: "account/my-posts",
+          label: "Bài viết của tôi",
+          icon: <LuNotebookPen className="!text-base mb-[2px]" />,
+          onClick: () => router.push("/account/my-posts"),
+        },
+        {
+          key: "account/liked-posts",
+          label: "Yêu thích",
+          icon: <IoMdHeartEmpty className="!text-base mb-[2px]" />,
+          onClick: () => router.push("/account/liked-posts"),
+        },
+        {
+          key: "account/settings",
+          label: "Cài đặt",
+          icon: <IoSettingsOutline className="!text-base mb-[2px]" />,
+          onClick: () => router.push("/account/settings"),
         },
         {
           key: "logout",
           label: "Đăng xuất",
-          icon: <LogoutOutlined className="!text-base mb-[2px]" />,
+          icon: <LuLogOut className="!text-base mb-[2px]" />,
           onClick: () => confirmLogoutModalRef.current?.handleOpen(),
         },
       ]}

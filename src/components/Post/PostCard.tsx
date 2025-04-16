@@ -49,7 +49,7 @@ export default function PostCard({
   return (
     <div className="relative group bg-white dark:bg-[#222] rounded-[24px] border border-gray-200 dark:border-none shadow-md h-full flex flex-col">
       {isShowEdit && (
-        <div className="absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+        <div className="absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-[20]">
           <Link
             href={`/post/edit/${post.slug}`}
             className="flex items-center gap-1 bg-purple-500 hover:bg-purple-600 text-white text-sm px-3 py-1 rounded-[8px] font-semibold shadow"
@@ -60,17 +60,32 @@ export default function PostCard({
         </div>
       )}
       <div className="group relative overflow-hidden rounded-t-[24px] h-[200px]">
-        <Link href={`/blog/${post.slug}`} className="h-full block">
+        {/* Ảnh mờ nền (blur) */}
+        <div className="absolute inset-0 z-0">
           <Image
             src={post.thumbnail}
             alt=""
             width={300}
             height={200}
-            className="object-cover h-full w-full transition-transform duration-300 group-hover:scale-110"
+            className="object-cover w-full h-full blur-md scale-110"
+          />
+        </div>
+
+        {/* Ảnh chính phía trên */}
+        <Link
+          href={`/blog/${post.slug}`}
+          className="relative z-10 flex items-center justify-center w-full h-full"
+        >
+          <Image
+            src={post.thumbnail}
+            alt=""
+            width={300}
+            height={200}
+            className="object-contain w-full h-full"
           />
         </Link>
         {isShowStatus && (
-          <div className="absolute top-4 right-4">
+          <div className="absolute top-4 right-4 z-[20]">
             <div
               className={`rounded-[8px] py-1 px-2 w-fit text-sm font-medium
                 ${

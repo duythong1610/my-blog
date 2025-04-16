@@ -3,7 +3,7 @@ import { useHeadsObserver } from "@/hooks/useHeadsObserver";
 import { Post } from "@/types/post";
 import { formatDate } from "@/utils/date";
 import { useQuery } from "@tanstack/react-query";
-import { Collapse, CollapseProps } from "antd";
+import { Collapse, CollapseProps, Tooltip } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -17,6 +17,7 @@ import CommentSystem from "../Comment/CommentSystem";
 import { useAppSelector } from "@/lib/hook";
 import RelatedPosts from "./RelatedPost";
 import { useRelatedPost } from "@/hooks/useRelatedPost";
+import { RiVerifiedBadgeFill } from "react-icons/ri";
 
 interface PropsType {
   post: Post;
@@ -159,12 +160,20 @@ const PostContent = ({ post, slug }: PropsType) => {
                   </Link>
                   <div className="flex flex-col gap-1">
                     <span>Tác giả</span>
-                    <Link
-                      href={`/user/${post.author.username}`}
-                      className="text-[#33404A] dark:text-white font-bold"
-                    >
-                      {post.author?.fullName}
-                    </Link>
+                    <div className="flex items-center gap-2">
+                      <Link
+                        href={`/user/${post.author.username}`}
+                        className="text-[#33404A] dark:text-white font-bold"
+                      >
+                        {post.author?.fullName}
+                      </Link>
+                      {(post?.author.username == "writeflow" ||
+                        post?.author.username == "auduythong") && (
+                        <Tooltip title="Tài khoản đã được xác minh">
+                          <RiVerifiedBadgeFill className="text-lg md:text-xl fill-purple-500" />
+                        </Tooltip>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

@@ -101,6 +101,9 @@ const CreatePostPage = () => {
             onUploadOk={(url) => form.setFieldValue("thumbnail", url)}
             imageUrl={thumbnail}
           />
+          <div className="text-center font-medium text-gray-400 mt-3">
+            Tỉ lệ ảnh đề xuất - 2:1
+          </div>
         </Form.Item>
         <Form.Item
           name="title"
