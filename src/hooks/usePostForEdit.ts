@@ -15,7 +15,7 @@ export const usePostForEdit = ({ slug }: PostForEditProps) => {
   const [query, setQuery] = useState({ slug });
 
   const fetchPostForEdit = async (slug: string) => {
-    const response = await postApi.getPostForEdit({ slug });
+    const response = await postApi.getPostForEdit(slug);
     return response.data;
   };
 
