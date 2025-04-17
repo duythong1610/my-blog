@@ -6,7 +6,7 @@ import { FaComment, FaHeart, FaRegComments, FaRegHeart } from "react-icons/fa"; 
 import { AiOutlineEye } from "react-icons/ai"; // Icon for views
 import { useMutation, useQueryClient } from "@tanstack/react-query"; // react-query for optimistic update
 import { toggleLikePost } from "@/services/post";
-import { Tooltip } from "antd";
+import { message, Tooltip } from "antd";
 import { useAppSelector } from "@/lib/hook";
 
 const PostSummary = ({
@@ -60,6 +60,9 @@ const PostSummary = ({
 
   // Handle Like button click
   const handleLike = () => {
+    if (!user?._id) {
+      return message.error("Vui lòng đăng nhập để tiếp tục thao tác");
+    }
     // Trigger the mutation to toggle like
     mutate({ postId: post._id });
 

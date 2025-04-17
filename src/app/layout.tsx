@@ -10,6 +10,7 @@ import { ThemeProvider } from "next-themes";
 import { headers } from "next/headers";
 import SessionProviderWrapper from "@/providers/SessionProviderWrapper";
 import dynamic from "next/dynamic";
+import FollowCursor from "@/components/FollowCursor";
 
 const Footer = dynamic(() => import("@/components/Footer"), {
   ssr: false,
@@ -67,6 +68,7 @@ export default function RootLayout({
           <body
             className={`${raleway.className} bg-white dark:bg-[#0e100f] text-black dark:text-white !p-0`}
           >
+            <FollowCursor color="#BA55D3AA" />
             <SessionProviderWrapper>
               <NextTopLoader color="#a855f7" />
               <ThemeProvider attribute="data-mode">
